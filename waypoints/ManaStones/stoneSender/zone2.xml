@@ -3,7 +3,7 @@
 	
 	<onload><![CDATA[
 	
-		useGuildhouseMailbox	= false	-- set to false if you dont have a guildhouse mailbox
+		useGuildhouseMailbox	= true	-- set to false if you dont have a guildhouse mailbox
 		
 		if not RoMScript ('IsInGuild()') or RoMScript ('GCB_GetGuildLevel ()')<10 then
 			useGuildhouseMailbox	= false
