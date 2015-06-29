@@ -11,12 +11,12 @@
 	
 	repeat
 		
-		element		= tonumber (chooseList (elements, 'choose element'))
-		level			= chooseNumber (2, 5, 'choose level')
+		element		= tonumber (UMMD_chooseList (elements, 'choose element'))
+		level			= UMMD_chooseNumber (2, 5, 'choose level')
 		
-		fuseElements (element, level, 3)
+		UMB_fuseElements (element, level, 3)
 		
-	until not chooseFlag ('restart?', true)
+	until not UMMD_chooseFlag ('restart?', true)
 	
 </onLoad>
 </waypoints>
