@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints>
+<onLoad><![CDATA[
+		repeat zid = getZoneId(); yrest(500) until zid;
+		if zid==1 then
+			__WPL:setWaypointIndex(__WPL:findWaypointTag("get_milk"))
+		else
+			error ('wrong zone', 0);
+		end
+		
+		inventory:update()
+		while inventory:itemTotalCount(200338)>0 do
+			player:target_Object(112151)		
+			RoMScript("ChoiceOption(3);")
+			yrest(6000)
+			inventory:update()
+		end
+		inventory:update()
+		while inventory:itemTotalCount(200334)>0 do
+			player:target_Object(112151)		
+			RoMScript("ChoiceOption(2);")
+			yrest(6000)
+			inventory:update()
+		end
+		inventory:update()
+		while inventory:itemTotalCount(200335)>0 do
+			player:target_Object(112151)		
+			RoMScript("ChoiceOption(1);")
+			yrest(6000)
+			inventory:update()
+		end
+		error ('finished', 0);
+
+]]></onLoad>
+</waypoints>

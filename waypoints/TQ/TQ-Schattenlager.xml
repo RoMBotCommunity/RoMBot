@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints type="TRAVEL">
+<onload><![CDATA[
+
+	include ("../../includes/afterCrash.lua")
+
+	questNPC							= 120577
+	questID								= 425495
+	player.free_counter1	= UMMD_chooseClass (68, 'which class to accept quest?')
+	player.free_counter2	= UMMD_chooseClass (61, 'which class to complete quest?')
+
+	function swapClasses (class1, class2, useHomeRune, npc)
+		if player.Class1 ~= class1 then	-- swap classes
+			if useHomeRune==true and getZoneId ()~=400 then
+				inventory:useItem (202435)
+				waitForLoadingScreen ()
+			end
+			if getZoneId ()==400 then
+				player:target_NPC (110758)
+				RoMScript ('ChoiceListDialogOption (1)') yrest (750)
+			else
+				player:target_NPC (npc)
+				RoMScript ('ChoiceOption (3)') yrest (750)
+			end
+			RoMScript ('ExchangeClass ('..(class1+1)..', '..(class2+1)..')') yrest (2000)
+			player:update ()
+		end
+		if getZoneId()==400 then -- leaving home
+			player:target_NPC (110758)
+			RoMScript ('ChoiceListDialogOption (0)')
+			waitForLoadingScreen ()
+		end
+	end
+		
+	function isFirstClass ()
+		player:update ()
+		return (player.Class1 == player.free_counter1)
+	end
+	
+	function isSecondClass ()
+		player:update ()
+		return (player.Class1 == player.free_counter2)
+	end
+		
+	function activate ()
+		if inventory:itemTotalCount (241196)>0 then
+			inventory:useItem(241196)
+		end
+	end
+	
+	player:mount()
+	
+	]]></onload>
+	<!-- #  1 --><waypoint x="-2663" z="-17962" y="830" tag="start"><![CDATA[
+		if getQuestStatus (questID) == "complete" then
+			if not isSecondClass () then
+				swapClasses (player.free_counter2, player.free_counter1, true)
+			end
+			player:target_NPC (questNPC)
+			CompleteQuestByName (questID) yrest (750)
+		end
+		
+		local dqCount, dqTotal	= RoMScript ('Daily_count ()')
+		if dqCount>=dqTotal then
+			if inventory:itemTotalCount (202434)>0 then
+				inventory:useItem (202434)
+			else
+				print ('\a\ano more tq cards left')
+				error ('')
+			end
+		end
+
+		if getQuestStatus (questID)=="not accepted" then
+			if not isFirstClass () then
+				swapClasses (player.free_counter1, player.free_counter2, true)
+			end
+			player:target_NPC (questNPC)
+			AcceptQuestByName (questID) yrest (750)
+		end
+		
+		if not player.Mounted then player:mount () end
+	]]></waypoint>	
+	<!-- #  2 --><waypoint x="-2810" z="-18156" y="831"></waypoint>
+	<!-- #  3 --><waypoint x="-2932" z="-18027" y="830">activate ()</waypoint>
+	<!-- #  4 --><waypoint x="-2810" z="-18156" y="831">activate ()</waypoint>
+	<!-- #  5 --><waypoint x="-2663" z="-17962" y="830">activate ()</waypoint>
+</waypoints>

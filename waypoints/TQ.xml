@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='utf-8'?>
+<waypoints type='TRAVEL'>
+	<onload><![CDATA[
+		
+		scripts							= {
+			['event']						= '/Events/TruhenEvent.xml',
+			['parcour']					= '/Instances/minigames/cot.xml',
+			['survival']				= '/Instances/minigames/survivalR5.xml',
+			['andor']						= '/Instances/minigames/AndorTraining.xml',
+			['lyliya']					= '/Instances/minigames/Lyliya.xml',
+			['plant']						= '/Farm/PlantCare.xml',
+			['goldegg']					= '/Farm/MillersRanchChickens.xml',
+			['manastone']				= '/ManaStones/start.xml',
+			['gobo']						= '/instances/gobo/gobo_solo.xml',
+			
+			['tq_prepare']			= '/TQ/TQ-Logar_prepare.xml',
+			['tq_patrouille']		= '/TQ/TQ-Patrouille.xml',
+			['tq_logar']				= '/TQ/TQ-Logar.xml',
+			['tq_dogs']					= '/TQ/TQ-Xaviera_dogs.xml',
+			['tq_butterfly']		= '/TQ/TQ-Xaviera_butterflies.xml',
+			['tq_xaviera']			= '/TQ/TQ-Xaviera.xml',
+			['tq_kadun']				= '/TQ/TQ-Kadun.xml',
+			['tq_meisterkoch']	= '/TQ/TQ-Meisterkoch.xml',
+			['tq_kisten']				= '/TQ/TQ-Kisten.xml',
+			['tq_ruinen']				= '/TQ/TQ-Ruinen.xml',
+			['tq_flammen']			= '/TQ/TQ-Flammen.xml',
+			['tq_hornbestien']	= '/TQ/TQ-Hornbestienleder.xml',
+			['tq_maedchen']			= '/TQ/TQ-Maedchen.xml',
+		}
+		
+		if getAcc ()==47 then 
+			chars								= {
+				{ name = 'Mainbänker', 		account = 47, char = 7, scripts = {'tq_prepare','tq_logar','manastone'} },
+				{ name = 'Kräuterbänker', account = 47, char = 4, scripts = {'tq_logar','manastone'} },
+				{ name = 'Holzbänker', 		account = 47, char = 5, scripts = {'tq_logar','manastone'} },
+				{ name = 'Erzbänker', 		account = 47, char = 8, scripts = {'tq_logar','manastone'} },
+				{ name = 'Runenbänker', 	account = 47, char = 3, scripts = {'tq_logar'} },
+				{ name = 'Statsbänker', 	account = 47, char = 6, scripts = {'tq_logar'} },
+				{ name = 'Brisinga',			account = 47, char = 1, scripts = {'tq_logar','manastone'} },
+				{ name = 'Vindictive', 		account = 47, char = 2, scripts = {'parcour','andor','tq_butterfly'} },
+			}
+		end
+		
+		if getAcc ()==68 then
+			chars								= {
+				{ name = 'Foodbänker', 		account = 68, char = 1, scripts = {'tq_logar','manastone'} },
+				{ name = 'Matsbänker', 		account = 68, char = 2, scripts = {'tq_logar','manastone'} },
+				{ name = 'Manabänker', 		account = 68, char = 3, scripts = {'tq_logar'} },
+				{ name = 'Steinbänker', 	account = 68, char = 4, scripts = {'tq_logar'} },
+				{ name = 'Restebänker', 	account = 68, char = 5, scripts = {'tq_logar','manastone'} },
+				{ name = 'Crapbänker', 		account = 68, char = 6, scripts = {'tq_logar'} },
+				{ name = 'Dailybänker', 	account = 68, char = 7, scripts = {'tq_logar','manastone'} },
+				{ name = 'Hexxxhexxx', 		account = 68, char = 8, scripts = {'parcour','andor','tq_butterfly'} },
+			}
+		end
+		
+		if getAcc ()==57 then
+			chars								= {
+				{ name = 'Thunderstrike', account = 57, char = 2, scripts = {'parcour','andor','tq_butterfly'} },
+				{ name = 'Celesteria', 		account = 57, char = 3, scripts = {'parcour','andor','tq_dogs'} },
+				{ name = 'Celestron', 		account = 57, char = 1, scripts = {'goldegg','parcour','survival','andor','gobo','tq_flammen'} },
+				{ name = 'Schulani', 			account = 57, char = 4, scripts = {'goldegg','parcour','survival','andor','gobo'} },
+			}
+		end
+		
+		logFile							= getExecutionPath ()..'/logs/'..getPlayerName ()..'.'..getDailyDate ("%Y%m%d")..'.txt'
+		wpPath							= getExecutionPath ()..'/waypoints/'
+		selfFile					  = wpPath .. "/TQ"
+
+		local function createCharList ()
+			local cList					= {}
+			local data
+			for _,data in ipairs (chars) do
+				if #cList>0 and cList[#cList].account == data.account then
+					table.insert (cList[#cList].chars, data.char)
+				else
+					table.insert (cList, {
+						account = data.account,
+						chars		= {data.char}
+					})
+				end
+			end
+			return cList
+		end
+		
+		local function createScriptList ()
+			local name					= getPlayerName ()
+			local sList					= {}
+			local found					= false
+			local script,data
+			for id,data in ipairs (chars) do
+				if data.name == name then
+					for _,script in pairs (data.scripts) do
+						table.insert (sList, script)
+					end
+					found 					= true;
+				end
+			end
+			if found==false then
+message ('no scripts found for '..name, true)
+			end
+			return sList
+		end
+		
+		local old_loadLastPaths	= loadLastPaths or false
+		function loadLastPath ()
+			if config then
+				table.remove (config, 1)
+				table.save (config, logFile)
+			end
+			loadPaths (selfFile)
+		end
+		
+		function checkRelog (When_Finished)
+			if When_Finished == "relog" then
+				ChangeChar()
+				waitForLoadingScreen()
+				loadPaths(__WPL.FileName)
+			elseif When_Finished == "charlist" then
+				LoginNextChar()
+				loadPaths(__WPL.FileName)
+			elseif When_Finished == "end" then
+				error("finished",2)
+			elseif When_Finished == nil then
+				loadPaths ('tq_return')
+			else
+				loadPaths (When_Finished)
+			end
+		end
+	
+		function getConfig ()
+			local saved	= table.load (logFile)
+			if saved~=nil and type (saved)=="table" then
+				return saved
+			else
+				return createScriptList ()
+			end
+		end
+		
+		function logtrace()
+			errorCallback()
+			logInfo (player.Name, debug.traceback(), true, "crashes")
+		end
+
+		atError(logtrace)
+
+		soundOff ()
+		savePlayerName ()
+		config = getConfig ()
+		
+		if config[1]~=nil then
+			table.save (config, logFile)
+			local next = ((type(config[1])=='table') and config[1]) or { config[1] }
+			loadPaths (wpPath .. scripts[next[1]])
+		else
+			cleanupBags ()
+			print ('\a\a\a') 
+			--yrest (5000)
+player:sleep ()
+			message ('finished - login next char')
+			RoMScript ("CloseAllWindows ()")
+			soundOn ()
+			SetCharList (createCharList ())
+			LoginNextChar ()
+			loadProfile ()
+			loadPaths (selfFile)
+		end
+
+	]]></onload>	
+</waypoints>

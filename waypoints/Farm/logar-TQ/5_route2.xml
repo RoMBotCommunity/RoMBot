@@ -1,0 +1,57 @@
+<waypoints type="NORMAL">
+	
+	<onload><![CDATA[
+	
+		include ('onload.lua')
+		saveLastFile (__WPL.FileName)
+		
+		function MyOnLeaveCombat ()
+      player:lootAll ()
+      checkBag ()
+			if isBagFull () then
+				stopWander ()
+				__WPL:setWaypointIndex(5)
+			end
+		end
+		
+		function startWander ()
+			settings.profile.friends	= {"Beruda Lize"}				-- don't attack elite
+			settings.profile.mobs 		= {"B\132r", "Keiler"}			-- farm mobs
+			changeProfileOption ("PATH_TYPE", 'wander')
+			changeProfileOption ("WANDER_RADIUS", 50)
+			changeProfileOption ("MAX_TARGET_DIST", 350)
+			__WPL:setForcedWaypointType ('NORMAL')
+		end
+		
+		if __WPL:getNearestWaypoint(player.X, player.Z)>=5 then startWander () end
+		
+  ]]></onload>
+	
+	<!-- #  1 --><waypoint x="-712" z="-5963" type="TRAVEL"><![CDATA[
+		__WPL:setDirection( WPT_FORWARD )
+    if isBagFull () then loadLastPaths () end
+	]]></waypoint>
+	<!-- #  2 --><waypoint x="-670" z="-5630" type="TRAVEL"/>
+	<!-- #  3 --><waypoint x="-581" z="-5360" type="TRAVEL"/>
+	<!-- #  4 --><waypoint x="-522" z="-5123" type="TRAVEL"/>
+	<!-- #  5 --><waypoint x="-593" z="-4622" type="TRAVEL"><![CDATA[
+		if not isBagFull () then
+			startWander ()
+			__WPL:setDirection( WPT_FORWARD )
+		else
+			stopWander ()
+			__WPL:setDirection( WPT_BACKWARD )
+		end
+	]]></waypoint>
+	<!-- #  6 --><waypoint x="-1143" z="-4573"><![CDATA[
+		MyOnLeaveCombat ()
+		__WPL:setDirection( WPT_FORWARD )
+	]]></waypoint>
+	<!-- #  7 --><waypoint x="-206" z="-4274"><![CDATA[
+		MyOnLeaveCombat ()
+	]]></waypoint>
+	<!-- #  8 --><waypoint x="-186" z="-3722"><![CDATA[
+		MyOnLeaveCombat ()
+		__WPL:setDirection( WPT_BACKWARD )
+	]]></waypoint>
+</waypoints>

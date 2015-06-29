@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+	
+		itemCharHouseName		= '199450'
+		itemCharHousePass		= ''
+		
+		function RoMBarAutoKeys (onOff)
+			onOff	= onOff and 'true' or 'false'
+			RoMScript ('if RoMBar and RoMBar.auto then RoMBar.core.func.setVar ("SkipDialogs", '..onOff..') end')
+		end
+		
+		function enterHouse (NPC, houseName, housePass)
+			while getZoneId ()~=400 do
+				RoMBarAutoKeys (false)
+				player:target_NPC (NPC)
+				ChoiceOptionByName (getTEXT ("SO_VISITHOME"))
+				RoMScript ('ChoiceOption (2);Houses_VisitHouseRequest("'..houseName.. '","'..housePass..'")')
+				waitForLoadingScreen()
+				RoMBarAutoKeys (true)
+			end
+		end
+		
+		function leaveHouse ()
+			while getZoneId ()==400 do
+				RoMBarAutoKeys (false)
+				player:target_NPC ({115235,101758})
+				ChoiceOptionByName (getTEXT ("HOUSE_MAID_LEAVE_HOUSE"))
+				waitForLoadingScreen()
+				RoMBarAutoKeys (true)
+			end
+		end
+		
+		function getFromChest (chestID, itemID, itemCount)
+			local spaceCount		= RoMScript ('Houses_GetSpaceInfo()')
+			for i=1,spaceCount do 
+				local enabled, name, texture, placed, ID = RoMScript ('Houses_GetFurnitureItemInfo ('..i..')')
+				if name and enabled and placed and name==GetIdName (chestID) then
+					local maxSlots	= RoMScript ('Houses_GetItemInfo ('..ID..',0)')
+					for s=1,maxSlots do
+						print ('\n')
+						table.print ({RoMScript ('Houses_GetItemInfo ('..ID..','..s..')')})
+						local texture, name, itemCount = RoMScript ('Houses_GetItemInfo ('..ID..','..s..')')
+						if name==GetIdName (itemID) then
+							RoMScript ('Houses_PickupItem ('..ID..','..s..')')
+							if cursor:hasItem () then
+								for i = 61,240 do
+									if inventory.BagSlot[i].Empty then
+										inventory.BagSlot[i]:pickup () yrest (250)
+				if item.ItemCount > need then
+					RoMScript("SplitBagItem("..item.BagId..","..need..")")
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+		
+		--[[
+		for k, recipient in pairs(Recipients) do
+			local stack = findSplitStack(ItemName, StackSize)
+			if stack then
+				local success, reason = UMM_SendInventoryItem(recipient, stack)
+				if not success then
+					error(reason)
+				end
+			end
+		end
+		-- Tidy up left over items
+		merge()
+		-- Close mailbox
+		RoMCode("UMMFrame:Hide()")
+		]]--
+
+	]]></onload>
+	
+	<waypoint x="-433" z="-5971" tag="Meydo"><![CDATA[
+		enterHouse (110773, itemCharHouseName, itemCharHousePass)
+		error ('finished')
+	]]></waypoint>
+	
+	<waypoint x="0" z="30" tag="inhouse"><![CDATA[
+		getFromChest (201383, 200624, 25)
+		--getFromChest (201383, 200609, 25)
+		--leaveHouse ()
+		error ('finished')
+	]]></waypoint>
+	
+</waypoints>

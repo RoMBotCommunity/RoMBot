@@ -1,0 +1,113 @@
+return {
+-- Table: {1}
+{
+   ["Restebänker"]={2},
+   ["Mainbänker"]={3},
+   ["Holzbänker"]={4},
+   ["Steinbänker"]={5},
+   ["Erzbänker"]={6},
+   ["Fussimen"]={7},
+   ["Kräuterbänker"]={8},
+   ["Foodbänker"]={9},
+   ["Beltiboy"]={10},
+   ["Matsbänker"]={11},
+   ["Dailybänker"]={12},
+   ["Brisinga"]={13},
+},
+-- Table: {2}
+{
+   ["date"]=20150629,
+   ["num228966"]=0,
+   ["num202999"]=0,
+   ["name"]="Restebänker",
+   ["finished"]=true,
+},
+-- Table: {3}
+{
+   ["date"]=20150629,
+   ["num228966"]=0,
+   ["num202999"]=0,
+   ["name"]="Mainbänker",
+   ["finished"]=true,
+},
+-- Table: {4}
+{
+   ["date"]=20150629,
+   ["num228966"]=0,
+   ["num202999"]=0,
+   ["name"]="Holzbänker",
+   ["finished"]=true,
+},
+-- Table: {5}
+{
+   ["date"]="20150625",
+   ["num228966"]=0,
+   ["num202999"]=0,
+   ["name"]="Steinbänker",
+   ["finished"]=true,
+},
+-- Table: {6}
+{
+   ["date"]=20150629,
+   ["num228966"]=0,
+   ["num202999"]=0,
+   ["name"]="Erzbänker",
+   ["finished"]=true,
+},
+-- Table: {7}
+{
+   ["date"]="20150625",
+   ["num228966"]=0,
+   ["num202999"]=0,
+   ["name"]="Fussimen",
+   ["finished"]=false,
+},
+-- Table: {8}
+{
+   ["date"]=20150629,
+   ["num228966"]=0,
+   ["num202999"]=0,
+   ["name"]="Kräuterbänker",
+   ["finished"]=true,
+},
+-- Table: {9}
+{
+   ["date"]=20150629,
+   ["num228966"]=0,
+   ["num202999"]=0,
+   ["name"]="Foodbänker",
+   ["finished"]=true,
+},
+-- Table: {10}
+{
+   ["date"]="20150625",
+   ["num228966"]=0,
+   ["num202999"]=0,
+   ["name"]="Beltiboy",
+   ["finished"]=false,
+},
+-- Table: {11}
+{
+   ["date"]=20150629,
+   ["num228966"]=0,
+   ["num202999"]=0,
+   ["name"]="Matsbänker",
+   ["finished"]=true,
+},
+-- Table: {12}
+{
+   ["date"]=20150629,
+   ["num228966"]=0,
+   ["num202999"]=0,
+   ["name"]="Dailybänker",
+   ["finished"]=true,
+},
+-- Table: {13}
+{
+   ["date"]=20150629,
+   ["num228966"]=0,
+   ["num202999"]=0,
+   ["name"]="Brisinga",
+   ["finished"]=true,
+},
+}

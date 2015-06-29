@@ -1,0 +1,98 @@
+<waypoints type="TRAVEL">
+	
+	<onload><![CDATA[
+	
+		include ('onload.lua')
+		saveLastFile (__WPL.FileName)
+		__WPL:setWaypointIndex(__WPL:getNearestWaypoint(player.X, player.Z))
+		
+	]]></onload>
+	
+	<!-- #  1 --><waypoint x="-4069" z="-8247" tag="to_pioneer"><![CDATA[
+		if player.Level==1 and player.Level2==0 then
+			loadPaths ('2_pioneer')
+		end
+	]]></waypoint>
+	<!-- #  2 --><waypoint x="-4045" z="-8278"/>
+	<!-- #  3 --><waypoint x="-3770" z="-8498"/>
+	<!-- #  4 --><waypoint x="-3702" z="-8681"><![CDATA[
+		mount ()
+	]]></waypoint>
+	<!-- #  5 --><waypoint x="-3488" z="-8682"/>
+	<!-- #  6 --><waypoint x="-3188" z="-8580"/>
+	<!-- #  7 --><waypoint x="-2908" z="-8669"/>
+	<!-- #  8 --><waypoint x="-2605" z="-8645"/>
+	<!-- #  9 --><waypoint x="-2441" z="-8723"/>
+	<!-- # 10 --><waypoint x="-2210" z="-8937"/>
+	<!-- # 11 --><waypoint x="-2002" z="-9134"/>
+	<!-- # 12 --><waypoint x="-1796" z="-9330"/>
+	<!-- # 13 --><waypoint x="-1518" z="-9359"/>
+	<!-- # 14 --><waypoint x="-1263" z="-9198"/>
+	<!-- # 15 --><waypoint x="-1122" z="-8967"/>
+	<!-- # 16 --><waypoint x="-977" z="-8694"/>
+	<!-- # 17 --><waypoint x="-800" z="-8467"/>
+	<!-- # 18 --><waypoint x="-686" z="-8265"/>
+	<!-- # 19 --><waypoint x="-486" z="-8038" tag="route1"><![CDATA[
+		__WPL:setDirection( WPT_FORWARD )
+		if not isBagFull () and isLowLevel () then
+			loadPaths ('4_route1')
+		end
+	]]></waypoint>
+	<!-- # 20 --><waypoint x="-369" z="-7882"><![CDATA[
+		mount ()
+	]]></waypoint>
+	<!-- # 21 --><waypoint x="-345" z="-7761"/>
+	<!-- # 22 --><waypoint x="-394" z="-7575"/>
+	<!-- # 23 --><waypoint x="-382" z="-7458"/>
+	<!-- # 24 --><waypoint x="-310" z="-7224"/>
+	<!-- # 25 --><waypoint x="-259" z="-6930"/>
+	<!-- # 26 --><waypoint x="-200" z="-6757"/>
+	<!-- # 27 --><waypoint x="-213" z="-6544"/>
+	<!-- # 28 --><waypoint x="-303" z="-6355"/>
+	<!-- # 29 --><waypoint x="-392" z="-6208"/>
+	<!-- # 30 --><waypoint x="-481" z="-6062" tag="mailbox"><![CDATA[
+		if mailCheck () then
+			player:target_NPC (110771) -- mailbox
+			UMM_SendByNameOrId (mailreceipient, itemsToCollect)
+		end
+		if isMaxLevel () then 
+			if player.Level2==0 then
+				loadPaths ('3_varanas')
+				return
+			elseif isMaxLevel (true) then
+				player:logout ()
+				return
+			else
+				player:target_NPC (110773) -- Klassenverwalterin
+				RoMScript ("ChoiceOption (4)") yrest (500)
+				RoMScript ("ExchangeClass (".. (player.Class2+1)..", ".. (player.Class1+1)..")") yrest (3000)
+				RoMScript ("SwapEquipmentItem (1)") yrest (500)
+				player:update ()
+				levelupSkills1To10();
+				mount ()
+			end
+		end
+		
+		if isBagFull () then
+ 			__WPL:setDirection( WPT_FORWARD )
+    elseif isLowLevel () then
+			__WPL:setDirection( WPT_BACKWARD )
+		else
+ 			__WPL:setDirection( WPT_FORWARD )
+		end
+	]]></waypoint>
+	<!-- # 31 --><waypoint x="-712" z="-5963" tag="route2"><![CDATA[
+		if not isBagFull () and __WPL.Direction==WPT_FORWARD then
+ 		  loadPaths ('5_route2')
+      return
+    end
+	]]></waypoint>
+	<!-- # 32 --><waypoint x="-816" z="-5946" tag="merchant"><![CDATA[
+		checkBag ()
+		player.freeFlag1 = false
+		player:merchant (110502) -- Dan
+		yrest (3000)
+		checkBag ()
+		__WPL:setDirection( WPT_BACKWARD )
+	]]></waypoint>
+</waypoints>

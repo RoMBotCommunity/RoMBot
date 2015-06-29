@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints>
+	
+	<onload><![CDATA[
+	
+		pango				= 243153
+		
+		changeOptionFriends ( 'add', 108233, 108269 )
+		changeOptionMobs ('add', 108264)	-- pango
+		
+		changeProfileOption ('LOOT',										true)
+		changeProfileOption ('LOOT_ALL',								true)
+		changeProfileOption ('LOOT_IN_COMBAT',					false)
+		changeProfileOption ('LOOT_DISTANCE',						300)
+		changeProfileOption ('MAX_TARGET_DIST', 				300)
+		changeProfileOption ('HARVEST_DISTANCE',				250)
+		changeProfileOption ('AUTO_ELITE_FACTOR',				50)
+		
+		changeProfileSkill ('MAGE_PURGATORY_FIRE',			'AutoUse', false)
+		changeProfileSkill ('MAGE_THUNDERSTORM',				'AutoUse', false)
+		changeProfileSkill ('MAGE_FLAME', 							'AutoUse', true)
+		changeProfileSkill ('MAGE_FIREBALL' ,						'AutoUse', true)
+		changeProfileSkill ('MAGE_RISING_TIDE_ELITE' ,	'AutoUse', true)
+		changeProfileSkill ('MAGE_LIGHTNING', 					'AutoUse', true)
+		
+		changeProfileSkill ('MAGE_FIREBALL' ,						'Priority', 90)
+		changeProfileSkill ('MAGE_LIGHTNING', 					'Priority', 85)
+		changeProfileSkill ('MAGE_FLAME', 							'Priority', 80)
+		changeProfileSkill ('MAGE_RISING_TIDE_ELITE' ,	'Priority', 75)
+		
+		function MyOnLeaveCombat ()
+			local mBag = player:findNearestNameOrId (GetIdName (105930))
+      if mBag and inventory:itemTotalCount(0)~=0 then
+				print("\n\a"..mBag.Name.."\n")
+				player:target_Object(mBag.Id) yrest(1000) -- If not enough time to pick up bag, increase it.
+				player:target_Object(mBag.Id) yrest(1000)
+				inventory:update()
+      end
+			local cavy = player:findNearestNameOrId ({103566,103567})	-- or (103567) for only golden cavy
+			if cavy and inventory:itemTotalCount(0)~=0 then
+				catchCavy (cavy.Id)
+				inventory:update()
+			end
+			if inventory:itemTotalCount (pango)>=500 then
+				print ("\a\a")
+				print ('stack is full. can not loot more than 500 items')
+				player:sleep()
+			end
+		end
+		
+		function MyOnSkillCast ()
+			local HP	= player.HP/player.MaxHP*100
+			if HP < 15 then
+				player:cast("PRIEST_SOUL_SOURCE")
+			elseif HP < 25 then
+				player:cast("PRIEST_HOLY_AURA")
+				player:cast("PRIEST_REGENERATE")
+				player:cast("PRIEST_URGENT_HEAL")
+				player:cast("PRIEST_URGENT_HEAL")
+			elseif HP < 50 then
+				player:cast("PRIEST_URGENT_HEAL")
+			elseif HP < 75 then
+				player:cast("PRIEST_REGENERATE")
+			end
+			
+			--itemBuffs()
+			
+			if not player:hasBuff (501962) then player:cast ('MAGE_ESSENCE_OF_MAGIC') yrest (1000) end
+			if not player:hasBuff (500296) then player:cast ('MAGE_ENERGY_INFLUX') yrest (1000) end
+			if not player:hasBuff (620177) then player:cast ('MAGE_INTENSIFICATION') yrest (1000) end
+			
+			return true
+		end
+		
+	]]></onload>
+
+	<waypoint x="16250" z="26700"><![CDATA[ __WPL:setDirection (WPT_FORWARD) ]]></waypoint>
+	<waypoint x="16400" z="26550" />
+	<waypoint x="16400" z="26550"><![CDATA[ __WPL:setDirection (WPT_BACKWARD) ]]></waypoint>
+	
+</waypoints>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+		include ('../../includes/afterCrash.lua')
+		
+		questDaily						= 427048
+		questPublic						= 427058
+		questNPC							= 123561	-- Jenn Shadoli
+		questItems						= {123369, 123368, 123508}
+		complete, numTqCards	= dayliesComplete ()
+		questID								= complete and questPublic or questDaily
+		startEventMsg					= getTEXT('SC_ZONE_PE_3TH_ST1START')
+		finishEventMsg				= getTEXT('SC_ZONE_PE_3TH_ST1OVER')
+		startTime							= 0
+		
+		if questID==questPublic then
+			waitForEventToStart	= chooseFlag ('wait for event to start?')
+			onFinishEvent				= chooseList ({
+				['wait']					= 'wait for next event to start',
+				['channel']				= 'switch channel',
+				['stop']					= 'stop script',
+			})
+		end
+		
+		DN_AutoQuest (questDaily)
+		DN_AutoQuest (questPublic)
+		
+		function fastTarget (_objid, waittime)
+			obj = player:findNearestNameOrId (_objid)
+			player:target(obj.Address)
+			Attack()
+			if waittime~=nil then
+				yrest(waittime)
+			end
+		end
+		
+		function waitForEvent ()
+			if startTime~=0 or waitForEventToStart==false then return end
+			print ('Waiting for event start...\n')
+			repeat
+				yrest(500)
+			until getLastWarning ('|cffffff80'..startEventMsg..'|r', 15)
+			startTime = os.time()
+			print ('Event has started...\n')
+		end
+	 
+		function changeChannel ()
+			local currentChannel = RoMScript('GetCurrentParallelID ()')
+			if currentChannel==3 then
+				currentChannel = 1
+			else
+				currentChannel = currentChannel + 1
+			end
+			RoMScript ('ChangeParallelID ('..currentChannel..')')
+			repeat
+				yrest(1000)
+			until RoMScript ('GetCurrentParallelID ()')==currentChannel
+		end
+		
+	]]></onload>
+	<!-- #  1 --><waypoint x="15379" z="35826" y="688" tag="start"><![CDATA[
+		if getQuestStatus (questID)=='complete' then
+			player:target_NPC (questNPC)
+			if getQuestStatus (questID)=='complete' then
+				CompleteQuestByName (questID)
+			end
+		end
+		
+		if questID==questDaily then
+			complete, numTqCards	= dayliesComplete (numTqCards)
+			if complete then
+				print ('\a\a\a')
+				player:sleep ()
+			end
+		elseif getLastWarning ('|cffffff80'..finishEventMsg..'|r', 15) then
+			print ('Event finished after '..(os.time()-startTime)..'s...\n')
+			startTime = 0
+			if onFinishEvent=='stop'		then error ('finished', 0) end
+			if onFinishEvent=='channel'	then changeChannel () end
+			if onFinishEvent=='wait' 		then startTime = 0 end
+		end
+		
+		if getQuestStatus (questID)=='not accepted' then
+			if questID==questPublic and waitForEventToStart then
+				waitForEvent ()
+			end
+			player:target_NPC (questNPC)
+			if getQuestStatus (questID)=='not accepted' then
+				AcceptQuestByName (questID)
+			end
+		end
+
+		while getQuestStatus (questID)=='incomplete' do
+			for _,id in ipairs (questItems) do
+				fastTarget (id, 200)
+			end
+		end
+		
+		__WPL:setWaypointIndex(__WPL:findWaypointTag('start'))
+	]]></waypoint>
+</waypoints>

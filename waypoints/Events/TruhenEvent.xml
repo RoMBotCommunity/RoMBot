@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+	
+		-------------------------------------
+		afterFinish		= "/TQ_return"					-- "end" to stop script / the path of the next file to load / a function (without brakes)		
+		-------------------------------------
+	
+		local zID	= getZoneId ()
+		if zID==357 then		-- allready in minigame
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("ingame"))
+		elseif zID==1 then	-- we are in logar
+			__WPL:setWaypointIndex (__WPL:getNearestWaypoint (player.X, player.Z))
+		elseif travelTo ('VaranasBridge') then
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("VaranasBridge"))
+		else
+			error ('unable to find the way to NPC', 0)
+		end
+		
+		useItems	= {
+			206824,205036,243216,242522,242163,243216,241162,		-- diverse Truhen und Beutel
+			208932,202928,																			-- Ladungen für arkaner Umwandler
+		}
+		
+		itemshopIDs		= {
+			202902,202903,203784,202435,202904,									-- Transport Items
+			205547,207748,202434,203785,208785,									-- Diverse Gutscheine
+			243215,203178,																			-- Diverse Schlüssel
+			231893,231894,231885,231886,231887,231888,					-- Diverse Amulette			
+			208792,201014,242087,242791,242792,242793,242794,		-- Diverse Items			
+			201139,242631,201141,242085,												-- Diverse Tränke
+			207747,																							-- Diverse Rollen
+			207771,207772,207773,207774,207775,207776,207777,		-- Diverse Steine
+			207778,207779,242720,242721,242722,242723,242724,
+			242725,242726,242727,242728,
+		}
+		
+		jamie_found = false;
+		
+		combatMode (false);
+		
+		function sortBag ()
+			local item, id, count
+			for _,id in pairs (useItems) do
+				repeat
+					inventory:update ()
+					item = inventory:findItem (id, 'bags')
+					if item then 
+						count = inventory:itemTotalCount (id, 'bags')
+						item:use () 
+						if count == inventory:itemTotalCount (id, 'bags') then
+							break;
+						end
+					end
+				until item==nil
+			end
+			for _,id in pairs (itemshopIDs) do
+				repeat
+					inventory:update ()
+					local item = inventory:findItem (id, 'bags')
+					if item then item:moveTo ('itemshop') end
+					if inventory:itemTotalCount (0, 'itemshop')==0 then
+						break
+					end
+				until item==nil
+			end
+		end
+		
+		function createChestsTable ()
+			local tbl 				= {}
+			local objectList	= CObjectList ();
+			objectList:update ();
+			for i = 0, objectList:size () do
+				local obj = objectList:getObject (i);
+				if obj.Id == 123536 then
+					table.insert (tbl, table.copy (obj))
+				end
+			end
+			if #tbl==0 then 
+message ('no chests found');
+				return nil
+			else
+message (tostring (#tbl)..' chests found');
+				return tbl;
+			end
+		end
+
+		function catchCheep ()
+			if player:target_NPC (108874) then
+				combatMode (true);
+				player:target_Object (108874, nil, true)
+				combatMode (false);
+			end
+			player:moveTo (CWaypoint (-133, -331), true);
+			while	inventory:itemTotalCount (243208)>0 do
+				player:target_NPC (123562);
+				sendMacro ("ChoiceOption (2);");
+			end
+		end
+		
+		local function checkfading(address)
+			return memoryReadRepeat("float", getProc(), address + addresses.pawnFading_offset) == 0
+		end
+		
+		function doEvent ()
+			local opened		= 0
+			local chests		= nil
+			local maxWait		= 10
+			player:target_NPC (123562);
+			sendMacro ("ChoiceOption (2);");
+message ('creating chests list');
+			repeat
+				yrest (300)
+				if RoMScript ("TimeKeeperFrame:IsVisible ()") then
+					chests 	= createChestsTable ();
+					if chests~=nil and #chests>100 then
+						break;
+					end
+				else
+					maxWait = maxWait - 1
+					if maxWait<=0 then
+message ('no chests found, skip game');
+						return
+					end
+				end
+			until false
+message ('starting');
+			while #chests>0 and RoMScript ("TimeKeeperFrame:IsVisible ()") do
+				local next 		= 999999
+				local chestID = 1
+				for i=1, #chests do
+					local tmp = chests[i]
+					local dist = distance (player.X, player.Z, tmp.X, tmp.Z)
+					if dist < next then
+						next		= dist
+						chestID	= i
+					end
+				end
+				player:target_Object (123536, 1000, nil, true, function (address) return address == chests[chestID].Address end )
+				--if checkfading (chests[chestID].Address) then
+					table.remove (chests, chestID);
+					opened = opened + 1
+				--end
+				player:update ()
+			end
+message ('finished - '..tostring (opened)..' chests opened');
+			saveReport (tostring (opened)..' chest opened', 'event')
+		end
+		
+		function findJamie ()
+			if jamie_found then return end
+			local jamie = player:findNearestNameOrId ('Jamie')
+			if jamie then
+				local dist = distance (player.X, player.Z, jamie.X, jamie.Z)
+				if dist<310 then
+					player:target_NPC ('Jamie')
+					sendMacro ("ChoiceOption (1);"); yrest (750)
+					jamie_found = true
+					saveReport ('jamie found', 'event')
+					__WPL:setDirection (WPT_BACKWARD);
+				end
+			end
+		end
+	]]></onload>
+	
+	<waypoint x="-433" z="-5971"><![CDATA[
+		repeat
+			player:target_NPC(110771)
+			sendMacro("ChoiceOption(1);");
+			UMM_TakeMail()
+		until RoMScript("UMMMailManager.MailCount") == 0
+		mount ()
+	]]></waypoint>
+	<waypoint x="-666" z="-5806"/>
+	<waypoint x="-757" z="-5654"/>
+	<waypoint x="-959" z="-5604"/>
+	
+	<waypoint x="-1167" z="-5527" tag="logar_snoop"><![CDATA[
+		if not travelTo ('VaranasBridge') then
+			error ('can not travel to varanas', 0);
+		end
+		__WPL:setWaypointIndex (__WPL:getNearestWaypoint (player.X, player.Z))
+	]]></waypoint>
+	
+
+	<waypoint x="2687" z="1035"><![CDATA[
+		while inventory:itemTotalCount (209561)>=7 do
+			player:target_NPC (114943)
+			sendMacro ("ChoiceOption (1);"); yrest (750)
+			inventory:update ()
+		end
+		__WPL:setDirection (WPT_FORWARD)
+	]]></waypoint>
+	<waypoint x="2767" z="956" tag="VaranasBridge"><![CDATA[
+		mount ()
+		if inventory:itemTotalCount (209561)>=7 then
+			__WPL:setDirection (WPT_BACKWARD)
+		end
+	]]></waypoint>
+	<waypoint x="3238" z="287" tag="quest_npc"><![CDATA[
+		if inventory:itemTotalCount (209561)>=7 then
+			__WPL:setDirection (WPT_BACKWARD)
+		else
+			while	inventory:itemTotalCount (243209)>0 and
+						inventory:itemTotalCount (243210)>0 and
+						inventory:itemTotalCount (243211)>0 and
+						inventory:itemTotalCount (243212)>0 and
+						inventory:itemTotalCount (243213)>0 and
+						inventory:itemTotalCount (243214)>0 
+			do
+				player:target_NPC (123583);
+				sendMacro ("ChoiceOption (2);"); yrest (750)
+			end
+			player:target_NPC (123583);
+			sendMacro ("ChoiceOption (1);"); yrest (750)
+			waitForLoadingScreen (20)
+			__WPL:setWaypointIndex (__WPL:getNearestWaypoint (player.X, player.Z))
+		end
+	]]></waypoint>
+
+	<waypoint x="-133" z="-331" tag="ingame"><![CDATA[
+		doEvent ()
+		catchCheep ()
+		player:target_NPC (123562);
+		sendMacro ("ChoiceOption (1);"); yrest (750)
+		waitForLoadingScreen (20)
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("find_jamie"))
+	]]></waypoint>
+	
+	<waypoint x="2767" z="956" tag="finished"><![CDATA[
+		sortBag ()
+		print ('\a'); yrest (5000);
+		if afterFinish=="end" then
+			error ('finished', 0)
+		elseif type (afterFinish)=="string" then
+			loadPaths (afterFinish)
+		else
+			if afterFinish then 
+				afterFinish ()
+			else
+				error ('finished', 0);
+			end
+		end
+	]]></waypoint>
+	<waypoint x="3238" z="287"/>
+	<waypoint x="3364" z="101" tag="find_jamie"><![CDATA[
+		mount ()
+	]]></waypoint>
+	<waypoint x="3531" z="-263"/>
+	<waypoint x="3531" z="-263"><![CDATA[findJamie ()]]></waypoint>
+	<waypoint x="3702" z="-504"/>
+	<waypoint x="3702" z="-504"><![CDATA[findJamie ()]]></waypoint>
+	<waypoint x="3800" z="-645"/>
+	<waypoint x="3800" z="-645"><![CDATA[findJamie ()]]></waypoint>
+	<waypoint x="3800" z="-645"><![CDATA[
+		message ('jamie not found, try manually', true);
+		saveReport ('jamie NOT found', 'event')
+		jamie_found = true;
+		__WPL:setDirection (WPT_BACKWARD);
+	]]></waypoint>
+
+</waypoints>

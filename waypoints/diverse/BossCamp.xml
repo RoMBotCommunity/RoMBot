@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+<onload>
+
+	--=== User Option ===--
+	
+	local Main = "";
+	-- Set the name of the character you want to whisp.
+	
+	--===================--
+	
+	local Boss = nil;
+	local BossNormal = nil;
+	local BossFurax = nil;
+	local Alarme = soundLoad(getExecutionPath() .. "/alarm.wav");
+	
+	local ZoneID = getZoneId();
+	
+	if ZoneID == 15 then
+		Boss = "Wodjin";
+		BossNormal = 103580;
+		BossFurax = 107183;
+	elseif ZoneID == 16 then
+		Boss = "Hackman";
+		BossNormal = 103583;
+		BossFurax = 107185;
+	elseif ZoneID == 19 then
+		Boss = "Mandara";
+		BossNormal = 107787;
+		BossFurax = 107792;
+	elseif ZoneID == 21 then
+		Boss = "Lagusen";
+	else
+		error("Incorrect zone",0);
+	end
+	
+	while Boss == "Lagusen" do
+		player:target_NPC(118923);
+		if 0 == (RoMScript("GetNumSpeakOption()")) then
+			sendMacro( "SendChatMessage('" .. Boss .. " pop !!', 'WHISPER' , 0 ,'" .. Main .. "');" );
+			soundPlay(Alarme);
+			yrest(50000);
+		end
+		yrest(10000);
+	end
+	
+	while Boss ~= nil do
+		if player:findNearestNameOrId({BossNormal , BossFurax}, nil) then
+			sendMacro( "SendChatMessage('" .. Boss .. " pop !!', 'WHISPER' , 0 ,'" .. Main .. "');" );
+			soundPlay(Alarme);
+			yrest(50000);
+		end
+		yrest(10000);
+	end
+	
+</onload>
+</waypoints>

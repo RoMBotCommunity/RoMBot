@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<profile>
+	<options>
+		<option name="PATH_TYPE"							value="waypoints" />		<!-- waypoints | wander -->
+		<option name="WAYPOINTS"							value="3_Instances/SoK" />  						<!-- leave empty to show a list -->
+		<option name="QUICK_TURN" 						value="true" />
+		<!-- Loot settings -->
+		<option name="LOOT"               		value="true" />
+		<option name="LOOT_ALL"			  				value="true" />  				<!-- Loot all nearby dead mobs after combat -->
+		<option name="LOOT_IN_COMBAT"     		value="false" />
+		<option name="LOOT_DISTANCE"      		value="500" />
+		<option name="LOOT_PAUSE_AFTER"   		value="0" />						<!-- probability in % for a short rest -->
+		<option name="LOOT_SIGILS"						value="false" />				<!-- Loot sigils or not. If ommitted, will depend on "LOOT" value -->
+		<option name="SIGILS_IGNORE_LIST"			value="" />							<!-- List of any sigils you wish to ignore, in language of client -->
+		<!-- Party Bot options  -->
+		<option name="PARTY"									value="true" />
+		<option name="PARTY_ICONS"						value="false" /> 				<!-- For party leader to place "I" Icon on the target Mob -->
+		<option name="PARTY_INSTANCE"					value="false" /> 				<!-- For party bot to enable the killing of mobs with high HP  -->
+		<option name="ICON_FIGHT"							value="true" />					<!-- For party bot to only attack mobs with "I" Icon -->
+		<option name="PARTY_FOLLOW_NAME"			value="Schulani" /> 		<!-- For party bot name of character to follow -->
+		<!-- Auto selling options when used with player:merchant -->
+		<option name="INV_AUTOSELL_ENABLE"		value="false" />				<!-- true | false -->
+		<option name="INV_AUTOSELL_FROMSLOT" 	value="1" /> 						<!-- 1 = bag 1 slot 1 -->
+		<option name="INV_AUTOSELL_TOSLOT"		value="30" /> 					<!-- 30 = last slot bag 1 -->
+		<option name="INV_AUTOSELL_QUALITY"		value="white,green,blue" /> 	<!-- white,green,blue,purple  -->
+	</options>
+
+	<hotkeys>
+    	<!-- to communicate with the RoM API / define ingame dummy macro at place 1 -->
+		<hotkey name="MACRO"         					key="VK_0" />
+	</hotkeys>
+
+	<skills_mage>
+		<skill name="MAGE_PURGATORY_FIRE"			hotkey="MACRO" />
+		
+		<skill name="MAGE_FIREBALL"         	hotkey="MACRO" priority="90" />
+		<skill name="MAGE_LIGHTNING"        	hotkey="MACRO" priority="80" />
+		<skill name="MAGE_FLAME"           	 	hotkey="MACRO" priority="70" />
+		<skill name="MAGE_ENERGY_INFLUX" 	  	hotkey="MACRO" priority="30" pullonly="true" />
+		<skill name="MAGE_ELEMENTAL_CATALYST"	hotkey="MACRO" priority="30" pullonly="true" />
+		<skill name="MAGE_ENERGY_WELL" 		  	hotkey="MACRO" priority="30" pullonly="true" />
+		
+		<skill name="PRIEST_REGENERATE"				hotkey="MACRO" hpper="85" />
+		<skill name="PRIEST_URGENT_HEAL"			hotkey="MACRO" hpper="60" />
+	</skills_mage>
+		
+	<onLoad><![CDATA[
+	]]></onLoad>
+
+	<onDeath><![CDATA[
+	]]></onDeath>
+
+	<preCodeOnElite><![CDATA[
+	]]></preCodeOnElite>
+
+	<onLeaveCombat><![CDATA[
+	]]></onLeaveCombat>
+
+	<onLevelup><![CDATA[
+	]]></onLevelup>
+
+	<onSkillCast><![CDATA[
+	]]></onSkillCast>
+
+	<onHarvest><![CDATA[
+	]]></onHarvest>
+
+	<onUnstickFailure><![CDATA[
+	]]></onUnstickFailure>
+
+</profile>

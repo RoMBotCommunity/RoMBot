@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+		questNPC	= 123084	-- Jero Wespo
+		questID		= 426735	-- Dieses Mädchen wartet
+		questGoal	= 123086	-- Diana Hatschirm
+		complete,  numTqCards	= dayliesComplete (nil, true)
+
+		DN_AutoQuest (questID)
+
+	]]></onload>
+	<!--#  1--><waypoint x="-9175" z="3055" tag="snoop_WailingFjord"><![CDATA[
+		if complete then
+			__WPL:setDirection (WPT_BACKWARD)
+			print ('\a'); yrest (5000);
+			loadPaths ('/TQ_return')
+		end
+	]]></waypoint>
+	<!-- # 80 --><waypoint x="-9163" z="3058"/>
+	<!-- # 79 --><waypoint x="-9163" z="3058"/>
+	<!-- # 78 --><waypoint x="-9094" z="3077"/>
+	<!-- # 77 --><waypoint x="-8957" z="3214"/>
+	<!-- # 76 --><waypoint x="-8813" z="3267"/>
+	<!-- # 75 --><waypoint x="-8579" z="3381"/>
+	<!-- # 74 --><waypoint x="-8246" z="3390"/>
+	<!-- # 73 --><waypoint x="-8297" z="3617"/>
+	<!-- # 72 --><waypoint x="-8339" z="3869"/>
+	<!-- # 71 --><waypoint x="-8324" z="4172"/>
+	<!-- # 70 --><waypoint x="-8373" z="4394"/>
+	<!-- # 69 --><waypoint x="-8291" z="4696"/>
+	<!-- # 68 --><waypoint x="-8334" z="4989"/>
+	<!-- # 67 --><waypoint x="-8383" z="5385"/>
+	<!-- # 66 --><waypoint x="-8460" z="5605"/>
+	<!-- # 65 --><waypoint x="-8622" z="5749"/>
+	<!-- # 64 --><waypoint x="-8704" z="6163"/>
+	<!-- # 63 --><waypoint x="-8818" z="6394"/>
+	<!-- # 62 --><waypoint x="-9000" z="6780"/>
+	<!-- # 61 --><waypoint x="-9110" z="6956"/>
+	<!-- # 60 --><waypoint x="-9273" z="7122"/>
+	<!-- # 59 --><waypoint x="-9320" z="7298"/>
+	<!-- # 58 --><waypoint x="-9159" z="7458"/>
+	<!-- # 57 --><waypoint x="-9111" z="7653"/>
+	<!-- # 56 --><waypoint x="-8864" z="8118"/>
+	<!-- # 55 --><waypoint x="-8481" z="8356"/>
+	<!-- # 54 --><waypoint x="-8158" z="8623"/>
+	<!-- # 53 --><waypoint x="-7940" z="8694"/>
+	<!-- # 52 --><waypoint x="-7400" z="8670"/>
+	<!-- # 51 --><waypoint x="-7178" z="8670"/>
+	<!-- # 50 --><waypoint x="-7078" z="8749"/>
+	<!-- # 49 --><waypoint x="-7104" z="9040"/>
+	<!-- # 48 --><waypoint x="-7292" z="9258"/>
+	<!-- # 47 --><waypoint x="-7249" z="9526"/>
+	<!-- # 46 --><waypoint x="-7032" z="9656"/>
+	<!-- # 45 --><waypoint x="-6766" z="9703"/>
+	<!-- # 44 --><waypoint x="-6550" z="9549"/>
+	<!-- # 43 --><waypoint x="-6276" z="9338"/>
+	<!-- # 42 --><waypoint x="-5952" z="9098"/>
+	<!-- # 41 --><waypoint x="-5675" z="8959"/>
+	<!-- # 40 --><waypoint x="-5393" z="8897"/>
+	<!-- # 39 --><waypoint x="-5184" z="9000"/>
+	<!-- # 38 --><waypoint x="-5162" z="9251"/>
+	<!-- # 37 --><waypoint x="-4955" z="9579"/>
+	<!-- # 36 --><waypoint x="-4710" z="9827"/>
+	<!-- # 35 --><waypoint x="-4592" z="10015"/>
+	<!-- # 34 --><waypoint x="-4289" z="10367"/>
+	<!-- # 33 --><waypoint x="-4120" z="10792"/>
+	<!-- # 32 --><waypoint x="-4011" z="11098"/>
+	<!-- # 31 --><waypoint x="-3772" z="11469"/>
+	<!-- # 30 --><waypoint x="-3638" z="11729"/>
+	<!-- # 29 --><waypoint x="-3434" z="12017"/>
+	<!-- # 28 --><waypoint x="-3217" z="12346"/>
+	<!-- # 27 --><waypoint x="-3056" z="12720"/>
+	<!-- # 26 --><waypoint x="-2956" z="13085"/>
+	<!-- # 25 --><waypoint x="-2930" z="13468"/>
+	<!-- # 24 --><waypoint x="-3139" z="13840"/>
+	<!-- # 23 --><waypoint x="-3368" z="14130"/>
+	<!-- # 22 --><waypoint x="-3575" z="14361"/>
+	<!-- # 21 --><waypoint x="-3600" z="14654"/>
+	<!-- # 20 --><waypoint x="-3631" z="14880"/>
+	<!-- # 19 --><waypoint x="-3599" z="15289"/>
+	<!-- # 18 --><waypoint x="-3441" z="15629"/>
+	<!-- # 17 --><waypoint x="-3177" z="15923"/>
+	<!-- # 16 --><waypoint x="-2815" z="15980"/>
+	<!-- # 15 --><waypoint x="-2582" z="16077"/>
+	<!-- # 14 --><waypoint x="-2381" z="16252"/>
+	<!-- # 13 --><waypoint x="-2117" z="16266"/>
+	<!-- # 12 --><waypoint x="-1925" z="16190"/>
+	<!-- # 11 --><waypoint x="-1728" z="16232"/>
+	<!-- # 10 --><waypoint x="-1582" z="16339"/>
+	<!-- #  9 --><waypoint x="-1507" z="16503"/>
+	<!-- #  8 --><waypoint x="-1396" z="16598"/>
+	<!-- #  7 --><waypoint x="-1130" z="16578"/>
+	<!-- #  6 --><waypoint x="-875" z="16427"/>
+	<!-- #  5 --><waypoint x="-645" z="16359"/>
+	<!-- #  4 --><waypoint x="-419" z="16360"/>
+	<!-- #  3 --><waypoint x="-186" z="16189"/>
+	<!-- #  2 --><waypoint x="-37" z="16046"/>
+	<!-- #  1 --><waypoint x="37" z="15849"/>
+	<!-- #  5 --><waypoint x="149" z="15783"><![CDATA[
+		while getQuestStatus (questID)=='incomplete' do
+			player:target_NPC (questGoal)
+			sendMacro ("ChoiceOption (1)") yrest (1000)
+		end
+		if complete then 
+			__WPL:setDirection (WPT_BACKWARD)
+		else
+			__WPL:setDirection (WPT_FORWARD)
+		end
+
+	]]></waypoint>
+	<!-- #  4 --><waypoint x="364" z="15710"/>
+	<!-- #  3 --><waypoint x="629" z="15710"/>
+	<!-- #  2 --><waypoint x="902" z="15730"/>
+	<!-- #  1 --><waypoint x="1080" z="15684"><![CDATA[
+		
+		if getQuestStatus (questID)=='complete' then
+			player:target_NPC (questNPC)
+			CompleteQuestByName (questID)
+		end
+		complete,  numTqCards	= dayliesComplete (numTqCards)
+		if not complete and getQuestStatus (questID)=='not accepted' then
+			player:target_NPC (questNPC)
+			AcceptQuestByName (questID)
+		end
+		__WPL:setDirection (WPT_BACKWARD)
+	]]></waypoint>
+</waypoints>

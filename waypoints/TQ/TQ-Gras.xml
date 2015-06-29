@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+		questID								= 424172
+		questNPC							= 118067
+		questItem							= 118052
+		complete, numTqCards	= dayliesComplete ();
+
+		DN_AutoQuest (questID)
+
+		__WPL:setForcedWaypointType("TRAVEL")
+		
+	]]></onload>
+	<!-- #  1 --><waypoint x="13084" z="1703" y="59"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD)
+		if getQuestStatus (questID)=='complete' then
+			player:target_NPC (questNPC)
+			CompleteQuestByName (questID)
+		end
+		player:update ()
+		if player.Level==63 then
+			print ('\a\a\a')
+			error ('ready', 0)
+		end
+		complete,  numTqCards	= dayliesComplete (numTqCards)
+		if complete then
+			inventory:useItem (202434)
+		end
+		if getQuestStatus (questID)=='not accepted' then
+			player:target_NPC (questNPC)
+			AcceptQuestByName (questID)
+		end
+	]]></waypoint>
+	<!-- #  2 --><waypoint x="12865" z="1633" y="54"/>
+	<!-- #  3 --><waypoint x="12525" z="1676" y="53"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD)
+		if getQuestStatus (questID)=='incomplete' then
+			player:target_Object (questItem)
+		end
+		if getQuestStatus (questID)=='complete' then
+			__WPL:setDirection (WPT_BACKWARD)
+		end
+	]]></waypoint>
+	<!-- #  4 --><waypoint x="12420" z="1790" y="60"/>
+	<!-- #  5 --><waypoint x="12394" z="1898" y="54"><![CDATA[
+		if getQuestStatus (questID)=='incomplete' then
+			player:target_Object (questItem)
+		end
+		if getQuestStatus (questID)=='complete' then
+			__WPL:setDirection (WPT_BACKWARD)
+		end
+	]]></waypoint>
+	<!-- #  6 --><waypoint x="12371" z="1974" y="55"/>
+	<!-- #  7 --><waypoint x="12411" z="2032" y="58"/>
+	<!-- #  8 --><waypoint x="12441" z="2048" y="57"/>
+	<!-- #  9 --><waypoint x="12441" z="2048" y="57"><![CDATA[
+		if getQuestStatus (questID)=='incomplete' then
+			player:target_Object (questItem)
+		end
+		__WPL:setDirection (WPT_BACKWARD)
+	]]></waypoint>
+</waypoints>

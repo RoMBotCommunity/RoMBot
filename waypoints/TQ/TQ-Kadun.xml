@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints>
+	<onload><![CDATA[
+		include ("../../includes/afterCrash.lua")
+		
+		questNPC								= 121173
+		questID1								= 425768
+		questID2								= 425767
+		homeNPC									= 121272
+		player.free_counter1		= (player.free_counter1>0 and player.free_counter1) or ChooseAvailableClass (75, "class to accept quest");
+		player.free_counter2		= (player.free_counter2>0 and player.free_counter2) or ChooseAvailableClass (65, "class to complete quest");
+		
+		DN_AutoQuest (questID1)
+		DN_AutoQuest (questID2)
+
+		numTqCards						= CheckTqCardCount ()
+		complete, numTqCards	= dayliesComplete (numTqCards);
+		combatMode (false)
+		
+		zID = getZoneId ()
+		if zID~=24 then
+			if travelTo ('Tundra') then
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("Tundra"))
+			else
+				error ('', 0);
+			end
+		end
+		
+		class1									= player.free_counter1
+		class2									= player.free_counter2
+		
+		targetNPC1							= 121588
+		questItem1							= 241661
+		
+		function check1 ()
+			if getQuestStatus (questID1)=='complete' or getQuestStatus (questID1)=='not accepted' then
+				__WPL:setWaypointIndex (__WPL:findWaypointTag("questNPC"))
+			end
+		end
+
+		function doit1 ()
+			player:target_NPC (targetNPC1);
+			inventory:useItem (questItem1); yrest (3500);
+			player:clearTarget ()
+		end
+
+		targetObject2						= 121604
+		questItem2							= 241657
+		
+		function check2 ()
+			__WPL:setDirection (WPT_FORWARD);
+			if getQuestStatus(questID2)=='incomplete' and inventory:itemTotalCount(questItem2)>0 then
+				player:target_NPC(questNPC);
+				RoMScript ("ChoiceOption(1);") yrest(750)
+			end
+			if getQuestStatus (questID2)=='complete' or getQuestStatus (questID2)=='not accepted' then
+				__WPL:setWaypointIndex (__WPL:findWaypointTag("questNPC"))
+			end
+			repeat player:mount(); yrest (1000) until player.Mounted
+		end
+
+		function doit2 ()
+			while getQuestStatus(questID2)=='incomplete' and inventory:itemTotalCount(questItem2)<=0 do
+				player:target_Object(targetObject2,7500)		
+				inventory:update()
+			end
+			repeat player:mount(); yrest (1000) until player.Mounted
+			__WPL:setDirection (WPT_BACKWARD);
+		end
+
+		__WPL:setWaypointIndex (1)
+	]]></onload>
+	
+	<!-- #  1 --><waypoint x="3843" z="-7737" tag="Tundra" />
+	<!-- #  1 --><waypoint x="3866" z="-8553"/>
+	<!-- #  2 --><waypoint x="3385" z="-8973"/>
+	<!-- #  3 --><waypoint x="3120" z="-8989" tag="questNPC"><![CDATA[
+		
+		__WPL:setDirection (WPT_FORWARD)
+		
+		if getQuestStatus (questID1)=='complete' and player.Class1==class2 then
+			if not player:hasBuff (624474) and inventory:itemTotalCount (242628)>0 then
+				inventory:useItem (242638); yrest(1000);
+			end
+			player:target_NPC (questNPC)
+			CompleteQuestByName (questID1)
+		end
+		
+		if getQuestStatus (questID2)=='complete' and player.Class1==class2 then
+			if not player:hasBuff (624474) and inventory:itemTotalCount (242628)>0 then
+				inventory:useItem (242638); yrest(1000);
+			end
+			player:target_NPC (questNPC)
+			CompleteQuestByName (questID2)
+		end
+		
+		complete, numTqCard = dayliesComplete (numTqCard);
+		if complete then
+			if checkRelog and type(checkRelog)=='function' then 
+				checkRelog ()
+				return
+			else
+				message ('finished', false, true);
+			end
+		end
+		
+		if getQuestStatus (questID1)=='not accepted' and player.Class1==class1 then
+			player:target_NPC (questNPC)
+			AcceptQuestByName (questID1)
+		end
+		
+		if getQuestStatus (questID2)=='not accepted' and player.Class1==class1 then
+			player:target_NPC (questNPC)
+			AcceptQuestByName (questID2)
+		end
+		
+		if getQuestStatus (questID1)=='incomplete' then
+			__WPL:setWaypointIndex (__WPL:findWaypointTag("q"..questID1))
+		end
+		
+		if getQuestStatus (questID2)=='incomplete' then
+			__WPL:setWaypointIndex (__WPL:findWaypointTag("q"..questID2))
+		end
+		
+		repeat player:mount(); yrest (1000) until player.Mounted
+	]]></waypoint>
+	<!-- #  4 --><waypoint x="3385" z="-8973"/>
+	<!-- #  5 --><waypoint x="3941" z="-8545"/>
+	<!-- #  6 --><waypoint x="4083" z="-8508" tag="Christine Wor"><![CDATA[
+		player:target_NPC (homeNPC);
+		RoMScript ("ChoiceOption (3);"); yrest (100)
+		RoMScript ("ExchangeClass ("..(((player.Class1==class1 and class2) or class1)+1)..","..(((player.Class1==class1 and class1) or class2)+1)..");"); yrest (3000)
+		repeat player:mount(); yrest (1000) until player.Mounted
+		__WPL:setDirection (WPT_BACKWARD);
+	]]></waypoint>
+
+	<!-- #  7 --><waypoint x="3385" z="-8973" tag="q425768"><![CDATA[check1()]]></waypoint>
+	<!-- #  8 --><waypoint x="3353" z="-9078"><![CDATA[doit1()]]></waypoint>
+	<!-- #  9 --><waypoint x="3385" z="-8973"><![CDATA[check1()]]></waypoint>
+	<!-- # 10 --><waypoint x="3234" z="-8939"><![CDATA[doit1()]]></waypoint>
+	<!-- # 11 --><waypoint x="3385" z="-8973"><![CDATA[check1()]]></waypoint>
+	<!-- # 12 --><waypoint x="3337" z="-8848"><![CDATA[doit1()]]></waypoint>
+	<!-- # 13 --><waypoint x="3385" z="-8973"><![CDATA[check1()]]></waypoint>
+	<!-- # 14 --><waypoint x="3570" z="-8994"><![CDATA[doit1()]]></waypoint>
+	<!-- # 15 --><waypoint x="3385" z="-8973"><![CDATA[__WPL:setWaypointIndex (__WPL:findWaypointTag("q425768"))]]></waypoint>
+
+	<!-- # 16 --><waypoint x="3120" z="-8989" tag="q425767"><![CDATA[check2()]]></waypoint>
+	<!-- # 17 --><waypoint x="3320" z="-9000"/>
+	<!-- # 18 --><waypoint x="3816" z="-8643"/>
+	<!-- # 19 --><waypoint x="4208" z="-8616"/>
+	<!-- # 20 --><waypoint x="4301" z="-8566"><![CDATA[doit2()]]></waypoint>
+
+</waypoints>

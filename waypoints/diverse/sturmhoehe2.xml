@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints type="TRAVEL">
+	<onload><![CDATA[
+		repeat
+			local chest = player:findNearestNameOrId ('Geheimnisvolle Schatztruhe')
+			if chest~=nil and distance (chest, player)<100 then
+				player:target_Object (chest)
+				player:target_Object (chest.id)
+			end
+			player:sleep ()
+		until false
+	]]></onload>
+</waypoints>

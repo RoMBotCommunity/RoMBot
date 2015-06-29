@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints>
+	
+	<onload><![CDATA[
+		bags				= {105930,105982,107217,107442,107444,107445,107446,107447,107448,107449}
+		pango				= 243153
+		count				= 0
+		nextReport	= 50
+		
+		settings.profile.friends = {108264,108233,108269}		
+		
+		changeProfileOption ('LOOT', true);
+		changeProfileOption ('LOOT_ALL', true);
+		changeProfileOption ('LOOT_IN_COMBAT', false);
+		changeProfileOption ('LOOT_DISTANCE', 250);
+		changeProfileOption ('MAX_TARGET_DIST', 0);
+		changeProfileOption ('HARVEST_DISTANCE', 250);
+		changeProfileOption ('WAYPOINT_DEVIATION', 30);
+		
+		function goLooting ()
+			while player.Battling do 
+				player:rest (1)
+				player:updateBattling ()
+			end
+			player:lootAll();
+			while player:findNearestNameOrId (bags) do
+				bag	= player:findNearestNameOrId (bags) 
+				player:target_Object (bag.Id);
+				player:clearTarget ()
+				player:rest (1)
+				player:lootAll ();
+			end
+			inventory:update()
+			count = inventory:itemTotalCount (pango)
+			if count >= nextReport then
+				count = math.floor (count / 50) * 50
+				RoMScript ('SendChatMessage("Pango:'..count..'", "WHISPER", 0, "Schiller")');
+				if count >= 500 then
+					print ("\a\a");
+					player:sleep()
+				end
+				nextReport	= count + 50;
+			end
+		end
+	]]></onload>
+
+	<waypoint x="16480" z="26640"><![CDATA[goLooting()]]></waypoint>
+	<waypoint x="16484" z="26642"><![CDATA[
+		while not player.Battling do 
+			player:rest (3)
+			player:updateBattling ()
+		end
+	]]></waypoint>
+	
+</waypoints>

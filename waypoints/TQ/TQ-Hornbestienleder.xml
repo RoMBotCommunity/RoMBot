@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints>
+	<onload><![CDATA[
+		include ("../../includes/afterCrash.lua")
+	
+		questID								= 426808
+		questNPC							= 123150
+		questItem							= 243088
+		complete, numTqCards	= dayliesComplete ();
+		
+		DN_AutoQuest (questID)
+
+		__WPL:setForcedWaypointType("TRAVEL")
+		changeProfileOption('MAX_TARGET_DIST', 0)
+		changeProfileOption('WAYPOINT_DEVIATION', 0)
+		combatMode (false)
+		
+		repeat zid = getZoneId (); yrest (200) until zid;
+		while zid==400 do	-- in house
+			message ('leave the house',  true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		while zid~=28 and not travelTo ('Hortek') do
+			message ('unable to go to Hortek',  true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+	]]></onload>
+	<waypoint x="2587" z="24618" tag="Sturobold"><![CDATA[
+		if complete or inventory:itemTotalCount (questItem)<10 then
+			loadLastPaths () or error ('finished here', 0)
+		end
+	]]></waypoint>
+	<waypoint x="2445" z="24435"/>
+	<waypoint x="2437" z="24380" tag="Kay"><![CDATA[
+		if getQuestStatus (questID)=='complete' then
+			player:target_NPC (questNPC)
+			CompleteQuestByName (questID)
+		end
+		complete, numTqCards	= dayliesComplete (numTqCards)
+		if complete or inventory:itemTotalCount (questItem)<10 then
+			__WPL:setDirection (WPT_BACKWARD)
+			return
+		end
+		if getQuestStatus (questID)=='not accepted' and inventory:itemTotalCount (questItem)>=10 then
+			player:target_NPC (questNPC)
+			AcceptQuestByName (questID)
+		end
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("Kay"))
+	]]></waypoint>
+</waypoints>

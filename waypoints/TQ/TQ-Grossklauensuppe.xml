@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='utf-8'?>
+<waypoints>
+	<onload><![CDATA[
+	
+		questNPC							= 118755
+		questID								= 'Großklauensuppe'
+		
+		include ('../../includes/afterCrash.lua')
+		acceptClass						= UMMD_chooseClass (63, 'class to accept quest')
+		completeClass					= UMMD_chooseClass (53, 'class to complete quest')
+		
+		function swapClasses (class1, class2)
+			while player.Class1 ~= class1 do
+				repeat -- going home
+					if getZoneId()~=400 then
+						inventory:update ()
+						if inventory:itemTotalCount (202435)<=0 then
+							print ('\a\ano more home runes left')
+							player:sleep ()
+						else
+							inventory:useItem (202435)
+							waitForLoadingScreen ()
+						end
+					else
+						break
+					end
+				until true
+				while player.Class1 ~= class1 do	-- swap classes
+					player:target_NPC (110758)
+					RoMScript('ChoiceListDialogOption(1)') yrest(750)
+					RoMScript('ExchangeClass('..(class1+1)..','..(class2+1)..')') yrest(2000)
+					player:update ()
+				end
+				repeat -- leaving home
+					if getZoneId ()==400 then
+						player:target_NPC (110758)
+						RoMScript ('ChoiceListDialogOption (0)')
+						waitForLoadingScreen ()
+					else
+						break
+					end
+				until true
+			end		
+		end
+		
+		while true do
+			if getQuestStatus (questID) == 'not accepted' then
+				swapClasses (acceptClass, completeClass)
+				while not player:target_NPC (questNPC) do
+					print ('you are to far away from quest npc')
+					player:sleep ()	player:update ()
+				end
+				if getQuestStatus (questID) == 'not accepted' then
+					AcceptQuestByName (questID) yrest (300)
+				end
+				swapClasses (completeClass, acceptClass)
+			end
+
+			if getQuestStatus (questID) == 'complete' then
+				swapClasses (completeClass, acceptClass)
+				while not player:target_NPC (questNPC) do
+					print ('you are to far away from quest npc')
+					player:sleep ()	player:update ()
+				end
+				if getQuestStatus (questID) == 'complete' then
+					CompleteQuestByName (questID) yrest (300)
+				end
+				swapClasses (acceptClass, completeClass)
+			end
+			
+			if getQuestStatus (questID) == 'incomplete' then
+				print ('\a\asomething is wrong - items missing?')
+				player:sleep ()
+			end
+			
+			local dqCount, dqTotal	= RoMScript ('Daily_count ()')
+			if dqCount>=dqTotal then
+				if player.Level==63 then
+					print ('\a\a\a')
+					error ('finished')
+				elseif inventory:itemTotalCount (202434)>0 then
+					inventory:useItem (202434)
+				else
+					print ('\a\ano more tq cards left')
+					error ('')
+				end
+			end
+		end
+		
+	]]></onload>
+</waypoints>

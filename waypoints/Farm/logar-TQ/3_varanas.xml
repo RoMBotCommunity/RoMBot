@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	
+	<onload><![CDATA[
+	
+		include ('onload.lua')
+		saveLastFile (__WPL.FileName)
+    
+	]]></onload>
+	
+	<!--#  1--><waypoint x="-481" z="-6062"><![CDATA[
+    mount ()
+  ]]></waypoint>
+	<!--#  2--><waypoint x="-712" z="-5963"/>
+	<!--#  3--><waypoint x="-816" z="-5946"/>
+	<!--#  4--><waypoint x="-936" z="-5974"/>
+	<!--#  5--><waypoint x="-1073" z="-5967"/>
+	<!--#  6--><waypoint x="-1177" z="-5859"/>
+	<!--#  7--><waypoint x="-1173" z="-5728"><![CDATA[
+    player:target_NPC (111256) -- Snoop the Stubborn
+		yrest (500)
+  ]]></waypoint>
+	<!--#  8--><waypoint x="-1183" z="-5564"/>
+	<!--#  9--><waypoint x="-1061" z="-5412"/>
+	<!--# 10--><waypoint x="-1078" z="-5329"/>
+	<!--# 11--><waypoint x="-1367" z="-5171"/>
+	<!--# 12--><waypoint x="-1472" z="-5010"/>
+	<!--# 13--><waypoint x="-1489" z="-4832"/>
+	<!--# 14--><waypoint x="-1368" z="-4518"/>
+	<!--# 15--><waypoint x="-1333" z="-4337"/>
+	<!--# 16--><waypoint x="-1169" z="-4169"/>
+	<!--# 17--><waypoint x="-985" z="-4046"/>
+	<!--# 18--><waypoint x="-793" z="-3877"/>
+	<!--# 19--><waypoint x="-640" z="-3723"/>
+	<!--# 20--><waypoint x="-536" z="-3538"/>
+	<!--# 21--><waypoint x="-484" z="-3320"/>
+	<!--# 22--><waypoint x="-563" z="-2974"/>
+	<!--# 23--><waypoint x="-569" z="-2672"/>
+	<!--# 24--><waypoint x="-569" z="-2271"/>
+	<!--# 25--><waypoint x="-596" z="-2089"/>
+	<!--# 26--><waypoint x="-638" z="-1842"/>
+	<!--# 27--><waypoint x="-406" z="-1463"/>
+	<!--# 28--><waypoint x="-153" z="-1368"/>
+	<!--# 29--><waypoint x="107" z="-1193"/>
+	<!--# 30--><waypoint x="297" z="-923"/>
+	<!--# 31--><waypoint x="538" z="-669"/>
+	<!--# 32--><waypoint x="660" z="-370"/>
+	<!--# 33--><waypoint x="819" z="-180"/>
+	<!--# 34--><waypoint x="853" z="23"/>
+	<!--# 35--><waypoint x="865" z="245"/>
+	<!--# 36--><waypoint x="907" z="564"/>
+	<!--# 37--><waypoint x="1008" z="852"/>
+	<!--# 38--><waypoint x="1062" z="1096"/>
+	<!--# 39--><waypoint x="1149" z="1228"/>
+	<!--# 40--><waypoint x="1325" z="1227"/>
+	<!--# 41--><waypoint x="1538" z="1195"/>
+	<!--# 42--><waypoint x="1753" z="1130"/>
+	<!--# 43--><waypoint x="1966" z="1166"/>
+	<!--# 44--><waypoint x="2254" z="1204"><![CDATA[
+		player:target_NPC (122115) -- Snoop the Stubborn
+		yrest (500)
+	]]></waypoint>
+	<!--# 45--><waypoint x="2459" z="1138"/>
+	<!--# 46--><waypoint x="2578" z="1011"/>
+	<!--# 47--><waypoint x="2755" z="960"><![CDATA[
+		player:target_NPC (110755) -- Lieve
+		sendMacro ("ChoiceOption (5)") yrest (500)
+		sendMacro ("ChoiceOption (1)") yrest (500)
+		waitForLoadingScreen ()
+		player:update ()
+		__WPL:setWaypointIndex (__WPL:getNearestWaypoint (player.X,   player.Z))
+	]]></waypoint>
+	<!--# 48--><waypoint x="5281" z="-3923"/>
+	<!--# 49--><waypoint x="5265" z="-3971"/>
+	<!--# 50--><waypoint x="5236" z="-4022"/>
+	<!--# 51--><waypoint x="5282" z="-4071"/>
+	<!--# 52--><waypoint x="5397" z="-4202"/>
+	<!--# 53--><waypoint x="5436" z="-4269"/>
+	<!--# 54--><waypoint x="5488" z="-4321"><![CDATA[
+    player:target_NPC (110307) -- Elson
+		RoMScript ("ChoiceOption (1)") yrest (500)
+		RoMScript ("ChoiceOption (1)") yrest (500)
+		player:update ()
+	]]></waypoint>
+	<!--# 55--><waypoint x="5488" z="-4321"><![CDATA[
+    player:target_NPC (110309) -- Casaray
+		RoMScript ("ChoiceOption (1)") yrest (500)
+		RoMScript ("ChoiceOption (1)") yrest (500)
+		player:update ()
+	]]></waypoint>
+	<!--# 56--><waypoint x="5524" z="-4243"><![CDATA[
+    player:target_NPC (110581) -- Klassenverwalterin
+		RoMScript ("ChoiceOption (1)") yrest (500)
+    RoMScript ("ExchangeClass (".. (player.Class2+1)..", ".. (player.Class1+1)..")") yrest (3000)
+    RoMScript ("SwapEquipmentItem (1)") yrest (500)
+		player:update ()
+		if inventory:itemTotalCount (210294)>0 then
+			inventory:useItem (210294)
+		end
+		levelupSkills1To10();
+		RoMScript ("CastSpellByName ('Transport: Logar')")
+		waitForLoadingScreen ()
+	]]></waypoint>
+	<!--# 58--><waypoint x="-481" z="-6062"><![CDATA[
+		mount ()
+		if not loadLastPaths () then error ('finished here', 0) end
+	]]></waypoint>
+</waypoints>

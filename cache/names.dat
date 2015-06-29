@@ -1,0 +1,97 @@
+return {
+-- Table: {1}
+{
+   [91]={2},
+   [57]={3},
+   [94]={4},
+   [90]={5},
+   [92]={6},
+   [47]={7},
+   [68]={8},
+   [93]={9},
+},
+-- Table: {2}
+{
+   "Elbone",
+   "Elbtwo",
+   "Elbthree",
+   "Elbfour",
+   "Elbfive",
+   "Elbsix",
+   "Elbseven",
+   "Elbeight",
+},
+-- Table: {3}
+{
+   "Celestron",
+   "Thunderstrike",
+   "Celesteria",
+   "Schulani",
+},
+-- Table: {4}
+{
+   "Eleone",
+   "Eletwo",
+   "Elethree",
+   "Elefour",
+   "Elefive",
+   "Elesix",
+   "Eleseven",
+   "Eleeight",
+},
+-- Table: {5}
+{
+   "Elaone",
+   "Elatwo",
+   "Elathree",
+   "Elafour",
+   "Elafive",
+   "Elasix",
+   "Elaseven",
+   "Elaeight",
+},
+-- Table: {6}
+{
+   "Elcone",
+   "Elctwo",
+   "Elcthree",
+   "Elcfour",
+   "Elcfive",
+   "Elcsix",
+   "Elcseven",
+   "Elceight",
+},
+-- Table: {7}
+{
+   "Brisinga",
+   "Vindictive",
+   "Runenbänker",
+   "Kräuterbänker",
+   "Holzbänker",
+   "Statsbänker",
+   "Mainbänker",
+   "Erzbänker",
+},
+-- Table: {8}
+{
+   "Foodbänker",
+   "Matsbänker",
+   "Manabänker",
+   "Steinbänker",
+   "Restebänker",
+   "Crapbänker",
+   "Dailybänker",
+   "Hexxxhexxx",
+},
+-- Table: {9}
+{
+   "Eldone",
+   "Eldtwo",
+   "Eldthree",
+   "Eldfour",
+   "Eldfive",
+   "Eldsix",
+   "Eldseven",
+   "Eldeight",
+},
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints>
+	<onload><![CDATA[
+	
+		settings.profile.mobs = {100368,103650}			-- farm mobs
+		
+		repeat zid = getZoneId () yrest (200) until zid
+		while zid==400 do	-- in house
+			message ('leave the house', true)
+			repeat zid = getZoneId () yrest (200) until zid
+		end
+		while zid~=5 and not travelTo ('HarfTradingPost') do
+			message ('unable to go to harf', true)
+			repeat zid = getZoneId () yrest (200) until zid
+		end
+		
+		changeProfileOption('LOOT', false)
+		changeProfileOption('MAX_TARGET_DIST', 200)
+		changeProfileOption('TARGET_LEVELDIF_BELOW', player.Level)
+		changeProfileOption('COMBAT_RANGED_PULL', false)
+		
+		function MyOnLeaveCombat ()
+			local boss = player:findNearestNameOrId (101344)
+			if boss then
+				print ("\a\a\a\a\a\a\a\a\a\a\a\a\a\a\a")
+				player:sleep ()
+			end
+		end
+	]]></onload>
+	<!-- #  1 --><waypoint x="-14468" z="-169"/>
+	<!-- #  2 --><waypoint x="-14748" z="-471"/>
+	<!-- #  3 --><waypoint x="-14970" z="-802"/>
+	<!-- #  4 --><waypoint x="-15073" z="-864"/>
+	<!-- #  5 --><waypoint x="-15116" z="-832"/>
+	<!-- #  6 --><waypoint x="-15264" z="-845"/>
+	<!-- #  7 --><waypoint x="-15855" z="-2045"/>
+	<!-- #  8 --><waypoint x="-15970" z="-2336"/>
+	<!-- #  9 --><waypoint x="-16041" z="-2697"/>
+	<!-- # 10 --><waypoint x="-15982" z="-3302"/>
+	<!-- # 11 --><waypoint x="-15940" z="-3747"/>
+	<!-- # 12 --><waypoint x="-15771" z="-4029" tag="loop"/>
+	<!-- # 13 --><waypoint x="-15581" z="-4191"/>
+	<!-- # 14 --><waypoint x="-15306" z="-4710"/>
+	<!-- # 15 --><waypoint x="-14869" z="-4875"/>
+	<!-- # 16 --><waypoint x="-14448" z="-4596"/>
+	<!-- # 17 --><waypoint x="-13951" z="-4606"/>
+	<!-- # 18 --><waypoint x="-13791" z="-4770"/>
+	<!-- # 19 --><waypoint x="-13668" z="-4664"/>
+	<!-- # 20 --><waypoint x="-14342" z="-4155"/>
+	<!-- # 21 --><waypoint x="-14761" z="-4108"/>
+	<!-- # 22 --><waypoint x="-15111" z="-4388"><![CDATA[
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("loop"))
+	]]></waypoint>
+</waypoints>

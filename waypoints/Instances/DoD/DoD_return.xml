@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints>
+	<!-- #  1 --><waypoint x="-3812" z="5117" y="31">	</waypoint>
+	<!-- #  2 --><waypoint x="-3451" z="5410" y="17">	</waypoint>
+	<!-- #  3 --><waypoint x="-3180" z="5709" y="21">	</waypoint>
+	<!-- #  4 --><waypoint x="-2651" z="6220" y="28">	</waypoint>
+	<!-- #  5 --><waypoint x="-2464" z="6437" y="28">	</waypoint>
+	<!-- #  6 --><waypoint x="-2496" z="6546" y="44">	</waypoint>
+	<!-- #  7 --><waypoint x="-2717" z="6680" y="44">	</waypoint>
+	<!-- #  8 --><waypoint x="-2827" z="6778" y="53">	</waypoint>
+	<!-- #  9 --><waypoint x="-2871" z="6978" y="51">	</waypoint>
+	<!-- # 10 --><waypoint x="-2932" z="7216" y="-86">	</waypoint>
+	<!-- # 11 --><waypoint x="134" z="-819" y="869">
+			player:target_NPC(115572) -- Jake Wallanda
+			ChoiceOptionByName(getTEXT("SC_115531_1")) -- 'Ich bin bereit für den Transport.'
+	</waypoint>
+</waypoints>

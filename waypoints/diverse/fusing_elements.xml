@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints type="TRAVEL">
+<onLoad>
+	
+	local elements	= {
+		[ELE_WIND]	= 'Wind',
+		[ELE_WATER]	= 'Water',
+		[ELE_FIRE]	= 'Fire',
+		[ELE_EARTH]	= 'Earth',
+	}
+	local element, level
+	
+	repeat
+		
+		element		= tonumber (chooseList (elements, 'choose element'))
+		level			= chooseNumber (2, 5, 'choose level')
+		
+		fuseElements (element, level, 3)
+		
+	until not chooseFlag ('restart?', true)
+	
+</onLoad>
+</waypoints>

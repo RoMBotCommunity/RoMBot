@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints>
+	<onload><![CDATA[
+		
+		onFinish			= 'logout' -- "logout" or "loginNextChar" or a function or nothing
+		openMats			= UMMD_chooseFlag ('open?')
+		donateMats		= openMats and UMMD_chooseFlag ('donate?') or false
+		useBibliothek	= UMMD_chooseFlag ('bibliothek?')
+	
+		ids	= {
+			{'Beet',			204831, 'Unbekannte Pflanze'},
+			{'Esse',			204832, 'Unbekanntes Erz'},
+			{'Holzlager',	204833, 'Unbekanntes Holz'},
+		}
+		
+		function openItems (id)
+			if openMats==false then return end
+			local building, tools, product = table.unpack (ids[id])
+			repeat
+				local items = inventory:findItemsRegexp (product)
+				if items~=nil then 
+					for _,item in pairs(items) do
+						for i=1,item.ItemCount do
+							if inventory:itemTotalCount (0)==0 then break end
+							item:use ()
+						end
+					end
+				end
+				if donateMats==true then GuildDonate() end
+			until items==nil
+		end
+		 
+		function harvest (id)
+			local building, tools, product = table.unpack (ids[id])
+			local tmp		= player:findNearestNameOrId (building)
+			if tmp then 
+				player:target_NPC (tmp.Id) yrest (1000)
+				while inventory:itemTotalCount (tools)>0 do
+					player:target_Object (building, nil, nil, true)
+				end
+			end
+			openItems (id)
+		end
+		
+		openItems (1)
+		openItems (2)
+		openItems (3)
+		
+		if getZoneId ()~=401 then repeat
+			if player:target_NPC (111621) or player:target_NPC (113416) or player:target_NPC (111731) then
+				RoMScript ("ChoiceOption(2)"); yrest (750)
+				waitForLoadingScreen ()
+			elseif not travelTo ('VaranasCastleWest') then 
+				if inventory:itemTotalCount (203784)>0 then
+					inventory:useItem (203784) yrest (750)
+					waitForLoadingScreen ()
+				else
+					print ('unable to enter the guild castle')
+					player:sleep ()
+				end
+			end
+			zID = getZoneId ()
+		until zID == 401 end
+		
+		 __WPL:setWaypointIndex (math.min (__WPL:getNearestWaypoint (player.X, player.Z), 4))
+		 
+	]]></onload>
+	<!-- #  1 --><waypoint x="0" z="-468"/>
+	<!-- #  2 --><waypoint x="106" z="-286"/>
+	<!-- #  3 --><waypoint x="399" z="-222"/>
+	<!-- #  4 --><waypoint x="410" z="-257"><![CDATA[
+		harvest (2)
+		harvest (3)
+	]]></waypoint>
+	<!-- #  5 --><waypoint x="401" z="-171"><![CDATA[
+		harvest (1)
+	]]></waypoint>
+	<!-- #  6 --><waypoint x="391" z="-14"><![CDATA[
+		useBibliothek	= useBibliothek and (RoMScript ("GetPlayerExpDebt()")<0)
+		if not useBibliothek then
+			if onFinish=='logout' then
+				player:logout () 
+				return
+			elseif onFinish=='loginNextChar' then
+				loginNextChar ()
+				return
+			elseif type(onFinish)=="function" then
+				onFinish ()
+				return
+			end
+			error ('finished');
+		end
+	]]></waypoint>
+	<!-- #  7 --><waypoint x="407" z="143"><![CDATA[
+		player:target_Object ("Bibliothek", 10000, nil, true)
+		while RoMScript ("GetPlayerExpDebt()")<0 do
+			yrest (10000)
+		end
+		__WPL:setDirection(WPT_BACKWARD)
+	]]></waypoint>
+</waypoints>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<profile>
+	<options>
+		<!-- Try the bot with a new char mage                   -->
+		<!-- At the pioneer village. Use demo.xml waypoint file -->
+		<option name="HP_LOW"				value="95" />
+		<option name="MP_LOW_POTION"		value="50" />
+		<option name="HP_LOW_POTION"		value="75" />
+		<option name="USE_HP_POTION"		value="best" />			<!-- potion select strategy: best|minstack -->
+		<option name="USE_MANA_POTION"		value="best" />			<!-- potion select strategy: best|minstack -->
+		<option name="USE_PHIRIUS_POTION"	value="true" /> 		<!-- false | true if you want to use the Phirus Potions -->
+		<option name="PHIRIUS_MP_LOW"		value="40" />
+		<option name="PHIRIUS_HP_LOW"		value="50" />
+
+		<!-- Rest if HP or Mana is below that level -->
+		<option name="HP_REST" 				value="15" />
+		<option name="MP_REST" 				value="15" />
+
+		<!-- Shopping options, how many of what do you want to keep in your inventory -->
+		<option name="HEALING_POTION" 		value="0" />
+		<option name="MANA_POTION" 			value="0" />			<!-- set to "0" if not required to buy -->
+		<option name="ARROW_QUIVER" 		value="0" /> 			<!-- set to "0" if not required to buy -->
+		<option name="THROWN_BAG" 			value="0" />			<!-- set to "0" if not required to buy -->
+		<option name="POISON" 				value="0" />			<!-- set to "0" if not required to buy -->
+
+		<!-- either false or arrow or thrown -->
+		<option name="RELOAD_AMMUNITION" 	value="false" />		<!-- false|arrow|thrown -->
+
+		<!-- Combat options -->
+		<option name="COMBAT_TYPE"        	value="" />				<!-- leave empty or choose ranged/melee if not using class default -->
+		<option name="COMBAT_RANGED_PULL" 	value="true" /> 		<!-- only important for melees -->
+		<option name="COMBAT_DISTANCE"    	value="200" />			<!-- Distance at which it starts using skills -->
+		<option name="COMBAT_STOP_DISTANCE" value="150" />			<!-- Distance at which it stops moving towards the target -->
+		<option name="MAX_FIGHT_TIME"     	value="10" />			<!-- Max time without damage before break -->
+		<option name="DOT_PERCENT"        	value="90" />
+		<option name="ANTI_KS"            	value="true" />
+		<option name="MAX_TARGET_DIST"    	value="500" />
+		<option name="PRIORITY_CASTING"		value="true" />		<!-- If you want to cast attack skills by 'priority' or 'sequencially' -->
+		<option name="COUNT_AGGRO_ONLY"		value="false" />		<!-- If you want to count only aggro mobs within range of aoe skills  -->
+		<option name="AUTO_ELITE_FACTOR"    value="10" />			<!-- (value * your max HP) to designate a mob as "elite" -->
+
+		<!-- Attack monsters 3 levels above or 10 below your level -->
+		<option name="TARGET_LEVELDIF_ABOVE" value="5" />
+		<option name="TARGET_LEVELDIF_BELOW" value="20" />
+
+		<!-- Waypoint and movement settings -->
+		<option name="WAYPOINTS"			value="" />  			<!-- leave empty to show a list -->
+		<option name="RETURNPATH"			value="" />
+		<option name="PATH_TYPE"			value="waypoints" />	<!-- waypoints | wander -->
+		<option name="WANDER_RADIUS"		value="200" />
+		<option name="WAYPOINT_DEVIATION"	value="10" />
+		<option name="QUICK_TURN" 			value="true" />
+
+		<!-- Loot settings -->
+		<option name="LOOT"               	value="true" />
+		<option name="LOOT_ALL"			  	value="true" />  		<!-- Loot all nearby dead mobs after combat -->
+		<option name="LOOT_IN_COMBAT"     	value="true" />
+		<option name="LOOT_DISTANCE"      	value="500" />
+		<option name="LOOT_PAUSE_AFTER"   	value="0" />			<!-- probability in % for a short rest -->
+		<option name="LOOT_SIGILS"			value="" />				<!-- Loot sigils or not. If ommitted, will depend on "LOOT" value -->
+		<option name="SIGILS_IGNORE_LIST"	value="" />				<!-- List of any sigils you wish to ignore, in language of client -->
+
+		<!-- Auto selling options when used with player:merchant -->
+		<option name="INV_AUTOSELL_ENABLE"	value="true" />		<!-- true | false -->
+		<option name="INV_AUTOSELL_FROMSLOT" value="1" /> 			<!-- 1 = bag 1 slot 1 -->
+		<option name="INV_AUTOSELL_TOSLOT"	value="30" /> 			<!-- 30 = last slot bag 1 -->
+		<option name="INV_AUTOSELL_QUALITY"	value="white,green,blue" /> 	<!-- white,green,blue,purple  -->
+		<option name="INV_AUTOSELL_NOSELL_DURA"      value="0" />
+		
+		<!-- Harvest options -->
+		<option name="HARVEST_DISTANCE"		value="120" />
+		<option name="HARVEST_WOOD"			value="true" /> 		<!-- Choose which types to harvest. -->
+		<option name="HARVEST_HERB"			value="true" /> 		<!-- "true" = harvest, "false" = do not harvest -->
+		<option name="HARVEST_ORE"			value="true" />
+
+		<!-- Eggpet options -->
+		<option name="EGGPET_ENABLE_CRAFT"	value="false" />		<!-- If using same slot for assist and craft, onlt 1 can be enabled. -->
+		<option name="EGGPET_CRAFT_SLOT"	value="1" />
+		<option name="EGGPET_ENABLE_ASSIST"	value="false" />
+		<option name="EGGPET_ASSIST_SLOT"	value="1" />
+		<option name="EGGPET_CRAFT_RATIO"	value="1:1:1" /> 		<!-- mining:woodworking:herbalism ratio to produce. -->
+		<option name="EGGPET_CRAFT_INDEXES"	value="" /> 	 		<!-- override auto craft index for mining,woodworking,herbalism eg. "2,,"-->
+
+		<!-- Log out and resurrect settings -->
+		<option name="LOGOUT_TIME" 			value="0" />			<!-- in minutes, 0 = timer disabled -->
+		<option name="LOGOUT_SHUTDOWN"		value="false" />
+		<option name="LOGOUT_WHEN_STUCK"	value="false" />
+		<option name="CLOSE_WHEN_STUCK"		value="true" />
+		<option name="RES_AFTER_DEATH" 		value="true" />
+		<option name="MAX_DEATHS" 			value="10" /> 			<!-- Log out after this many deaths -->
+
+		<!-- Party Bot options  -->
+		<option name="PARTY"				value="false" />
+		<option name="PARTY_ICONS"			value="false" /> 		<!-- For party leader to place "I" Icon on the target Mob -->
+		<option name="PARTY_INSTANCE"		value="false" /> 		<!-- For party bot to enable the killing of mobs with high HP  -->
+		<option name="ICON_FIGHT"			value="false" />		<!-- For party bot to only attack mobs with "I" Icon -->
+		<option name="PARTY_FOLLOW_NAME"	value="" /> 			<!-- For party bot name of character to follow -->
+		<option name="HEAL_FIGHT"			value="false" />  		<!-- For party bot if you want healer to also fight -->
+		<option name="PARTYLEADER_WAIT"		value="false" /> 		<!-- to make a normal bot wait for party members -->
+
+		<!-- GM detection options -->
+		<option name="GMDETECT"						value="true" /> <!-- enables the GM detection userfunction -->
+		<option name="GMnearbylogout"			value="true" /> <!-- If a GM is close to the character it will log out. -->
+		<option name="PAUSEONGM"					value="300" />  <!-- Pauses when GM whispers for value in seconds. ie 300 = 5 minutes -->
+		<option name="RECALL"							value="true" /> <!-- if in combat while pausing it will use recall and whisper/logout -->
+		<option name="playerDETECT"				value="true" /> <!-- enables the player detection userfunction -->
+
+		<!-- pvp -->
+		<option name="PVP"		value="" /> <!-- 'true' will auto attack players, 'false' will not fight back, no value will only fight if attacked. -->
+
+		<!-- For more options and documentation see the RoM Bot Wiki:  -->
+		<!-- http://www.solarstrike.net/wiki/index.php5?title=RoM_Bot  -->
+
+	</options>
+
+	<hotkeys>
+    	<!-- to communicate with the RoM API / define ingame dummy macro at place 1 -->
+		<hotkey name="MACRO"          key="VK_0" />
+	</hotkeys>
+
+	<!-- define your skills depending from your actual primary class -->
+	<!-- see the example for a priest/mage                           -->
+	<!-- delete skills you don't have or don't want to use.          -->
+	<!-- For more skills to use see /database/skills.xml             -->
+	<!-- demo skills for LvL 1 character for all classes             -->
+	<!-- to use a specific key instead of MACRO then use hotkey="VK_1" this example is for hotkey 1 -->
+	
+	<skills_priest>
+		<skill name="PRIEST_GRACE_OF_LIFE" 		hotkey="MACRO" priority="120" rebuffcut="10" inbattle="false" />
+		<skill name="PRIEST_SOUL_SOURCE"     	hotkey="MACRO" priority="110" inbattle="true" hpper="15" />
+		<skill name="PRIEST_URGENT_HEAL"     	hotkey="MACRO" priority="100" hpper="50"  />
+		<skill name="PRIEST_HOLY_AURA"       	hotkey="MACRO" priority="90" inbattle="true" hpper="24" />
+		<skill name="PRIEST_REGENERATE"      	hotkey="MACRO" priority="80"  hpper="80" />
+		<skill name="PRIEST_FROST_SCARS"			hotkey="MACRO" priority="75" />
+		<skill name="PRIEST_ICE_BLADE"				hotkey="MACRO" priority="75" />
+		<skill name="PRIEST_ICE_BLADES"				hotkey="MACRO" priority="75" />
+		<skill name="PRIEST_RISING_TIDE"     	hotkey="MACRO" priority="70" />
+		<skill name="PRIEST_WAVE_ARMOR"      	hotkey="MACRO" priority="40"  inbattle="true" />
+		<skill name="PRIEST_SOUL_BOND"     		hotkey="MACRO" priority="30" />
+		<skill name="PRIEST_MAGIC_BARRIER" 		hotkey="MACRO" priority="20" rebuffcut="60" inbattle="false" />
+		<skill name="PRIEST_EMBRACE_OF_THE_WATER_SPIRIT"	hotkey="MACRO" priority="30" />
+	</skills_priest>
+
+	<skills_scout>
+		<skill name="SCOUT_DETECTION"   				hotkey="MACRO" priority="100" inbattle="false" />
+		<skill name="SCOUT_FROST_ARROW"   			hotkey="MACRO" priority="100" />
+		<skill name="SCOUT_BLINDING_POWDER" 		hotkey="MACRO" priority="90" />
+		<skill name="SCOUT_VAMPIRE_ARROWS" 			hotkey="MACRO" priority="85" />
+		<skill name="SCOUT_DEADLY_POISON_BITE"	hotkey="MACRO" priority="80"/>
+		<skill name="SCOUT_COMBO_SHOT"      	  hotkey="MACRO" priority="75" />
+		<skill name="SCOUT_SHOT"          			hotkey="MACRO" priority="70" />
+		<skill name="SCOUT_WIND_ARROWS"   			hotkey="MACRO" priority="60" />
+		<skill name="SCOUT_AUTOSHOT"      			hotkey="MACRO" priority="50" />
+	</skills_scout>
+
+	<onLoad><![CDATA[
+		levelupSkills1To10("loadonly");
+		if MyOnLoad then MyOnLoad() end
+	]]></onLoad>
+
+	<onDeath><![CDATA[
+		if MyOnDeath then MyOnDeath() end
+	]]></onDeath>
+
+	<preCodeOnElite><![CDATA[
+		if MyPreCodeOnElite then MyPreCodeOnElite() end
+	]]></preCodeOnElite>
+
+	<onLeaveCombat><![CDATA[
+		if MyOnLeaveCombat then MyOnLeaveCombat() end
+	]]></onLeaveCombat>
+
+	<onLevelup><![CDATA[
+		openGiftbags1To10(player.Level);
+		levelupSkills1To10(player.Level);
+		if MyOnLevelup then MyOnLevelup() end
+	]]></onLevelup>
+
+	<onSkillCast><![CDATA[
+		if MyOnSkillCast then MyOnSkillCast() end
+	]]></onSkillCast>
+
+	<onHarvest><![CDATA[
+		if MyOnHarvest then MyOnHarvest() end
+	]]></onHarvest>
+
+	<onUnstickFailure><![CDATA[
+		if MyOnUnstickFailure then MyOnUnstickFailure() end
+	]]></onUnstickFailure>
+
+</profile>

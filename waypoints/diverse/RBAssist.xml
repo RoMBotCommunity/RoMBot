@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints>
+	<onLoad>
+	--==              Rock5's Rombot Assist                 ==--
+	--==  www.solarstrike.net/phpBB3/viewtopic.php?p=10289  ==--
+
+	-- User Options ------------------------------------
+	-- local attackMode = "disabled"
+	--      trigger  = Have to trigger each attack with the "triggerKEY".
+	--      auto     = Auto attacks targeted mobs. The "triggerKEY" toggles it on and off.
+	--      disabled = Only heal and buff. Never attacks. The "triggerKEY" does nothing.
+	-- Note: 'trigger' and 'auto' will always fight back if attacked.
+	local triggerKEY = key.VK_SHIFT
+	----------------------------------------------------
+
+	local modes = {
+		'auto - Auto attacks targeted mobs. The "triggerKEY" toggles it on/off.',
+		'trigger - Have to trigger each attack with the "triggerKEY"',
+		'disabled - Only heal and buff. Never attacks.',
+		'cancel',
+	}
+
+	-- Start messages
+	cprintf(cli.lightblue, "\nRock5's Rombot Assist\n");
+
+	local mode  = tonumber (UMMD_chooseList (modes, 'choose attack mode:'))
+	if mode==4 then error ('canceled',0) end
+	local attackMode  = 'disabled'
+	if mode==1 then attackMode = 'auto' end
+	if mode==2 then attackMode = 'trigger' end
+
+	cprintf(cli.white, "\nAttack mode is set to: %s\n", attackMode);
+	if attackMode == "trigger" then
+		cprintf(cli.yellow, "Use the \"triggerKEY\" to attack targeted mobs.\n");
+	elseif attackMode == "auto" then
+		cprintf(cli.yellow, "Use the \"triggerKEY\" to toggle auto attack on/off.\n");
+	elseif attackMode == "disabled" then
+		cprintf(cli.yellow, "Will only buff and heal. Will never fight. The \"triggerKEY\" does nothing.\n");
+	else
+		error("Incorrect value for option 'attackMode'. Please check script.\n",0)
+	end
+
+	-- start with attack on. Only useful for "auto" mode. Starts with auto mode "on".
+	local attack = true
+
+	-- Main loop
+	while (true) do
+		yrest(250)
+		if not isInGame() or not player:exists() or not player:isAlive() then
+			if not isInGame() or not player:exists() then
+				printf("Not in game. Waiting till you reenter game... ")
+			else
+				printf("Player dead. Waiting for resurection... ")
+			end
+			repeat
+				rest(1000)
+				local address = memoryReadRepeat("uintptr", getProc(), addresses.staticbase_char, addresses.charPtr_offset)
+				local id = memoryReadRepeat("uint", getProc(), address + addresses.pawnId_offset)
+				local hp = memoryReadRepeat("int", getProc(), address + addresses.pawnHP_offset)
+			until isInGame() and id and id >= PLAYERID_MIN and PLAYERID_MAX >= id and hp > 1
+			yrest(3000)
+			print("Continuing.")
+			player:update()
+		end
+
+		local address = memoryReadRepeat("uintptr", getProc(), addresses.staticbase_char, addresses.charPtr_offset)
+		local class1 = memoryReadRepeat("int", getProc(), address + addresses.pawnClass1_offset)
+		local class2 = memoryReadRepeat("int", getProc(), address + addresses.pawnClass2_offset)
+		if address ~= player.Address or class1 ~= player.Class1 or class2 ~= player.Class2 then
+			player:update()
+		end
+
+		if attackMode == "disabled" then
+			attack = false
+		else
+			while keyPressedLocal(triggerKEY) do
+				trigger = true
+			end
+			if trigger == true then
+				if attackMode == "trigger" then
+					attack = true
+				elseif attackMode == "auto" then
+					attack = (not attack)              -- Toggle attack
+					if attack then
+						RoMScript("DEFAULT_CHAT_FRAME:AddMessage('|cffffff00RB Assist: Auto attack mode on|r')")
+					else
+						RoMScript("DEFAULT_CHAT_FRAME:AddMessage('|cffffff00RB Assist: Auto attack mode off|r')")
+					end
+				end
+				trigger = false         -- Resets trigger
+			elseif attackMode == "trigger" then
+				attack = false
+			end
+
+			-- clearTarget if battling
+			player:updateBattling()
+			player:updateTargetPtr()
+			if player.Battling and player.TargetPtr ~= 0 then
+				local target = CPawn.new(player.TargetPtr)
+				target:updateType()
+				if target.Type ~= PT_MONSTER or target:isAlive() == false then
+					player:clearTarget()
+				end
+			end
+
+			-- If mob attacks me
+			player:updateBattling()
+			local aggrotarget=player:findEnemy(true,nil,evalTargetDefault)
+			if player.Battling or aggrotarget then
+				-- Attack back only if not moving
+				player:updateActualSpeed()
+				if player.Moving or keyPressedLocal(key.VK_W) or keyPressedLocal(key.VK_UP) or keyPressedLocal(1) or keyPressedLocal(2) then
+					player:updateTargetPtr()
+				else
+					player:target(aggrotarget)
+					player:fight()
+				end
+
+			-- if I attack a mob
+			elseif attack == true then
+				player:updateTargetPtr()
+				if player.TargetPtr ~=0 and player.TargetPtr ~= player.Address then
+					local target = CPawn.new(player.TargetPtr)
+					target:updateType()
+					if target.Type == PT_MONSTER then
+						player:fight()
+					end
+				end
+			end
+		end
+
+		inventory:update()
+
+		player:updateMounted()
+		if not player.Mounted then
+			player:checkPotions()
+			player:updateTargetPtr()
+			local target = CPawn.new(player.TargetPtr)
+			player:checkSkills(true, target)
+			checkEggPets()
+		end
+	end
+	</onLoad>
+</waypoints>

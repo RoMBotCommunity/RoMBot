@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<!--#  1--><waypoint x="2307" z="1152" tag="varanas"><![CDATA[
+		player:target_NPC (122115) yrest (500)
+		if travelTo ('HarfTradingPost') then 
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("harf"))
+		end
+	]]></waypoint>
+	<!-- #  1 --><waypoint x="-5920" z="2889"/>
+	<!-- #  2 --><waypoint x="-6110" z="2749"/>
+	<!-- #  3 --><waypoint x="-6233" z="2526"/>
+	<!-- #  4 --><waypoint x="-6710" z="2279"/>
+	<!-- #  5 --><waypoint x="-7039" z="2024"/>
+	<!-- #  6 --><waypoint x="-7275" z="1714"/>
+	<!-- #  7 --><waypoint x="-7412" z="1551"/>
+	<!-- #  8 --><waypoint x="-7765" z="1223"/>
+	<!-- #  9 --><waypoint x="-8048" z="1179"/>
+	<!-- # 10 --><waypoint x="-8308" z="1015"/>
+	<!-- # 11 --><waypoint x="-8410" z="849"/>
+	<!-- # 12 --><waypoint x="-8388" z="499"/>
+	<!-- # 13 --><waypoint x="-8390" z="144"/>
+	<!-- # 14 --><waypoint x="-8408" z="-291"/>
+	<!-- # 15 --><waypoint x="-8502" z="-823"/>
+	<!-- # 16 --><waypoint x="-8927" z="-939"/>
+	<!-- # 17 --><waypoint x="-9456" z="-1002"/>
+	<!-- # 18 --><waypoint x="-9849" z="-824"/>
+	<!-- # 19 --><waypoint x="-10150" z="-757"/>
+	<!-- # 20 --><waypoint x="-10347" z="-942"/>
+	<!-- # 21 --><waypoint x="-10399" z="-1387"/>
+	<!-- # 22 --><waypoint x="-10452" z="-1560"/>
+	<!-- # 23 --><waypoint x="-10696" z="-1746"/>
+	<!-- # 24 --><waypoint x="-10752" z="-2133"/>
+	<!-- # 25 --><waypoint x="-10946" z="-2375"/>
+	<!-- # 26 --><waypoint x="-11222" z="-2573"/>
+	<!-- # 27 --><waypoint x="-11986" z="-2851"/>
+	<!-- # 28 --><waypoint x="-12453" z="-2589"/>
+	<!-- # 29 --><waypoint x="-12618" z="-2275"/>
+	<!-- # 30 --><waypoint x="-13312" z="-1941"/>
+	<!-- # 31 --><waypoint x="-13443" z="-1573"/>
+	<!-- # 32 --><waypoint x="-13597" z="-1303"/>
+	<!-- # 33 --><waypoint x="-13745" z="-1010"/>
+	<!-- # 34 --><waypoint x="-14040" z="-764"/>
+	<!-- # 35 --><waypoint x="-14217" z="-528"/>
+	<!-- # 36 --><waypoint x="-14459" z="-150" tag="harf"><![CDATA[
+		player:target_NPC (111256) yrest (500)
+		loadLastPaths ()
+		error ('',0)
+	]]></waypoint>
+</waypoints>

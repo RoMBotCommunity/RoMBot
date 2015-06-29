@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints>
+	<onload><![CDATA[
+		
+		if getZoneId ()~=401 then repeat
+			if player:target_NPC (111621) or player:target_NPC (113416) or player:target_NPC (111731) then
+				RoMScript ("ChoiceOption(2)"); yrest (750)
+				waitForLoadingScreen ()
+			elseif not travelTo ('VaranasCastleWest') then 
+				if inventory:itemTotalCount (203784)>0 then
+					inventory:useItem (203784) yrest (750)
+					waitForLoadingScreen ()
+				else
+					print ('unable to enter the guild castle')
+					player:sleep ()
+				end
+			end
+			zID = getZoneId ()
+		until zID == 401 end
+		
+		step	= 0;
+		__WPL:setWaypointIndex (1);
+		if not player.Mounted then player:mount () end
+		
+		function clickBuilding (id, line)
+			player:target_NPC (id)
+			RoMScript ("ChoiceOption("..line..")"); yrest(750)
+			RoMScript ("ClickRequestDialogButton(1)"); yrest(750)
+		end
+	]]></onload>
+	<!-- #  1 --><waypoint x="0" z="-485" tag="enter"><![CDATA[
+		__WPL:setDirection(WPT_FORWARD)
+		if step==1 then 
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("gate"))
+		elseif step==3 then
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("leave"))
+		end
+	]]></waypoint>
+	<!-- #  2 --><waypoint x="-148" z="-400" tag="stable"><![CDATA[
+		local max = RoMScript ('GetNumSpeakOption ()')
+		clickBuilding (112473, max)
+		step = 1
+		__WPL:setDirection(WPT_BACKWARD)
+	]]></waypoint>
+	<!-- #  3 --><waypoint x="0" z="-788" tag="gate"><![CDATA[
+		if step==3 then
+			__WPL:setDirection(WPT_BACKWARD)
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("enter"))
+		end
+	]]></waypoint>
+	<!-- #  4 --><waypoint x="75" z="-844" tag="to_left"><![CDATA[
+		if step==2 then
+			__WPL:setDirection(WPT_FORWARD)
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("to_right"))
+		end
+	]]></waypoint>
+	<!-- #  5 --><waypoint x="800" z="-800" tag="left"/>
+	<!-- #  6 --><waypoint x="900" z="-515"><![CDATA[
+		clickBuilding (111684, 1)
+	]]></waypoint>
+	<!-- #  7 --><waypoint x="975" z="-505"><![CDATA[
+		clickBuilding (111685, 1)
+	]]></waypoint>
+	<!-- #  8 --><waypoint x="945" z="-585"><![CDATA[
+		clickBuilding (111682, 1)
+		step = 2
+		__WPL:setDirection(WPT_BACKWARD)
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("left"))
+	]]></waypoint>
+	<!-- #  9 --><waypoint x="-75" z="-844" tag="to_right"><![CDATA[
+		if step==3 then
+			__WPL:setDirection(WPT_BACKWARD)
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("gate"))
+		end
+	]]></waypoint>
+	<!-- # 10 --><waypoint x="-800" z="-800" tag="right"/>
+	<!-- # 11 --><waypoint x="-900" z="-515"><![CDATA[
+		clickBuilding (111681, 1)
+	]]></waypoint>
+	<!-- # 12 --><waypoint x="-975" z="-505"><![CDATA[
+		clickBuilding (111683, 1)
+	]]></waypoint>
+	<!-- # 13 --><waypoint x="-945" z="-585"><![CDATA[
+		clickBuilding (111676, 1)
+		step = 3
+		__WPL:setDirection(WPT_BACKWARD)
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("right"))
+	]]></waypoint>
+	<!-- # 14 --><waypoint x="-65" z="-515" tag="leave"><![CDATA[
+		RoMScript ("ClickRequestDialogButton(0)"); yrest(750)
+		waitForLoadingScreen ()
+		loadLastPath or error ('finished', 0);
+	]]></waypoint>
+</waypoints>

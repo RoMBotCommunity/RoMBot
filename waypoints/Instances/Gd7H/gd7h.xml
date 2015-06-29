@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints type="TRAVEL">
+<!-- ToSH_OT_farm by Bot_romka v0.1.3 -->
+<onLoad>
+<!-- CountMobs userfunction http://www.solarstrike.net/phpBB3/viewtopic.php?p=36781#p36781 -->
+<!-- Include onLoad -->
+	include("gd7h.lua",true)
+	MainScript();	-- Start Main Script
+</onLoad>
+</waypoints>

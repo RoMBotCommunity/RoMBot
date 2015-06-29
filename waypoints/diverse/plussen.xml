@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints type="TRAVEL">
+	<onload><![CDATA[
+		
+		local NPC				= 111629
+		local items			= { 232548,232988 } --,232989,232990,232550,232551,232552,232553 }
+		
+		repeat
+			for _,id in ipairs(items) do
+				local item		= inventory:findItem (id)
+				if item~=nil then
+table.print (item)
+player:sleep ()
+				end
+			end
+		until false
+		
+		print ("\a\a\a")
+	]]></onload>
+</waypoints>

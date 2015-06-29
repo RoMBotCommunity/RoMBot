@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints>
+	<onload><![CDATA[
+		
+		changeProfileOption ('WAYPOINT_DEVIATION', 0);
+		changeProfileOption ('MAX_TARGET_DIST', 100);
+		__WPL:setForcedWaypointType ("TRAVEL");
+		
+		bigMobID			= 106355
+		smallMobID		= 106359
+		centerWP			= CWaypoint (-1505, -715)
+		stepWP				= 16
+		calcWP				= {}
+		pi						= 3.1315926535
+		
+		for i=0, 2*pi, 2*pi/stepWP do
+			local dx	= math.sin (i)
+			local dz	= math.cos (i)
+			table.insert (calcWP, {X = dx, Z = - dz})
+		end
+		
+		function getWaypoint (idx, radius)
+			return CWaypoint (centerWP.X + calcWP[idx].X * radius, centerWP.Z + calcWP[idx].Z * radius);
+		end
+		
+		function getNearestWaypointIndex (radius)
+			local idx 	= 1
+			local dist	= 9999999
+			for i=1, #calcWP do
+				local wp	= getWaypoint (i, radius);
+				local dP	= distance (player.X, player.Z, wp.X, wp.Z);
+				if dP < dist then
+					idx 	= i
+					dist	= dP
+				end
+			end
+			return idx
+		end
+		
+		function move ()
+			local currentRadius	= 200
+			local currentWP			= getNearestWaypointIndex (currentRadius);
+			local lastPos				= nil
+			local lastDist			= 0
+			
+			repeat
+				repeat
+					if player.HP < 1 or not player.Alive then
+						__WPL:setWaypointIndex (__WPL:findWaypointTag ("Friedhof"))
+						return;
+					end;
+					local wp 				= getWaypoint (currentWP, currentRadius)
+					player:moveTo (wp);
+				until distance (player.X, player.Z, wp.X, wp.Z) < 10
+message ('waypoint:'..currentWP..' - radius:'..currentRadius)
+				
+				if not player.Battling and currentWP == stepWP/2 then
+message ('pull manually')
+					player:sleep ()
+				end
+				
+				local bigMob			= player:findNearestNameOrId (bigMobID);
+				local smallMob		= player:findNearestNameOrId (smallMobID);
+				local dist				= 0
+				
+				if bigMob then
+					dist 						= distance (player.X, player.Z, bigMob.X, bigMob.Z);
+				end	
+				if smallMob then
+					dist 						= distance (player.X, player.Z, smallMob.X, smallMob.Z);
+				end
+				
+				if dist>170 then
+					currentRadius = currentRadius + ((currentRadius<260 and 10) or 0)
+				elseif dist>0 and dist<130 then
+					currentRadius = currentRadius - ((currentRadius>120 and 10) or 0)
+				end
+				
+				currentWP = ((currentWP<#calcWP and currentWP) or 0) + 1
+			until false
+		end
+		
+		repeat zoneID = getZoneId () yrest (500) until zoneID
+		if zoneID == 143 then
+			move ()
+		end
+		
+	]]></onload>
+	
+	<waypoint x="-3910" z="14383" tag="Friedhof" />
+	<waypoint x="-3866" z="14477"/>
+	<waypoint x="-3512" z="14518"/>
+	<waypoint x="-3393" z="14432"/>
+	<waypoint x="-3267" z="14393"/>
+	<waypoint x="-3119" z="14221"/>
+	<waypoint x="-3077" z="14229"/>
+	<waypoint x="-3095" z="14510" tag="Händler"><![CDATA[
+		player:merchant (119206) -- Noll Kaid
+	]]></waypoint>
+	<waypoint x="-3290" z="14245"/>
+	<waypoint x="-3289" z="14120" tag="Portal"><![CDATA[
+		error ('restart manually', 0)
+	]]></waypoint>
+
+</waypoints>

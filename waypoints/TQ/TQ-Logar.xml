@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+	
+		complete, numTqCards			= dayliesComplete (true, true)
+		numTqCompleted						= 0
+		
+		repeat zid = getZoneId () yrest (200) until zid
+		while zid==400 do	-- in house
+			message ('leave the house', true)
+			repeat zid = getZoneId () yrest (200) until zid
+		end
+		while not travelTo ('LogarHousemaid') do
+			message ('unable to go to logar', true)
+		end
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("Hausmädchen"))
+		
+		DN_AutoQuest (420129)
+		DN_AutoQuest (420112)
+		
+		function isFirstChar ()
+			return (getAcc ()==47 and getChar ()==7)
+		end
+
+		function finished ()
+			inventory:update ()
+			return dayliesComplete () or (inventory:itemTotalCount (200624)<5 and inventory:itemTotalCount (200609)<5)
+		end
+		
+		function checkWay ()
+			if finished () then 
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("Hausmädchen"))
+				return false
+			elseif not player.Mounted and inventory.Money>=300 then
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("Tex"))
+			elseif getQuestStatus (420129) == "complete" then
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("Cid"))
+			elseif getQuestStatus (420112) == "complete" then
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("Dell"))
+			else
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("Schwarzes Brett"))
+			end
+			return true
+		end
+	]]></onload>
+	
+	<waypoint x="-433" z="-5971" tag="Hausmädchen"><![CDATA[
+		checkMailbox ()
+		if not checkWay () then		-- we have finished
+			if player.Mounted then player:dismount () end
+			return checkRelog ()
+		else
+			doMount()
+		end
+	]]></waypoint>
+	
+	<waypoint x="-505" z="-5930" tag="Tex"><![CDATA[
+		inventory:update ()
+		local mount = inventory:getMount()
+		local card	= inventory:itemTotalCount (203033)
+		if not mount and card then 
+      inventory:useItem (203033) yrest (2000) inventory:update ()
+  		mount = inventory:getMount()
+		end
+		if not mount then 
+			player:target_NPC (110782)
+			RoMScript ("ChoiceOption(1)"); yrest(250)
+			RoMScript ("ChoiceOption(1)"); yrest(250)
+			RoMScript ("ClickRequestDialogButton(0)"); yrest(2000)
+		end
+		doMount()
+		checkWay ()
+	]]></waypoint>
+	
+	<waypoint x="-606" z="-5846" tag="Schwarzes Brett"><![CDATA[
+		inventory:update ()
+		if inventory:itemTotalCount (200624)>=5 then
+      if getQuestStatus (420112)=="not accepted" then 
+				player:target_NPC (110584) 
+      end -- Schwarzes Brett
+      if getQuestStatus (420112)=="not accepted" then 
+				AcceptQuestByName (420112) 
+      end -- Tagesquest: Keiler-Hauer sammeln
+    else
+   		DN_AutoQuest (420112, false)
+		end
+		if inventory:itemTotalCount (200609)>=5 then
+      if getQuestStatus (420129)=="not accepted" then 
+				player:target_NPC (110584) 
+      end -- Schwarzes Brett
+      if getQuestStatus (420129)=="not accepted" then 
+				AcceptQuestByName (420129) 
+      end -- Tagesquest: Scharfe Bärenklauen
+    else
+   		DN_AutoQuest (420129, false)
+		end
+		checkWay ()
+	]]></waypoint>
+	
+	<waypoint x="-651" z="-6021" tag="Dell"><![CDATA[
+		if getQuestStatus (420112)=="complete" then
+			player:target_NPC (110052)
+    end -- Dell
+		if getQuestStatus (420112)=="complete" then
+			CompleteQuestByName (420112)
+    end
+		checkWay ()
+	]]></waypoint>
+	
+	<waypoint x="-554" z="-6096" tag="Cid"><![CDATA[
+		if getQuestStatus (420129)=="complete" then
+			player:target_NPC (110497)
+    end -- Cid
+		if getQuestStatus (420129)=="complete" then
+			CompleteQuestByName (420129)
+    end
+		checkWay ()
+	]]></waypoint>
+	
+</waypoints>

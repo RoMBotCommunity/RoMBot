@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	
+	<onload><![CDATA[
+	
+		useGuildhouseMailbox	= true	-- set to false if you dont have a guildhouse mailbox
+		
+		if not RoMScript ('IsInGuild()') or RoMScript ('GCB_GetGuildLevel ()')<10 then
+			useGuildhouseMailbox	= false
+		end
+	]]></onload>
+	
+	<!-- stoneSender varanas -->
+	<waypoint x="2752" z="-1648" tag="vendor"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD)
+		handleSender (1, false)
+		if not player.Mounted then player:mount () end
+		if useGuildhouseMailbox then
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ('to_guildhouse'))
+		end
+	]]></waypoint>
+	<!-- #  6 --><waypoint x="2806" z="-1487"/>
+	<!-- #  5 --><waypoint x="2831" z="-1356"/>
+	<!-- #  4 --><waypoint x="2836" z="-1283"/>
+	<!-- #  3 --><waypoint x="2828" z="-1183"/>
+	<!-- #  2 --><waypoint x="2792" z="-1012"/>
+	<!-- #  1 --><waypoint x="2908" z="-798"><![CDATA[
+		if __WPL.Direction==WPT_FORWARD then
+			player:target_NPC (110728)
+			ChoiceOptionByName (getTEXT ("SO_110561_7")) -- 'Bringt mich zum Stadtplatz von Varanas.'
+			waitForLoadingScreen ()
+		end
+	]]></waypoint>
+	<!-- #  1 --><waypoint x="4734" z="-1972"><![CDATA[
+		if __WPL.Direction==WPT_BACKWARD then
+			player:target_NPC (110726)
+			ChoiceOptionByName (getTEXT ("SO_110561_9")) -- 'Ich möchte zur Unterstadt West von Varanas.'
+			waitForLoadingScreen ()
+		end
+	]]></waypoint>
+	<!-- #  2 --><waypoint x="4630" z="-2026"/>
+	<!-- #  3 --><waypoint x="4570" z="-2174" tag="mailbox"><![CDATA[
+		__WPL:setDirection (WPT_BACKWARD)
+		handleSender (1, true)
+		if not player.Mounted then player:mount () end
+	]]></waypoint>
+
+	
+	<!-- stoneSender guildhouse varanas -->
+	<waypoint x="2510" z="-1416" tag="to_guildhouse"><![CDATA[
+		player:target_NPC (111621)
+		ChoiceOptionByName (getTEXT ("SC_GUILDHOUSE_01")) -- 'Ich möchte die Gildenburg betreten.'
+		waitForLoadingScreen ()
+	]]></waypoint>
+	<waypoint x="0" z="-106" tag="guildhouse_gate"><![CDATA[
+		local success = player:moveTo(CWaypoint(-39,598),true);
+		if success == false then
+			player:target_Object (111577)
+			yrest(3000)
+		end
+	]]></waypoint>
+	<waypoint x="-39" z="598" tag="guildhouse_mailbox"><![CDATA[
+		handleSender (1, true)
+		player:target_NPC (112588)
+		ChoiceOptionByName (getTEXT ("SC_GUILDGIRL_P1_03")) -- 'Ich will die Gildenburg verlassen'
+		waitForLoadingScreen ()
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ('vendor'))
+	]]></waypoint>
+
+</waypoints>

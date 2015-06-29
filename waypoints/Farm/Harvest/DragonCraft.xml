@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints>
+	<!-- #  1 --><waypoint x="-29454" z="-17630" y="252">	</waypoint>
+	<!-- #  2 --><waypoint x="-29337" z="-17761" y="256">	</waypoint>
+	<!-- #  3 --><waypoint x="-29219" z="-17805" y="277">	</waypoint>
+	<!-- #  4 --><waypoint x="-29144" z="-17670" y="256">	</waypoint>
+	<!-- #  5 --><waypoint x="-29167" z="-17499" y="269">	</waypoint>
+	<!-- #  6 --><waypoint x="-29235" z="-17350" y="256">	</waypoint>
+	<!-- #  7 --><waypoint x="-29312" z="-17212" y="246">	</waypoint>
+	<!-- #  8 --><waypoint x="-29376" z="-17095" y="246">	</waypoint>
+	<!-- #  9 --><waypoint x="-29181" z="-17070" y="256">
+		craftItem("Timber", "all")
+		craftItem("Lumber", "all")
+		craftItem("Plank", "all")
+	</waypoint>
+	<!-- # 11 --><waypoint x="-29259" z="-17088" y="256">	</waypoint>
+	<!-- # 12 --><waypoint x="-29350" z="-17032" y="251">	</waypoint>
+	<!-- # 13 --><waypoint x="-29474" z="-16955" y="254">
+		craftItem("Bundle", "all")
+		craftItem("Sap", "all")
+		craftItem("Extract", "all")
+	</waypoint>
+	<!-- # 14 --><waypoint x="-29357" z="-16937" y="255">
+		craftItem("Sand", "all")
+		craftItem("Nugget", "all")
+		craftItem("Ingot", "all")
+	</waypoint>
+	<!-- # 15 --><waypoint x="-29601" z="-16743" y="233">player:sleep()</waypoint>
+</waypoints>

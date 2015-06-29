@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints>
+	<onload><![CDATA[
+		include ("../../includes/afterCrash.lua")
+	
+		questID								= 424180
+		questNPC							= 118072
+		farmMobs 							= 105408
+		complete, numTqCards	= dayliesComplete ();
+		
+		DN_AutoQuest (questID)
+
+		zID = getZoneId ()
+		if zID~=14 then
+			if not travelTo ('Heffner') then
+				error ('', 0);
+			else
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("Heffner"))
+			end
+		end
+		
+		combatMode (getQuestStatus (questID)~='complete'
+								and __WPL:getNearestWaypoint (player.X, player.Z)>__WPL:findWaypointTag ("start"), nil, farmMobs)
+		changeProfileOption('WAYPOINT_DEVIATION', 0);
+		
+		function checkTarget (address)
+			local trgt 				= CPawn (address)
+			local extendedWP	= ((player.MaxHP>=20000) and true) or false
+			if trgt.Alive and trgt.HP>20 and trgt.Attackable then
+				if 								distance (6415, 4495, trgt.X, trgt.Z)<300 then return true end
+				if extendedWP and distance (6415, 3540, trgt.X, trgt.Z)<150 then return true end
+				if extendedWP and distance (6896, 3661, trgt.X, trgt.Z)<150 then return true end
+				if extendedWP and distance (6626, 3722, trgt.X, trgt.Z)<100 then return true end
+			end
+			return false
+		end
+		
+		function waitForTarget ()
+			repeat 
+				trgt = player:findNearestNameOrId (farmMobs, checkTarget)
+				if trgt==nil then yrest (250) end
+			until trgt~=nil 
+			--player:moveTo (CWaypoint (trgt.X, trgt.Z), false)
+			player:target (trgt)
+			player:fight ()
+		end
+		
+		function MyOnLeaveCombat ()
+			player:lootAll ()
+			player:update ()
+			if not combatMode ((getQuestStatus (questID)=='incomplete'), nil, farmMobs) then
+				if __WPL:getNearestWaypoint (player.X, player.Z)>=__WPL:findWaypointTag ("front") then
+					__WPL:setWaypointIndex (__WPL:findWaypointTag ("front"))
+				else
+					__WPL:setWaypointIndex (__WPL:findWaypointTag ("start"))
+				end
+			else
+				waitForTarget ()
+			end
+		end
+		
+	]]></onload>
+	
+	<!-- #  1--><waypoint x="-6948" z="-3652" tag="Nicole Rebecca"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD);
+		if complete then
+			if checkRelog and type(checkRelog)=='function' then 
+				checkRelog ()
+				return
+			else
+				message ('finished', false, true);
+			end
+		end
+	]]></waypoint>
+	
+	<!-- #  2--><waypoint x="-6360" z="-3886" tag="Heffner"><![CDATA[
+		if not complete then 
+			travelTo ('Butterflies')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Robbie Butcher"))
+		else
+			__WPL:setDirection (WPT_BACKWARD);
+		end
+	]]></waypoint>
+	
+	<!-- #  3--><waypoint x="6777" z="6312" tag="frontline"><![CDATA[
+		if not complete then 
+			travelTo ('Butterflies')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Robbie Butcher"))
+		else
+			travelTo ('Heffner')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Heffner"))
+		end
+	]]></waypoint>
+	
+	<!-- #  3--><waypoint x="6427" z="5459" tag="Robbie Butcher"><![CDATA[
+		if getQuestStatus (questID)=='complete' then
+			player:target_NPC (questNPC);
+			CompleteQuestByName (questID)
+		end
+		complete, numTqCards = dayliesComplete (numTqCards);
+		if complete then
+			travelTo ('Heffner')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Heffner"))
+		else
+			player:target_NPC (questNPC);
+			AcceptQuestByName (questID)
+			__WPL:setDirection (WPT_FORWARD);
+		end
+	]]></waypoint>
+	
+	<!-- #  4--><waypoint x="6337" z="4883" tag="start"><![CDATA[
+		if not combatMode (getQuestStatus (questID)=='incomplete', nil, farmMobs) then
+			__WPL:setDirection (WPT_BACKWARD);
+		end
+	]]></waypoint>
+	
+	<!-- #  5--><waypoint x="6375" z="4715"><![CDATA[
+		if combatMode () then
+			__WPL:setDirection (WPT_FORWARD);
+			waitForTarget ()
+		end
+	]]></waypoint>
+	<!-- #  6--><waypoint x="6415" z="4495"><![CDATA[
+		waitForTarget ()
+	]]></waypoint>
+	<!-- #  7--><waypoint x="6465" z="4330"><![CDATA[
+		if player.MaxHP<20000 then 
+			__WPL:setDirection (WPT_BACKWARD)
+		end
+		waitForTarget ()
+	]]></waypoint>
+	<!-- extendedWP -->
+	<!-- #  8 --><waypoint x="6489" z="4213" y="168"/>
+	<!-- #  9 --><waypoint x="6501" z="4174" y="168"/>
+	<!-- # 10 --><waypoint x="6511" z="4139" y="178"/>
+	<!-- # 11 --><waypoint x="6520" z="4111" y="186"/>
+	<!-- # 12 --><waypoint x="6550" z="3986" y="190"/>
+	<!-- # 13 --><waypoint x="6578" z="3876" y="190"/>
+	<!-- # 14 --><waypoint x="6593" z="3817" y="172"/>
+	<!-- # 15 --><waypoint x="6607" z="3768" y="158" tag="front" />
+	<!-- # 16 --><waypoint x="6626" z="3722" y="158"><![CDATA[
+		__WPL:setDirection (WPT_BACKWARD);
+		waitForTarget ()
+	]]></waypoint>
+
+	<!-- TODO: rückkehr zu start abfangen für xtendedWP !! -->
+
+</waypoints>

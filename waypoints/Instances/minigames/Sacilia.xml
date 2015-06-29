@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints type="TRAVEL">
+<onLoad>
+
+	--= Ancient Treasure  =--
+	--=== version 3.6 ===--
+	-- www.solarstrike.net/phpBB3/viewtopic.php?p=35357
+
+	--=== User Options ===--
+
+	CollectFragments       = true	-- If you want to collect the Stone Totem Fragments
+	CollectMatChests       = true	-- If you want to open the materials Chests
+	CollectRunesChests     = true	-- If you want to to open the Rune chests
+	CollectMountChests     = true	-- If you want to open the Mount chests
+	ExchangeFragments      = true	-- If you want to exchange Stone Totem Fragments for Ruins Investigation Team Medals before entering.
+	PutMaterialsIn     		 = "itemshop"			-- "guild" to donate materials to guild or "itemshop" to put them in itemshop backpack.
+	ExitBeforeNextFile     = true	-- If you want it to exit game before loading next "waypointfilename".
+	ExchangeForMedals      = ""		-- Item you want to exchange for Medals - "hammer", "card", "matchest", "runechest", "backpack" or "atrepeat"
+	SlowTeleports          = false	-- If you want it to go slower for older computers
+
+	When_Finished = "/TQ_return"
+		-- "end" to end script, "relog" to log next character, "charlist" to log next in 'charlist' and "waypointfilename" to load that waypointfile.
+
+	CharList = {
+	}
+		-- Character list to use when using the "charlist" option above. Requires my "userfunction_LoginNextChar" userfunction.
+		-- Find it here. http://www.solarstrike.net/phpBB3/viewtopic.php?p=10350
+		--		eg.
+		--		CharList = {
+		--			{account=4,chars={}},
+		--			{account=8,chars={1}},
+		--			{account=7,chars={1,2,5}},
+		--		}
+
+	--====================--
+	local medalshop = {
+		hammer = {price = 1, option = 1},
+		card = {price = 3, option = 2},
+		matchest = {price = 3, option = 3},
+		runechest = {price = 5, option = 4},
+		backpack = {price = 5, option = 5},
+		atrepeat = {price = 7, option = 6},
+	}
+	local numshells = inventory:getItemCount(240181)
+	local startwaittime = nil
+
+	if fly == nil or teleport == nil then
+		error("This waypoint cannot run without the 'swimhack' and 'teleport' userfunctions.")
+	end
+
+	local downwards = {[1] ={ X=4132, Z=4303, Y=7},[2] ={ X=3327, Z=3834, Y=7},[3] ={ X=4109, Z=3397, Y=7},[4] ={ X=3708, Z=4289, Y=7}}
+	for k,v in pairs(settings.profile.skills) do
+		v.AutoUse = false
+	end
+
+	local elemental = GetIdName(113614) -- Elemental Candstick
+	local luke = GetIdName(113622) -- Luke Xavi
+	local ange = GetIdName(113689) -- Ange Rasa
+	local totem = GetIdName(114080) -- Ancient Stone Totem (item to click)
+	local tran = GetIdName(113615) -- Transport Candlestick
+	local frag = GetIdName(206422) -- Stone Totem Fragment (item in bag)
+	local fragquest = GetIdName(422959) -- Gather Stone Totem Fragments
+	local proceedquest = GetIdName(422958) -- Proceed to the Scar of Despair Camp
+	local medals = GetIdName(206423) -- Ruins Investigation Team Medal
+	local records = GetIdName(206426) -- Ancient Treasures Investigation Record
+
+	local function buyitems()
+		-- Exchange fragments first
+		if ExchangeFragments and player.Level > 20 then
+			player:target_NPC(ange)
+			while inventory:itemTotalCount(frag) > 4 do
+				AcceptQuestByName(fragquest)
+				CompleteQuestByName(fragquest)
+				yrest(500)
+			end
+		end
+
+		-- no option. Return
+		if ExchangeForMedals == "" or ExchangeForMedals == nil or ExchangeForMedals == "nil" then
+			return
+		end
+
+		-- Invalid option
+		if not medalshop[ExchangeForMedals] then
+			error("Invalid value used for 'ExchangeForMedals': "..(ExchangeForMedals or "nil"))
+		end
+
+		local option = medalshop[ExchangeForMedals].option
+		local price = medalshop[ExchangeForMedals].price
+
+		-- Buy items
+		while math.floor(inventory:itemTotalCount(medals)/price) > 0 do
+			if player:target_NPC(ange) then
+				RoMScript("ChoiceOption(2)") yrest(500)
+				RoMScript("ChoiceOption(" .. 2 + option ..")") yrest(500)
+				yrest(1000)
+			end
+		end
+	end
+
+	function checkRelog()
+		flyoff()
+
+		-- Log result
+		local filename = getExecutionPath() .. "/logs/at.log";
+		local file, err = io.open(filename, "a+");
+		if file then
+			file:write("Acc: "..RoMScript("GetAccountName()").."\tName: " ..string.format("%-10s",player.Name ).." \tDate: " .. os.date() ..
+			"\tCoins:"..inventory:itemTotalCount(203038).." \tShells gained/total: "..inventory:getItemCount(240181) - numshells.."/".. inventory:getItemCount(240181).. "\t" ..logentry .. "\n")
+			file:close();
+		end
+
+		if When_Finished == "relog" then
+			ChangeChar()
+			waitForLoadingScreen();
+			yrest(3000)
+			loadProfile()
+			loadPaths(__WPL.FileName);
+		elseif When_Finished == "charlist" then
+			SetCharList(CharList)
+			LoginNextChar()
+			loadProfile()
+			loadPaths(__WPL.FileName);
+		elseif When_Finished == "end" then
+			error("Ending script",2)
+		else
+			player:update()
+
+			-- Leave before loading next waypoint file.
+			if ExitBeforeNextFile == true then
+				if player:target_Object(tran) then
+					RoMScript("StaticPopup_OnClick(StaticPopup1, 1);")
+					waitForLoadingScreen();
+					yrest(3000)
+					buyitems()
+				end
+			end
+
+			if not string.find(When_Finished,".", 1, true) then
+				When_Finished = When_Finished .. ".xml"
+			end
+			loadProfile() -- Because we messed with the skills
+
+			local filename = getExecutionPath() .. "/waypoints/" .. When_Finished
+			local file, err = io.open(filename, "r");
+			if file then
+				file:close();
+				loadPaths(When_Finished)
+			else
+				error("'When_Finished' option is invalid",0)
+			end
+		end
+	end
+
+	local function UpThroughFloor()
+		local rightheight = 18.5
+		local dir = 3.14
+		repeat
+			if dir == 0 then dir = 3.14 else dir = 0 end -- Alternate direction
+			teleport(nil,nil,rightheight) yrest(700)
+			player:faceDirection(dir,-1.3) yrest(300)
+			keyboardHold(settings.hotkeys.MOVE_FORWARD.key) yrest(300)
+			keyboardRelease(settings.hotkeys.MOVE_FORWARD.key) yrest(1000)
+			player:update()
+		until player.Y > rightheight
+	end
+
+	local function UpThroughRoof(op)
+		player:update()
+		if player.Y > 105 then -- already above roof.
+			return
+		end
+
+		local startpos, steps
+		if op == 1 then -- in Luke room
+			startpos = 74
+			steps = 12
+		elseif op == 2 then -- Hallways
+			startpos = 91
+			steps = 12
+		else -- When not sure which
+			startpos = 74
+			steps = 30
+		end
+
+		for i = 0,steps,1 do teleport(nil,nil,startpos+i) player:turnDirection(1) yrest(50) end
+		yrest(1000)
+		teleport(nil,nil,120)
+		player:update()
+	end
+
+	local function evalClickable(address)
+		local chest = memoryReadRepeat("byte", getProc(), address + 0x2F0) or 0
+		if chest ~= 0 then
+			return true
+		else
+			return false
+		end
+	end
+
+	local function HarvestItem(ID)
+		local stt = os.time()
+		repeat
+			yrest(1)
+		until player:target_Object(ID,3) or os.time() - stt > 5
+		if startwaittime == nil then
+			if (GetIdName(ID) == elemental and (player:hasBuff(505596) or not player:hasBuff(505594))) or
+			   (player:findNearestNameOrId(113617) ~= nil) then
+				startwaittime = os.clock()
+			end
+		end
+	end
+
+	local function First2Fragments()
+		print("Doing first 2 "..totem)
+		player:update()
+		if player.Y > 105 then
+			player:moveTo(CWaypoint(3716,4288,120),true)
+		else
+			player:moveTo(CWaypoint(3716,4288,7),true)
+		end
+		teleport(nil,nil,7)
+		local tmptotem = player:findNearestNameOrId(114080,nil,evalClickable)
+		if (not tmptotem) or distance(player.X,player.Z,tmptotem.X,tmptotem.Z) > 200 then
+			print("First 2 ".. totem .. " already collected.")
+			return
+		end
+		print("Moving to "..totem)
+		player:moveTo(CWaypoint(3700,4192,7),true)
+		UpThroughFloor()
+		player:moveTo(CWaypoint(3652,4204,34),true)
+		HarvestItem(114080)
+		UpThroughRoof(2)
+		print("Moving to "..totem)
+		player:moveTo(CWaypoint(3702,4289,120),true)
+		teleport(nil,nil,7)
+		player:moveTo(CWaypoint(3716,4155,7),true)
+		player:moveTo(CWaypoint(3665,4110,7),true)
+		player:moveTo(CWaypoint(3637,4124,7),true)
+		teleport(3637,4124,7)
+		UpThroughFloor()
+		player:moveTo(CWaypoint(3609,4183,45),true)
+		HarvestItem(114080)
+		UpThroughRoof(2)
+	end
+
+	local function getunder()
+		print("Going under.")
+		player:update()
+		if player.Y > 105 then
+			local dist,bestdist,bestX,bestZ
+			for k,v in pairs(downwards) do
+				--table.print(v)
+				dist = distance(player.X,player.Z,v.X,v.Z)
+				if bestdist == nil then
+					bestdist = dist
+					bestX = v.X
+					bestZ = v.Z
+				else
+					if bestdist > dist then
+						bestdist = dist
+						bestX = v.X
+						bestZ = v.Z
+					end
+				end
+			end
+
+			player:moveTo(CWaypoint(bestX,bestZ),true)
+		end
+
+		teleport(nil,nil,7) yrest(1000)
+		player:moveTo(CWaypoint(3890,3788,7),true) -- under instance in the middle
+	end
+
+	local function sortpath(initialtable)
+		player:update()
+		local returnedtable = {
+			{X=player.X,Z=player.Z}, -- Where yuo're starting from
+			{X=3838,Z=3994}, -- Where you're ending. Where it waits for mobs to despawn.
+		}
+
+		for __, obj in pairs (initialtable) do
+			local bestintertplace
+			local addeddist
+
+			-- Find best place to insert
+			for place = 2,#returnedtable do
+				local currdist = distance(returnedtable[place-1].X,returnedtable[place-1].Z,returnedtable[place].X,returnedtable[place].Z)
+				local newdist = distance(returnedtable[place-1].X,returnedtable[place-1].Z,obj.X,obj.Z) +
+								 distance(obj.X,obj.Z,returnedtable[place].X,returnedtable[place].Z)
+				if addeddist then
+					if addeddist > newdist - currdist then
+						bestintertplace = place
+						addeddist = newdist - currdist
+					end
+				else
+					bestintertplace = place
+					addeddist = newdist - currdist
+				end
+			end
+
+			-- Intert into new location
+			table.insert(returnedtable,bestintertplace,obj)
+		end
+
+		-- remove first and last to return only initial points
+		table.remove(returnedtable,1)
+		table.remove(returnedtable,#returnedtable)
+
+		return returnedtable
+	end
+
+	local function getcandles()
+
+		local function candlelist()
+			yrest(1000)
+			local chestsappeared = player:findNearestNameOrId(113617) ~= nil
+			local tmpcandles = {}
+			local objectList = CObjectList();
+			objectList:update();
+			local objSize = objectList:size()
+			for i = 0,objSize do
+				obj = objectList:getObject(i);
+				if ((not chestsappeared) and obj.Name == elemental) or
+					(CollectFragments and obj.Name == totem and evalClickable(obj.Address) and 4000 > obj.Z) then -- Also easy to get fragments
+					table.insert(tmpcandles, obj)
+				end
+			end
+
+			return tmpcandles
+		end
+
+		local candles = candlelist()
+
+		while #candles > 0 do
+			candles = sortpath(candles)
+			--for k,v in pairs(candles) do printf("%d X = %d, Z = %d\n",k,v.X,v.Z) end
+
+			for k,v in pairs(candles) do
+				print("Moving to ".. v.Name)
+				player:moveTo(CWaypoint(v.X,v.Z,7),true)
+				teleport(nil,nil,12)
+				if SlowTeleports == true then yrest(1000) end
+				keyboardPress(settings.hotkeys.STRAFF_RIGHT.key)
+				keyboardPress(settings.hotkeys.STRAFF_LEFT.key)
+				HarvestItem(v.Id)
+				teleport(nil,nil,7)
+				if SlowTeleports == true then yrest(1000) end
+			end
+
+			player:moveTo(CWaypoint(3838,3994),true)
+			candles = candlelist()
+		end
+
+		player:moveTo(CWaypoint(3838,3994),true)
+
+		local waittime = 12
+		if startwaittime then
+			waittime = waittime - (os.clock() - startwaittime)
+		end
+
+		if waittime > 0 then
+			printf("Waiting %ds for mobs to despawn.\n",waittime)
+			yrest(waittime*1000) -- 10 seconds to let mobs despawn
+		end
+
+		print("Going to chest room.")
+		UpThroughFloor()
+
+		teleport(3842,3838,49) -- get to chest room
+		teleport(3880,3867,55)
+	end
+
+	local function getchests()
+
+		--=== Open chests ===--
+		function matchests()
+			local matchest
+			repeat
+				matchest = player:findNearestNameOrId(113617,nil,evalClickable)
+				if matchest then
+					teleport(matchest.X,matchest.Z+3,matchest.Y+6)
+					keyboardPress(settings.hotkeys.STRAFF_RIGHT.key)
+					keyboardPress(settings.hotkeys.STRAFF_LEFT.key)
+					repeat
+						player:target_Object(matchest.Id, nil, nil, true, evalClickable);
+					until evalClickable(matchest.Address) ~= true
+				end
+			until matchest == nil
+
+			if type(PutMaterialsIn) == "string" then
+				if string.lower(PutMaterialsIn) == "guild" then
+					local guild = RoMScript("GetGuildInfo()")
+					if GuildDonate == nil then
+						print("Unable to donate to guild. Need \"GuildDonate\" userfunction.")
+					elseif guild == nil or guild == "" then
+						print("Unable to donate to guild. Character not a member of a guild.")
+					else
+						yrest(1000)
+						inventory:update()
+						GuildDonate("all",8)
+					end
+				elseif string.lower(PutMaterialsIn) == "itemshop" then
+					yrest(1000)
+					inventory:update()
+					for i = 61,240 do
+						local item = inventory.BagSlot[i]
+						if (not item.Empty) and item.Available and item.ObjType == 3 and -- Type Materials
+						   (item.ObjSubType == 0 or item.ObjSubType == 1 or item.ObjSubType == 2) then -- SubType Ore, Herbs or Wood
+							item:moveTo("itemshop")
+							yrest(1000)
+						end
+					end
+				end
+			end
+		end
+
+		function runechests()
+			local runechest
+			repeat
+				runechest = player:findNearestNameOrId(113618,nil,evalClickable)
+				if runechest then
+					teleport(runechest.X,runechest.Z,runechest.Y+6)
+					keyboardPress(settings.hotkeys.STRAFF_RIGHT.key)
+					keyboardPress(settings.hotkeys.STRAFF_LEFT.key)
+					repeat
+						player:target_Object(runechest.Id, nil, nil, true, evalClickable);
+					until evalClickable(runechest.Address) ~= true
+				end
+			until runechest == nil
+		end
+		function mountchests()
+			local mountchest
+			repeat
+				mountchest = player:findNearestNameOrId(113619,nil,evalClickable)
+				if mountchest then
+					teleport(mountchest.X,mountchest.Z,mountchest.Y+6)
+					keyboardPress(settings.hotkeys.STRAFF_RIGHT.key)
+					keyboardPress(settings.hotkeys.STRAFF_LEFT.key)
+					repeat
+						player:target_Object(mountchest.Id, nil, nil, true, evalClickable);
+					until evalClickable(mountchest.Address) ~= true
+				end
+			until mountchest == nil
+		end
+		if CollectMatChests then
+			print("Opening Material chests.")
+			matchests()
+		end
+		if CollectRunesChests then
+			print("Opening Rune chests.")
+			runechests()
+		end
+		if CollectMountChests then
+			print("Opening Mount chests.")
+			mountchests()
+		end
+	end
+
+	repeat
+		player:update()
+		if getZoneId() ~= 355 then
+			if 50 > player.Level and (player.Level2 >= 50 or player.Level3 >= 50) then
+				-- Wait for user to change class
+				cprintf(cli.yellow,"If you want to earn Phirius Shells, change to your 50+ class before continuing.\n")
+				player:sleep()
+			end
+			if inventory:itemTotalCount(240181) > 970 then
+				print("Too many Phirius Shells. Skipping.")
+				logentry = "Too many Phirius Shells. Skipping."
+				numshells = inventory:getItemCount(240181)
+				checkRelog()
+				return
+			end
+			local empties = inventory:itemTotalCount(0)
+			if 10 > empties then
+				-- Wait for user to make some space in inventory.
+				cprintf(cli.yellow,"Not much space left in inventory. Are you sure you want to continue with only %d spaces left?\n",empties)
+				player:sleep()
+			end
+			if 30 > inventory:itemTotalCount(203038) then
+				print("Not enough Phirius Token Coins.")
+				logentry = "Not enough Phirius Token Coins."
+				checkRelog()
+				return
+			end
+
+			if player:target_NPC(ange) then
+				CompleteQuestByName(proceedquest)
+			end
+
+			buyitems()
+
+			if player:target_NPC(ange) then
+				yrest(2000);
+				sendMacro("ChoiceOption(4);");
+				yrest(2000);
+				sendMacro("ChoiceOption(1);");
+				yrest(1000);
+				if not waitForLoadingScreen(10) then
+					print("Failed to teleport into Ancient Treasure. Maybe you already done it today.")
+					logentry = "Failed to teleport into Ancient Treasure. Maybe you already done it today."
+					checkRelog()
+					return
+				end
+			else
+				print("Too far from Ange Rasa")
+				logentry = "Too far from Ange Rasa"
+				checkRelog()
+				return
+			end
+		end
+
+		fly()
+
+		if not RoMScript("TimeKeeperFrame:IsVisible()") then -- no timer so click NPC and start it
+			if player:target_NPC(luke) then
+				yrest(2000);
+				sendMacro("ChoiceOption(3);");
+				yrest(2000);
+				sendMacro("ChoiceOption(1);");
+				yrest(5000);
+				player:clearTarget()
+				UpThroughRoof(1)
+			else
+				print("Can't find Luke Xavi")
+				logentry = "Can't find Luke Xavi"
+				checkRelog()
+				return
+			end
+		end
+
+		player:update()
+		if player.Y > 15 then
+			UpThroughRoof()
+		end
+
+		if CollectFragments then
+			First2Fragments()
+		end
+
+		getunder()
+		getcandles()
+		getchests()
+
+		local secondsleft
+		repeat secondsleft = RoMScript("TimeKeeperFrame.startTime-GetTime()") yrest(100) until secondsleft
+		local mm = string.format("%2s", math.floor(secondsleft/ 60))
+		local ss = string.format("%02s", math.floor(math.fmod(secondsleft, 60)))
+		printf("Succeeded with %s:%s remaining.\n",mm,ss)
+		logentry = string.format("Succeeded with %s:%s remaining.",mm,ss)
+
+		if inventory:itemTotalCount(records) > 0 or (ExchangeForMedals == "atrepeat" and
+		  (inventory:itemTotalCount(medals) + inventory:itemTotalCount(frag)/5) >= 7) then	-- Exit to repeat AT
+			if player:target_Object(tran) then
+				RoMScript("StaticPopup_OnClick(StaticPopup1, 1);")
+				waitForLoadingScreen();
+				yrest(3000)
+				buyitems() yrest(1000)
+				inventory:useItem(records)
+				yrest(1000)
+			end
+		else
+			checkRelog()
+			return
+		end
+
+	until false
+</onLoad>
+</waypoints>

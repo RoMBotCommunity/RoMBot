@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	
+	<onload><![CDATA[
+		include ('config.lua')
+		include ('onload.lua')
+		if not startup () then
+			error ('something is wrong', 1)
+		end
+	]]></onload>
+	
+</waypoints>

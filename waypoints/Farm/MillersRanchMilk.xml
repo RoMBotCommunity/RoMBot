@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints>
+	<onload><![CDATA[
+		questNPC				= 110789
+		questID					= 422343
+		questItems			= { reward = 204793, herb = 204788, herbFarm = 112954, goat = 112953, bucket = 204786}
+		innerNPC				= 114935
+		outerNPC				= {114932, "Sorrun", "Hazznor"}
+
+		-- Don't need buffs,  disable those skills
+		for i,  skill in pairs (settings.profile.skills) do
+			if skill.Type == STYPE_BUFF then
+				settings.profile.skills[i].AutoUse = false
+			end
+		end
+
+		repeat zid = getZoneId (); yrest (200) until zid;
+		while zid==400 do	-- in house
+			message ('leave the house',  true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		while zid~=304 do
+			while not player:target_NPC (outerNPC) do
+				while not travelTo ('VaranasEast') do
+					message ('unable to go to VaranasEast',  true);
+				end 
+			end
+			sendMacro ("ChoiceOption (3)") yrest (1000)
+			sendMacro ("ChoiceOption (1)")
+			waitForLoadingScreen (20)
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		__WPL:setWaypointIndex (__WPL:getNearestWaypoint (player.X, player.Z))
+
+	]]></onload>
+	<waypoint x="4054" z="3353" tag="npc"><![CDATA[
+		queststate = getQuestStatus (questID)
+		if queststate == "complete" then
+			player:target_NPC (questNPC)
+			CompleteQuestByName (questID)
+			item = inventory:findItem (questItems.reward)
+			if item~=nil then for i=1,item.ItemCount do
+				item:use ()
+			end end
+			player:target_NPC (questNPC)
+			AcceptQuestByName (questID)
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("npc"));
+		elseif queststate == "incomplete" then
+			inventory:update ()
+			if inventory:itemTotalCount (questItems.herb)<1 then -- Get more herb
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("herb"))
+			else
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("milk"))
+			end
+		else
+			player:target_NPC (questNPC)
+			AcceptQuestByName (questID)
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("npc"))
+		end		
+	]]></waypoint>
+	<waypoint x="3943" z="3412" tag="herb"><![CDATA[
+		while queststate == "incomplete" and inventory:itemTotalCount (questItems.herb)<25 do -- Get more herb
+			player:target_Object (questItems.herbFarm, 7500)		
+			inventory:update ()
+		end
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("npc"));
+	]]></waypoint>
+	<waypoint x="4055" z="3291" tag="milk"><![CDATA[
+		while queststate == "incomplete" and inventory:itemTotalCount (questItems.herb) > 0 and inventory:itemTotalCount (questItems.bucket) > 0  do 
+			player:target_Object (questItems.goat, 7000)
+			inventory:update ()
+		end
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("npc"))
+	]]></waypoint>
+</waypoints>

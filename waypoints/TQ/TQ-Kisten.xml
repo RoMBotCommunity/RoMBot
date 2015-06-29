@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints type="TRAVEL">
+	<onload><![CDATA[
+		include ("../../includes/afterCrash.lua")
+		
+		questNPC			= 122763
+		questID				= 426554
+		
+		DN_AutoQuest (questID)
+
+		complete,  numTqCards	= dayliesComplete (nil, true)
+		changeProfileOption ('WAYPOINT_DEVIATION',  10);
+		
+		repeat zid = getZoneId (); yrest (200) until zid;
+		while zid==400 do	-- in house
+			message ('leave the house',  true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		while zid~=27 and not travelTo ('WailingFjord') do
+			message ('unable to go to WailingFjord',  true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		__WPL:setWaypointIndex (__WPL:getNearestWaypoint (player.X,  player.Z))
+		
+		function getChest ()
+			player:target_Object ({122808, 122809, 122810}, 5000)
+		end
+		
+	]]></onload>
+	<!--#  1--><waypoint x="-9175" z="3055" tag="snoop_WailingFjord"><![CDATA[
+		if complete then
+			__WPL:setDirection (WPT_BACKWARD)
+			print ('\a'); yrest (5000);
+			loadPaths ('/TQ_return')
+		end
+	]]></waypoint>
+	<!--#  2--><waypoint x="-9444" z="3109"/>
+	<!--#  3--><waypoint x="-9689" z="3095"/>
+	<!--#  4--><waypoint x="-9802" z="3021"/>
+	<!--#  5--><waypoint x="-9956" z="2954"/>
+	<!--#  6--><waypoint x="-10140" z="2949"/>
+	<!--#  7--><waypoint x="-10245" z="3019"/>
+	<!--#  8--><waypoint x="-10298" z="3016" tag="Hoan Glemm"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD);
+		if getQuestStatus (questID)=='complete' then
+			player:target_NPC (questNPC)
+			CompleteQuestByName (questID)
+		end
+		complete,       numTqCards	= dayliesComplete (numTqCards)
+		
+		if complete==true and inventory:itemTotalCount (202434)>0 then
+			inventory:useItem (202434)
+		end
+		
+		if complete then
+			__WPL:setDirection (WPT_BACKWARD)
+		end
+		if getQuestStatus (questID)=='not accepted' then
+			player:target_NPC (questNPC)
+			AcceptQuestByName (questID)
+		end
+	]]></waypoint>
+	<!--#  9--><waypoint x="-10540" z="3025" y="37"><![CDATA[
+			getChest ()
+	]]></waypoint>
+	<!--# 10--><waypoint x="-10552" z="2953" y="37"/>
+	<!--# 11--><waypoint x="-10605" z="2901" y="37"><![CDATA[
+			getChest ()
+	]]></waypoint>
+	<!--# 12--><waypoint x="-10610" z="2795" y="37"/>
+	<!--# 13--><waypoint x="-10572" z="2735" y="37"/>
+	<!--# 14--><waypoint x="-10572" z="2735" y="37"/>
+	<!--# 15--><waypoint x="-10564" z="2742" y="41"><![CDATA[
+			getChest ()
+	]]></waypoint>
+	<!--# 16--><waypoint x="-10489" z="2783" y="37"/>
+	<!--# 17--><waypoint x="-10468" z="3127" y="42"><![CDATA[
+			getChest ()
+	]]></waypoint>
+	<!--# 18--><waypoint x="-10451" z="3201" y="37"><![CDATA[
+			getChest ()
+	]]></waypoint>
+	<!--# 19--><waypoint x="-10414" z="3282" y="37"><![CDATA[
+			getChest ()
+	]]></waypoint>
+	<!--# 20--><waypoint x="-10524" z="3586" y="46"><![CDATA[
+			getChest ()
+	]]></waypoint>
+	<!--# 21--><waypoint x="-10620" z="3745" y="43"><![CDATA[
+			getChest ()
+	]]></waypoint>
+	<!--# 22--><waypoint x="-10545" z="3745" y="40"><![CDATA[
+			getChest ()
+	]]></waypoint>
+	<!--# 23--><waypoint x="-10495" z="3670" y="40"/>
+	<!--# 24--><waypoint x="-10460" z="3500" y="40"/>
+	<!--# 29--><waypoint x="-10326" z="3045" y="37"><![CDATA[
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("Hoan Glemm"))
+	]]></waypoint>
+</waypoints>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints>
+	<onLoad><![CDATA[
+		
+		dura = 0.9
+		
+		changeProfileOption	("EGGPET_ENABLE_ASSIST", "true")
+		changeProfileOption	("EGGPET_ASSIST_SLOT", 2)
+		changeProfileOption ("INV_AUTOSELL_ENABLE", "false")
+		changeProfileOption ("AUTO_ELITE_FACTOR", 1000)
+		changeProfileOption ("TARGET_LEVELDIF_ABOVE", 5)
+		changeProfileOption ("TARGET_LEVELDIF_BELOW", player.Level - 5)
+		changeProfileOption ("MAX_TARGET_DIST", 200)
+
+		function checkDura (dura)
+			if dura > inventory:getMainHandDurability () then
+				player:merchant (115536)
+				yrest (1000)
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("start"))
+			end
+		end
+
+		function instanceMode ()					
+			local instanceLevel = sendMacro ('GetInstanceLevel ()')
+			if instanceLevel == ("easy") then
+				zid = 128
+			elseif instanceLevel == ("normal") then
+				zid = 127
+			elseif instanceLevel == ("hard") then
+				zid = RoMScript ("GetZoneID ()");
+				sendMacro ('SetInstanceLevel ("easy")');
+				cprint (cli.blue, "Instance Lvl change to easy\n")
+			end
+		end
+
+		function resetParty ()
+			local twink = RoMScript ("UnitName ('party1')")
+			RoMScript ("UninviteFromParty ('party1')")	yrest (1000)
+			RoMScript ("InviteByName ('"..twink.."')")	yrest (1000)
+		end
+		
+		function bossBuffs ()
+			-- Grassland
+			if not player:hasBuff (506271) and inventory:itemTotalCount (206874) > 0 then
+				inventory:useItem (206874)
+			end
+			-- Hähnchenschlegel
+			if not player:hasBuff (506120) and inventory:itemTotalCount (206878) > 0 then
+				inventory:useItem (206878)
+			end
+			player:update ()
+			player:cast ('MAGE_ENERGY_WELL')
+			player:cast ('MAGE_ENERGY_INFLUX')
+			player:cast ('MAGE_INTENSIFICATION')
+			player:cast ('MAGE_ELEMENTAL_CATALYST')
+		end
+
+	]]></onLoad>
+	<waypoint x="1667" z="-4926" tag="start" type="TRAVEL"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD);
+		checkDura (dura)
+	]]></waypoint>
+	<waypoint x="1678" z="-5092" tag="enter" type="TRAVEL"><![CDATA[
+		resetParty ()
+	]]></waypoint>
+	<waypoint x="1687" z="-5142" type="TRAVEL"><![CDATA[
+		keyboardHold (settings.hotkeys.MOVE_FORWARD.key) yrest (500)
+		keyboardRelease (settings.hotkeys.MOVE_FORWARD.key)
+		waitForLoadingScreen (10)
+		if getZoneId () == 209 then
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("enter"))
+		else
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("instance"))
+		end
+		instanceMode ()
+	]]></waypoint>
+	<!-- portal -->
+	<waypoint x="1728" z="2885"><![CDATA[
+		keyboardHold (settings.hotkeys.MOVE_FORWARD.key) yrest (500)
+		keyboardRelease (settings.hotkeys.MOVE_FORWARD.key)
+		waitForLoadingScreen (10)
+		if getZoneId () == 209 then
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("start"))
+		else
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("instance"))
+		end
+	]]></waypoint>
+	<waypoint x="1793" z="2880" tag="instance"/>
+	<waypoint x="1911" z="2859"/>
+	<waypoint x="2036" z="2702"/>
+	<waypoint x="2097" z="2622" tag="boss"><![CDATA[
+		boss = player:findNearestNameOrId ({103169,103827,103857})
+		if boss==nil then 
+			__WPL:setDirection (WPT_BACKWARD);
+			return
+		end
+		bossBuffs ()
+		player:aimAt (boss)
+	]]></waypoint>
+	<waypoint x="2297" z="2391"><![CDATA[
+		if boss and boss.Alive then
+			player:aimAt (boss)
+			if player.Battling then repeat
+				yrest (250)
+				player:updateBattling ()
+			until not player.Battling end
+		end
+		player:loot ()
+		__WPL:setDirection (WPT_BACKWARD);
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("boss")-1)
+	]]></waypoint>
+</waypoints>

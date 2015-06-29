@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints>
+	<!-- #  1 --><waypoint x="-10590" z="-3810">	</waypoint>
+	<!-- #  2 --><waypoint x="-10775" z="-3721">player:harvest();</waypoint>
+	<!-- #  3 --><waypoint x="-10828" z="-3755">player:harvest();</waypoint>
+	<!-- #  4 --><waypoint x="-10901" z="-3633">player:harvest();</waypoint>
+	<!-- #  5 --><waypoint x="-10973" z="-3657">	</waypoint>
+	<!-- #  6 --><waypoint x="-11114" z="-3604">	</waypoint>
+	<!-- #  7 --><waypoint x="-11229" z="-3524">player:harvest();</waypoint>
+	<!-- #  8 --><waypoint x="-11296" z="-3479">	</waypoint>
+	<!-- #  9 --><waypoint x="-11395" z="-3472">	</waypoint>
+	<!-- # 10 --><waypoint x="-11465" z="-3456">	</waypoint>
+	<!-- # 11 --><waypoint x="-11419" z="-3412">	</waypoint>
+	<!-- # 12 --><waypoint x="-11419" z="-3411">player:harvest();</waypoint>
+	<!-- # 13 --><waypoint x="-11285" z="-3371">	</waypoint>
+	<!-- # 14 --><waypoint x="-11180" z="-3341">	</waypoint>
+	<!-- # 15 --><waypoint x="-11132" z="-3335">	</waypoint>
+	<!-- # 16 --><waypoint x="-11132" z="-3335">player:harvest();</waypoint>
+	<!-- # 17 --><waypoint x="-11203" z="-3357">	</waypoint>
+	<!-- # 18 --><waypoint x="-11332" z="-3422">	</waypoint>
+	<!-- # 19 --><waypoint x="-11504" z="-3429">	</waypoint>
+	<!-- # 20 --><waypoint x="-11595" z="-3413">	</waypoint>
+	<!-- # 21 --><waypoint x="-11644" z="-3405">player:harvest();</waypoint>
+	<!-- # 22 --><waypoint x="-11647" z="-3449">	</waypoint>
+	<!-- # 23 --><waypoint x="-11646" z="-3524">	</waypoint>
+	<!-- # 24 --><waypoint x="-11648" z="-3714">player:harvest();</waypoint>
+	<!-- # 25 --><waypoint x="-11665" z="-3692">	</waypoint>
+	<!-- # 26 --><waypoint x="-11697" z="-3655">player:harvest();</waypoint>
+	<!-- # 27 --><waypoint x="-11754" z="-3660">	</waypoint>
+	<!-- # 28 --><waypoint x="-11831" z="-3675">	</waypoint>
+	<!-- # 29 --><waypoint x="-11986" z="-3720">	</waypoint>
+	<!-- # 30 --><waypoint x="-12062" z="-3765">	</waypoint>
+	<!-- # 31 --><waypoint x="-12119" z="-3807">	</waypoint>
+	<!-- # 32 --><waypoint x="-12156" z="-3836">	</waypoint>
+	<!-- # 33 --><waypoint x="-12159" z="-3835">player:harvest();</waypoint>
+	<!-- # 34 --><waypoint x="-12143" z="-3912">	</waypoint>
+	<!-- # 35 --><waypoint x="-12089" z="-3952">	</waypoint>
+	<!-- # 36 --><waypoint x="-12057" z="-3973">	</waypoint>
+	<!-- # 37 --><waypoint x="-12053" z="-3977">player:harvest();</waypoint>
+	<!-- # 38 --><waypoint x="-12106" z="-3959">	</waypoint>
+	<!-- # 39 --><waypoint x="-12197" z="-3922">	</waypoint>
+	<!-- # 40 --><waypoint x="-12254" z="-3910">	</waypoint>
+	<!-- # 41 --><waypoint x="-12314" z="-3934">	</waypoint>
+	<!-- # 42 --><waypoint x="-12347" z="-3853">	</waypoint>
+	<!-- # 43 --><waypoint x="-12416" z="-3841">	</waypoint>
+	<!-- # 44 --><waypoint x="-12425" z="-3840">player:harvest();</waypoint>
+	<!-- # 45 --><waypoint x="-12454" z="-3828">	</waypoint>
+	<!-- # 46 --><waypoint x="-12569" z="-3812">	</waypoint>
+	<!-- # 47 --><waypoint x="-12606" z="-3646">	</waypoint>
+	<!-- # 48 --><waypoint x="-12626" z="-3558">	</waypoint>
+	<!-- # 49 --><waypoint x="-12634" z="-3480">player:harvest();</waypoint>
+	<!-- # 50 --><waypoint x="-12667" z="-3604">	</waypoint>
+	<!-- # 51 --><waypoint x="-12659" z="-3751">	</waypoint>
+	<!-- # 52 --><waypoint x="-12491" z="-3819">	</waypoint>
+	<!-- # 53 --><waypoint x="-12478" z="-3828">player:harvest();</waypoint>
+	<!-- # 54 --><waypoint x="-12504" z="-3804">	</waypoint>
+	<!-- # 55 --><waypoint x="-12524" z="-3833">	</waypoint>
+	<!-- # 56 --><waypoint x="-12546" z="-3895">	</waypoint>
+	<!-- # 57 --><waypoint x="-12569" z="-3969">player:harvest();</waypoint>
+	<!-- # 58 --><waypoint x="-12587" z="-3979">player:harvest();</waypoint>
+	<!-- # 59 --><waypoint x="-12543" z="-3918">	</waypoint>
+	<!-- # 60 --><waypoint x="-12584" z="-3870">	</waypoint>
+	<!-- # 61 --><waypoint x="-12676" z="-3850">	</waypoint>
+	<!-- # 62 --><waypoint x="-12775" z="-3891">	</waypoint>
+	<!-- # 63 --><waypoint x="-12894" z="-3979">	</waypoint>
+	<!-- # 64 --><waypoint x="-13056" z="-4044">	</waypoint>
+	<!-- # 65 --><waypoint x="-13159" z="-4076">player:harvest();</waypoint>
+	<!-- # 66 --><waypoint x="-13125" z="-4096">	</waypoint>
+	<!-- # 67 --><waypoint x="-13042" z="-4154">	</waypoint>
+	<!-- # 68 --><waypoint x="-12943" z="-4254">	</waypoint>
+	<!-- # 69 --><waypoint x="-12888" z="-4328">player:harvest();</waypoint>
+	<!-- # 70 --><waypoint x="-12917" z="-4391">	</waypoint>
+	<!-- # 71 --><waypoint x="-12961" z="-4451">	</waypoint>
+	<!-- # 72 --><waypoint x="-12989" z="-4491">	</waypoint>
+	<!-- # 73 --><waypoint x="-13023" z="-4541">	</waypoint>
+	<!-- # 74 --><waypoint x="-13023" z="-4550">player:harvest();</waypoint>
+	<!-- # 75 --><waypoint x="-13054" z="-4522">	</waypoint>
+	<!-- # 76 --><waypoint x="-13157" z="-4401">	</waypoint>
+	<!-- # 77 --><waypoint x="-13197" z="-4329">	</waypoint>
+	<!-- # 78 --><waypoint x="-13251" z="-4225">	</waypoint>
+	<!-- # 79 --><waypoint x="-13317" z="-4139">	</waypoint>
+	<!-- # 80 --><waypoint x="-13338" z="-4065">	</waypoint>
+	<!-- # 81 --><waypoint x="-13294" z="-4017">	</waypoint>
+	<!-- # 82 --><waypoint x="-13244" z="-4001">	</waypoint>
+	<!-- # 83 --><waypoint x="-13202" z="-4062">player:harvest();</waypoint>
+	<!-- # 84 --><waypoint x="-13223" z="-3978">	</waypoint>
+	<!-- # 85 --><waypoint x="-13287" z="-4036">	</waypoint>
+	<!-- # 86 --><waypoint x="-13372" z="-4127">	</waypoint>
+	<!-- # 87 --><waypoint x="-13462" z="-4254">	</waypoint>
+	<!-- # 88 --><waypoint x="-13535" z="-4380">	</waypoint>
+	<!-- # 89 --><waypoint x="-13541" z="-4392">player:harvest();</waypoint>
+	<!-- # 90 --><waypoint x="-13613" z="-4416">	</waypoint>
+	<!-- # 91 --><waypoint x="-13697" z="-4415">	</waypoint>
+	<!-- # 92 --><waypoint x="-13874" z="-4407">player:harvest();</waypoint>
+	<!-- # 93 --><waypoint x="-13807" z="-4509">	</waypoint>
+	<!-- # 94 --><waypoint x="-13676" z="-4728">	</waypoint>
+	<!-- # 95 --><waypoint x="-13581" z="-4892">	</waypoint>
+	<!-- # 96 --><waypoint x="-13531" z="-5027">	</waypoint>
+	<!-- # 97 --><waypoint x="-13505" z="-5058">player:harvest();</waypoint>
+	<!-- # 98 --><waypoint x="-13642" z="-5029">	</waypoint>
+	<!-- # 99 --><waypoint x="-13789" z="-5000">	</waypoint>
+	<!-- #100 --><waypoint x="-13903" z="-5023">	</waypoint>
+	<!-- #101 --><waypoint x="-13924" z="-5053">player:harvest();</waypoint>
+	<!-- #102 --><waypoint x="-13892" z="-5008">	</waypoint>
+	<!-- #103 --><waypoint x="-13952" z="-5021">player:harvest();</waypoint>
+	<!-- #104 --><waypoint x="-13930" z="-4906">	</waypoint>
+	<!-- #105 --><waypoint x="-13936" z="-4760">	</waypoint>
+	<!-- #106 --><waypoint x="-13915" z="-4445">player:harvest();</waypoint>
+	<!-- #107 --><waypoint x="-13846" z="-4426">	</waypoint>
+	<!-- #108 --><waypoint x="-13690" z="-4390">	</waypoint>
+	<!-- #109 --><waypoint x="-13580" z="-4399">player:harvest();</waypoint>
+	<!-- #110 --><waypoint x="-13598" z="-4351">	</waypoint>
+	<!-- #111 --><waypoint x="-13949" z="-4254">	</waypoint>
+	<!-- #112 --><waypoint x="-14190" z="-4264">player:harvest();</waypoint>
+	<!-- #113 --><waypoint x="-14385" z="-4260">	</waypoint>
+	<!-- #114 --><waypoint x="-14474" z="-4258">	</waypoint>
+	<!-- #115 --><waypoint x="-14548" z="-4268">	</waypoint>
+	<!-- #116 --><waypoint x="-14573" z="-4327">	</waypoint>
+	<!-- #117 --><waypoint x="-14580" z="-4426">	</waypoint>
+	<!-- #118 --><waypoint x="-14590" z="-4566">player:harvest();</waypoint>
+	<!-- #119 --><waypoint x="-14609" z="-4580">	</waypoint>
+	<!-- #120 --><waypoint x="-14687" z="-4627">	</waypoint>
+	<!-- #121 --><waypoint x="-14751" z="-4643">	</waypoint>
+	<!-- #122 --><waypoint x="-14810" z="-4587">player:harvest();</waypoint>
+	<!-- #123 --><waypoint x="-14799" z="-4468">	</waypoint>
+	<!-- #124 --><waypoint x="-14905" z="-4412">	</waypoint>
+	<!-- #125 --><waypoint x="-15110" z="-4536">player:harvest();</waypoint>
+	<!-- #126 --><waypoint x="-15179" z="-4551">	</waypoint>
+	<!-- #127 --><waypoint x="-15232" z="-4516">	</waypoint>
+	<!-- #128 --><waypoint x="-15280" z="-4430">	</waypoint>
+	<!-- #129 --><waypoint x="-15308" z="-4336">	</waypoint>
+	<!-- #130 --><waypoint x="-15314" z="-4296">player:harvest();</waypoint>
+	<!-- #131 --><waypoint x="-15309" z="-4235">	</waypoint>
+	<!-- #132 --><waypoint x="-15285" z="-4186">	</waypoint>
+	<!-- #133 --><waypoint x="-15242" z="-4153">	</waypoint>
+	<!-- #134 --><waypoint x="-15174" z="-4145">	</waypoint>
+	<!-- #135 --><waypoint x="-15095" z="-4142">player:harvest();</waypoint>
+	<!-- #136 --><waypoint x="-15043" z="-4200">	</waypoint>
+	<!-- #137 --><waypoint x="-15010" z="-4265">	</waypoint>
+	<!-- #138 --><waypoint x="-15031" z="-4355">	</waypoint>
+	<!-- #139 --><waypoint x="-15151" z="-4385">	</waypoint>
+	<!-- #140 --><waypoint x="-15349" z="-4315">	</waypoint>
+	<!-- #141 --><waypoint x="-15534" z="-4268">	</waypoint>
+	<!-- #142 --><waypoint x="-15746" z="-4547">	</waypoint>
+	<!-- #143 --><waypoint x="-15812" z="-4633">player:harvest();</waypoint>
+	<!-- #144 --><waypoint x="-15853" z="-4638">	</waypoint>
+	<!-- #145 --><waypoint x="-16030" z="-4626">	</waypoint>
+	<!-- #146 --><waypoint x="-16090" z="-4658">	</waypoint>
+	<!-- #147 --><waypoint x="-16130" z="-4680">player:harvest();</waypoint>
+	<!-- #148 --><waypoint x="-16137" z="-4622">	</waypoint>
+	<!-- #149 --><waypoint x="-16131" z="-4562">player:harvest();</waypoint>
+	<!-- #150 --><waypoint x="-16140" z="-4472">	</waypoint>
+	<!-- #151 --><waypoint x="-16155" z="-4393">	</waypoint>
+	<!-- #152 --><waypoint x="-16280" z="-4184">	</waypoint>
+	<!-- #153 --><waypoint x="-16414" z="-4111">	</waypoint>
+	<!-- #154 --><waypoint x="-16716" z="-4048">	</waypoint>
+	<!-- #155 --><waypoint x="-16742" z="-4148">	</waypoint>
+	<!-- #156 --><waypoint x="-16745" z="-4182">player:harvest();</waypoint>
+	<!-- #157 --><waypoint x="-16736" z="-4057">	</waypoint>
+	<!-- #158 --><waypoint x="-16629" z="-4016">	</waypoint>
+	<!-- #159 --><waypoint x="-16276" z="-3983">player:harvest();</waypoint>
+	<!-- #160 --><waypoint x="-16395" z="-3868">player:harvest();</waypoint>
+	<!-- #161 --><waypoint x="-16396" z="-3871">player:harvest();</waypoint>
+	<!-- #162 --><waypoint x="-16393" z="-3866">	</waypoint>
+	<!-- #163 --><waypoint x="-16446" z="-3758">	</waypoint>
+	<!-- #164 --><waypoint x="-16437" z="-3643">	</waypoint>
+	<!-- #165 --><waypoint x="-16407" z="-3622">	</waypoint>
+	<!-- #166 --><waypoint x="-16362" z="-3663">	</waypoint>
+	<!-- #167 --><waypoint x="-16319" z="-3680">	</waypoint>
+	<!-- #168 --><waypoint x="-16316" z="-3578">player:harvest();</waypoint>
+	<!-- #169 --><waypoint x="-16304" z="-3564">	</waypoint>
+	<!-- #170 --><waypoint x="-16272" z="-3505">	</waypoint>
+	<!-- #171 --><waypoint x="-16248" z="-3460">	</waypoint>
+	<!-- #172 --><waypoint x="-16305" z="-3347">	</waypoint>
+	<!-- #173 --><waypoint x="-16323" z="-3299">	</waypoint>
+	<!-- #174 --><waypoint x="-16420" z="-3371">	</waypoint>
+	<!-- #175 --><waypoint x="-16490" z="-3421">	</waypoint>
+	<!-- #176 --><waypoint x="-16574" z="-3474">player:harvest();</waypoint>
+	<!-- #177 --><waypoint x="-16580" z="-3456">	</waypoint>
+	<!-- #178 --><waypoint x="-16668" z="-3403">	</waypoint>
+	<!-- #179 --><waypoint x="-16779" z="-3343">player:harvest();</waypoint>
+	<!-- #180 --><waypoint x="-16834" z="-3402">	</waypoint>
+	<!-- #181 --><waypoint x="-16886" z="-3456">	</waypoint>
+	<!-- #182 --><waypoint x="-17027" z="-3602">	</waypoint>
+	<!-- #183 --><waypoint x="-17102" z="-3679">	</waypoint>
+	<!-- #184 --><waypoint x="-17142" z="-3723">player:harvest();</waypoint>
+	<!-- #185 --><waypoint x="-17121" z="-3683">	</waypoint>
+	<!-- #186 --><waypoint x="-17055" z="-3566">	</waypoint>
+	<!-- #187 --><waypoint x="-17005" z="-3476">	</waypoint>
+	<!-- #188 --><waypoint x="-16985" z="-3369">	</waypoint>
+	<!-- #189 --><waypoint x="-17043" z="-3246">	</waypoint>
+	<!-- #190 --><waypoint x="-16995" z="-3029">	</waypoint>
+	<!-- #191 --><waypoint x="-16908" z="-2875">player:harvest();</waypoint>
+	<!-- #192 --><waypoint x="-16923" z="-2827">player:harvest();</waypoint>
+	<!-- #193 --><waypoint x="-16976" z="-2792">	</waypoint>
+	<!-- #194 --><waypoint x="-17107" z="-2702">	</waypoint>
+	<!-- #195 --><waypoint x="-17101" z="-2641">	</waypoint>
+	<!-- #196 --><waypoint x="-16972" z="-2530">	</waypoint>
+	<!-- #197 --><waypoint x="-16933" z="-2509">player:harvest();</waypoint>
+	<!-- #198 --><waypoint x="-16965" z="-2436">	</waypoint>
+	<!-- #199 --><waypoint x="-17106" z="-2144">player:harvest();</waypoint>
+	<!-- #200 --><waypoint x="-17103" z="-2099">player:harvest();</waypoint>
+	<!-- #201 --><waypoint x="-17119" z="-2133">	</waypoint>
+	<!-- #202 --><waypoint x="-17286" z="-2351">	</waypoint>
+	<!-- #203 --><waypoint x="-17371" z="-2456">	</waypoint>
+	<!-- #204 --><waypoint x="-17412" z="-2459">	</waypoint>
+	<!-- #205 --><waypoint x="-17494" z="-2429">	</waypoint>
+	<!-- #206 --><waypoint x="-17536" z="-2410">player:harvest();</waypoint>
+	<!-- #207 --><waypoint x="-17540" z="-2436">	</waypoint>
+	<!-- #208 --><waypoint x="-17549" z="-2518">player:harvest();</waypoint>
+	<!-- #209 --><waypoint x="-17524" z="-2637">	</waypoint>
+	<!-- #210 --><waypoint x="-17548" z="-2808">	</waypoint>
+	<!-- #211 --><waypoint x="-17590" z="-2961">	</waypoint>
+	<!-- #212 --><waypoint x="-17638" z="-3137">	</waypoint>
+	<!-- #213 --><waypoint x="-17697" z="-3260">player:harvest();</waypoint>
+	<!-- #214 --><waypoint x="-17680" z="-3318">	</waypoint>
+	<!-- #215 --><waypoint x="-17686" z="-3405">player:harvest();</waypoint>
+	<!-- #216 --><waypoint x="-17796" z="-3399">	</waypoint>
+	<!-- #217 --><waypoint x="-17870" z="-3381">	</waypoint>
+	<!-- #218 --><waypoint x="-18204" z="-3294">	</waypoint>
+	<!-- #219 --><waypoint x="-18421" z="-3307">	</waypoint>
+	<!-- #220 --><waypoint x="-18541" z="-3464">	</waypoint>
+	<!-- #221 --><waypoint x="-18629" z="-3585">player:harvest();</waypoint>
+	<!-- #222 --><waypoint x="-18657" z="-3633">	</waypoint>
+	<!-- #223 --><waypoint x="-18696" z="-3703">player:harvest();</waypoint>
+	<!-- #224 --><waypoint x="-18706" z="-3756">	</waypoint>
+	<!-- #225 --><waypoint x="-18736" z="-3819">	</waypoint>
+	<!-- #226 --><waypoint x="-18844" z="-3832">	</waypoint>
+	<!-- #227 --><waypoint x="-18873" z="-3797">	</waypoint>
+	<!-- #228 --><waypoint x="-18867" z="-3703">player:harvest();</waypoint>
+	<!-- #229 --><waypoint x="-18882" z="-3785">	</waypoint>
+	<!-- #230 --><waypoint x="-18885" z="-3877">	</waypoint>
+	<!-- #231 --><waypoint x="-18876" z="-3978">player:harvest();</waypoint>
+	<!-- #232 --><waypoint x="-18774" z="-3890">	</waypoint>
+	<!-- #233 --><waypoint x="-18661" z="-3770">	</waypoint>
+	<!-- #234 --><waypoint x="-18643" z="-3704">	</waypoint>
+	<!-- #235 --><waypoint x="-18559" z="-3111">	</waypoint>
+	<!-- #236 --><waypoint x="-18631" z="-3089">	</waypoint>
+	<!-- #237 --><waypoint x="-18718" z="-3075">	</waypoint>
+	<!-- #238 --><waypoint x="-18795" z="-3032">	</waypoint>
+	<!-- #239 --><waypoint x="-18838" z="-3002">player:harvest();</waypoint>
+	<!-- #240 --><waypoint x="-18796" z="-2981">	</waypoint>
+	<!-- #241 --><waypoint x="-18663" z="-2902">	</waypoint>
+	<!-- #242 --><waypoint x="-18634" z="-2839">	</waypoint>
+	<!-- #243 --><waypoint x="-18638" z="-2735">	</waypoint>
+	<!-- #244 --><waypoint x="-18637" z="-2696">player:harvest();</waypoint>
+	<!-- #245 --><waypoint x="-18577" z="-2662">	</waypoint>
+	<!-- #246 --><waypoint x="-18484" z="-2599">	</waypoint>
+	<!-- #247 --><waypoint x="-18393" z="-2537">	</waypoint>
+	<!-- #248 --><waypoint x="-18367" z="-2491">	</waypoint>
+	<!-- #249 --><waypoint x="-18381" z="-2449">player:harvest();</waypoint>
+	<!-- #250 --><waypoint x="-18420" z="-2385">	</waypoint>
+	<!-- #251 --><waypoint x="-18449" z="-2339">	</waypoint>
+	<!-- #252 --><waypoint x="-18508" z="-2299">	</waypoint>
+	<!-- #253 --><waypoint x="-18595" z="-2291">	</waypoint>
+	<!-- #254 --><waypoint x="-18661" z="-2322">	</waypoint>
+	<!-- #255 --><waypoint x="-18680" z="-2408">player:harvest();</waypoint>
+	<!-- #256 --><waypoint x="-18729" z="-2295">	</waypoint>
+	<!-- #257 --><waypoint x="-18596" z="-2147">	</waypoint>
+	<!-- #258 --><waypoint x="-18406" z="-2092">	</waypoint>
+	<!-- #259 --><waypoint x="-18072" z="-2174">	</waypoint>
+	<!-- #260 --><waypoint x="-17739" z="-2332">	</waypoint>
+	<!-- #261 --><waypoint x="-17709" z="-2297">player:harvest();</waypoint>
+	<!-- #262 --><waypoint x="-17747" z="-2367">	</waypoint>
+	<!-- #263 --><waypoint x="-17669" z="-2403">	</waypoint>
+	<!-- #264 --><waypoint x="-17623" z="-2418">	</waypoint>
+	<!-- #265 --><waypoint x="-17547" z="-2398">	</waypoint>
+	<!-- #266 --><waypoint x="-17548" z="-2400">player:harvest();</waypoint>
+	<!-- #267 --><waypoint x="-17544" z="-2448">	</waypoint>
+	<!-- #268 --><waypoint x="-17544" z="-2527">player:harvest();</waypoint>
+	<!-- #269 --><waypoint x="-17473" z="-2597">	</waypoint>
+	<!-- #270 --><waypoint x="-17286" z="-2690">	</waypoint>
+	<!-- #271 --><waypoint x="-16984" z="-2840">	</waypoint>
+	<!-- #272 --><waypoint x="-16922" z="-2862">player:harvest();</waypoint>
+	<!-- #273 --><waypoint x="-16906" z="-2813">player:harvest();</waypoint>
+	<!-- #274 --><waypoint x="-16816" z="-2810">	</waypoint>
+	<!-- #275 --><waypoint x="-16690" z="-2818">	</waypoint>
+	<!-- #276 --><waypoint x="-16564" z="-2825">	</waypoint>
+	<!-- #277 --><waypoint x="-16468" z="-2831">	</waypoint>
+	<!-- #278 --><waypoint x="-16354" z="-2881">	</waypoint>
+	<!-- #279 --><waypoint x="-16263" z="-2930">	</waypoint>
+	<!-- #280 --><waypoint x="-16178" z="-2962">	</waypoint>
+	<!-- #281 --><waypoint x="-15856" z="-3078">	</waypoint>
+	<!-- #282 --><waypoint x="-15693" z="-3135">player:harvest();</waypoint>
+	<!-- #283 --><waypoint x="-15716" z="-3217">	</waypoint>
+	<!-- #284 --><waypoint x="-15755" z="-3337">	</waypoint>
+	<!-- #285 --><waypoint x="-15771" z="-3397">	</waypoint>
+	<!-- #286 --><waypoint x="-15726" z="-3459">	</waypoint>
+	<!-- #287 --><waypoint x="-15628" z="-3549">	</waypoint>
+	<!-- #288 --><waypoint x="-15580" z="-3591">	</waypoint>
+	<!-- #289 --><waypoint x="-15556" z="-3600">player:harvest();</waypoint>
+	<!-- #290 --><waypoint x="-15609" z="-3563">	</waypoint>
+	<!-- #291 --><waypoint x="-15649" z="-3541">	</waypoint>
+	<!-- #292 --><waypoint x="-15722" z="-3552">	</waypoint>
+	<!-- #293 --><waypoint x="-15739" z="-3607">	</waypoint>
+	<!-- #294 --><waypoint x="-15745" z="-3693">	</waypoint>
+	<!-- #295 --><waypoint x="-15748" z="-3732">player:harvest();</waypoint>
+	<!-- #296 --><waypoint x="-15787" z="-3569">	</waypoint>
+	<!-- #297 --><waypoint x="-15678" z="-3632">	</waypoint>
+	<!-- #298 --><waypoint x="-15657" z="-3674">player:harvest();</waypoint>
+	<!-- #299 --><waypoint x="-15641" z="-3826">	</waypoint>
+	<!-- #300 --><waypoint x="-15628" z="-3925">	</waypoint>
+	<!-- #301 --><waypoint x="-15562" z="-4076">	</waypoint>
+	<!-- #302 --><waypoint x="-15362" z="-4148">	</waypoint>
+	<!-- #303 --><waypoint x="-15299" z="-4188">	</waypoint>
+	<!-- #304 --><waypoint x="-15282" z="-4220">	</waypoint>
+	<!-- #305 --><waypoint x="-15301" z="-4238">	</waypoint>
+	<!-- #306 --><waypoint x="-15301" z="-4238">player:harvest();</waypoint>
+	<!-- #307 --><waypoint x="-15357" z="-4302">	</waypoint>
+	<!-- #308 --><waypoint x="-15204" z="-4413">	</waypoint>
+	<!-- #309 --><waypoint x="-15140" z="-4298">	</waypoint>
+	<!-- #310 --><waypoint x="-15088" z="-4248">	</waypoint>
+	<!-- #311 --><waypoint x="-15063" z="-4204">	</waypoint>
+	<!-- #312 --><waypoint x="-15055" z="-4173">player:harvest();</waypoint>
+	<!-- #313 --><waypoint x="-14895" z="-4150">	</waypoint>
+	<!-- #314 --><waypoint x="-14528" z="-4109">	</waypoint>
+	<!-- #315 --><waypoint x="-14312" z="-4220">	</waypoint>
+	<!-- #316 --><waypoint x="-14256" z="-4252">player:harvest();</waypoint>
+	<!-- #317 --><waypoint x="-14168" z="-4212">	</waypoint>
+	<!-- #318 --><waypoint x="-14191" z="-4161">	</waypoint>
+	<!-- #319 --><waypoint x="-14242" z="-4012">	</waypoint>
+	<!-- #320 --><waypoint x="-14417" z="-3976">	</waypoint>
+	<!-- #321 --><waypoint x="-14514" z="-3931">	</waypoint>
+	<!-- #322 --><waypoint x="-14401" z="-3871">	</waypoint>
+	<!-- #323 --><waypoint x="-14366" z="-3859">player:harvest();</waypoint>
+	<!-- #324 --><waypoint x="-14406" z="-3826">	</waypoint>
+	<!-- #325 --><waypoint x="-14621" z="-3686">	</waypoint>
+	<!-- #326 --><waypoint x="-14696" z="-3647">player:harvest();</waypoint>
+	<!-- #327 --><waypoint x="-14508" z="-3703">	</waypoint>
+	<!-- #328 --><waypoint x="-14200" z="-3889">	</waypoint>
+	<!-- #329 --><waypoint x="-14118" z="-4014">	</waypoint>
+	<!-- #330 --><waypoint x="-14113" z="-4125">	</waypoint>
+	<!-- #331 --><waypoint x="-14116" z="-4149">player:harvest();</waypoint>
+	<!-- #332 --><waypoint x="-14199" z="-4246">	</waypoint>
+	<!-- #333 --><waypoint x="-14094" z="-4302">	</waypoint>
+	<!-- #334 --><waypoint x="-13917" z="-4397">player:harvest();</waypoint>
+	<!-- #335 --><waypoint x="-13851" z="-4388">	</waypoint>
+	<!-- #336 --><waypoint x="-13625" z="-4401">	</waypoint>
+	<!-- #337 --><waypoint x="-13565" z="-4411">player:harvest();</waypoint>
+	<!-- #338 --><waypoint x="-13555" z="-4170">	</waypoint>
+	<!-- #339 --><waypoint x="-13549" z="-4016">	</waypoint>
+	<!-- #340 --><waypoint x="-13401" z="-4016">	</waypoint>
+	<!-- #341 --><waypoint x="-13217" z="-4068">player:harvest();</waypoint>
+	<!-- #342 --><waypoint x="-13168" z="-3991">	</waypoint>
+	<!-- #343 --><waypoint x="-13085" z="-3783">	</waypoint>
+	<!-- #344 --><waypoint x="-13091" z="-3478">player:harvest();</waypoint>
+	<!-- #345 --><waypoint x="-13101" z="-3248">	</waypoint>
+	<!-- #346 --><waypoint x="-12975" z="-3228">	</waypoint>
+	<!-- #347 --><waypoint x="-12688" z="-3420">player:harvest();</waypoint>
+	<!-- #348 --><waypoint x="-12770" z="-3560">	</waypoint>
+	<!-- #349 --><waypoint x="-12678" z="-3735">	</waypoint>
+	<!-- #350 --><waypoint x="-12384" z="-3714">	</waypoint>
+	<!-- #351 --><waypoint x="-12174" z="-3845">player:harvest();</waypoint>
+	<!-- #352 --><waypoint x="-12114" z="-3931">	</waypoint>
+	<!-- #353 --><waypoint x="-12057" z="-3992">player:harvest();</waypoint>
+	<!-- #354 --><waypoint x="-12083" z="-3915">	</waypoint>
+	<!-- #355 --><waypoint x="-12033" z="-3796">	</waypoint>
+	<!-- #356 --><waypoint x="-11970" z="-3635">	</waypoint>
+	<!-- #357 --><waypoint x="-11791" z="-3636">	</waypoint>
+	<!-- #358 --><waypoint x="-11741" z="-3638">player:harvest();</waypoint>
+	<!-- #359 --><waypoint x="-11661" z="-3727">player:harvest();</waypoint>
+	<!-- #360 --><waypoint x="-11649" z="-3695">	</waypoint>
+	<!-- #361 --><waypoint x="-11584" z="-3578">	</waypoint>
+	<!-- #362 --><waypoint x="-11601" z="-3476">	</waypoint>
+	<!-- #363 --><waypoint x="-11672" z="-3412">player:harvest();</waypoint>
+	<!-- #364 --><waypoint x="-11620" z="-3402">	</waypoint>
+	<!-- #365 --><waypoint x="-11402" z="-3389">player:harvest();</waypoint>
+	<!-- #366 --><waypoint x="-11345" z="-3446">	</waypoint>
+	<!-- #367 --><waypoint x="-11271" z="-3489">player:harvest();</waypoint>
+	<!-- #368 --><waypoint x="-11192" z="-3666">	</waypoint>
+	<!-- #369 --><waypoint x="-11168" z="-3721">player:harvest();</waypoint>
+	<!-- #370 --><waypoint x="-11197" z="-3648">	</waypoint>
+	<!-- #371 --><waypoint x="-11137" z="-3608">	</waypoint>
+	<!-- #372 --><waypoint x="-10975" z="-3633">	</waypoint>
+	<!-- #373 --><waypoint x="-10894" z="-3674">player:harvest();</waypoint>
+	<!-- #374 --><waypoint x="-10793" z="-3720">player:harvest();</waypoint>
+	<!-- #375 --><waypoint x="-10827" z="-3754">player:harvest();</waypoint>
+	<!-- #376 --><waypoint x="-10883" z="-3698">	</waypoint>
+	<!-- #377 --><waypoint x="-10926" z="-3631">player:harvest();</waypoint>
+	<!-- #378 --><waypoint x="-10928" z="-3587">	</waypoint>
+	<!-- #379 --><waypoint x="-10924" z="-3548">	</waypoint>
+	<!-- #380 --><waypoint x="-10866" z="-3545">	</waypoint>
+	<!-- #381 --><waypoint x="-10753" z="-3562">	</waypoint>
+	<!-- #382 --><waypoint x="-10661" z="-3581">	</waypoint>
+	<!-- #383 --><waypoint x="-10572" z="-3532">	</waypoint>
+	<!-- #384 --><waypoint x="-10451" z="-3442">	</waypoint>
+	<!-- #385 --><waypoint x="-10295" z="-3438">	</waypoint>
+	<!-- #386 --><waypoint x="-10261" z="-3481">	</waypoint>
+	<!-- #387 --><waypoint x="-10192" z="-3618">	</waypoint>
+	<!-- #388 --><waypoint x="-10153" z="-3698">	</waypoint>
+	<!-- #389 --><waypoint x="-10109" z="-3882">	</waypoint>
+	<!-- #390 --><waypoint x="-10266" z="-3785">	</waypoint>
+	<!-- #391 --><waypoint x="-10429" z="-3664">	</waypoint>
+	<!-- #392 --><waypoint x="-10503" z="-3604">	</waypoint>
+	<!-- #393 --><waypoint x="-10569" z="-3587">	</waypoint>
+	<!-- #394 --><waypoint x="-10701" z="-3602">	</waypoint>
+	<!-- #395 --><waypoint x="-10771" z="-3659">	</waypoint>
+	<!-- #396 --><waypoint x="-10732" z="-3773">	</waypoint>
+	<!-- #397 --><waypoint x="-10706" z="-3802">	</waypoint>
+	<!-- #398 --><waypoint x="-10668" z="-3807">	</waypoint>
+	<!-- #399 --><waypoint x="-10606" z="-3796">	</waypoint>
+	<!-- #400 --><waypoint x="-10541" z="-3822">	</waypoint>
+</waypoints>

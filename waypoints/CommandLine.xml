@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints>
+<onLoad>
+proc = getProc()
+	cprintf(cli.lightgreen,"\n        RomBot command line\n")
+	print("Type in 'q' (without quotes) to quit.")
+	keyboardBufferClear()
+	repeat
+		cprintf(cli.lightblue,"Command> ");
+		local name = io.stdin:read();
+		if string.lower(name) == "q" then error("Closing.",0) end
+		funct=loadstring(name)
+		if type(funct) == "function" then
+			local status,err = pcall(funct);
+			if status == false then
+				printf("onLoad error: %s\n", err);
+			end
+
+		else
+			print ("Invalid Command")
+		end
+	until false
+
+</onLoad>
+</waypoints>

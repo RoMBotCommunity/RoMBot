@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints>
+
+	<onLoad><![CDATA[
+	
+		if not getZoneId ()==400 then
+			message ('enter your house', true)
+		end
+		
+		settings.profile.options.WAYPOINT_DEVIATION = 0;
+		
+		local pots			= {}
+		local seeds			= {}
+		local xmlFile		= xml.open(getExecutionPath().."/database/seeds.xml")
+		local elements	= xmlFile:getElements()
+
+		for _,v in pairs(elements) do
+			local type	= v:getAttribute ("type")
+			local name	= v:getAttribute ("name")
+			local id		= v:getAttribute ("id")
+			
+			if type=="WOOD" then
+				type = NTYPE_WOOD
+			elseif type=="ORE" then
+				type = NTYPE_ORE
+			elseif type=="HERB" then
+				type = NTYPE_HERB
+			end
+			
+			seeds[id] = {
+				["Name"]	= name,
+				["Id"]		= id,
+				["Type"]	= type,
+			}
+		end
+
+		local objectList = CObjectList ();
+		objectList:update ();
+		for i=0, objectList:size () do 
+			local obj = objectList:getObject(i);
+			if obj.Id >= 200000 and obj.Id <= 210000 then
+				table.insert (pots, table.copy (obj))
+			end
+		end
+
+		function clickPot (pot)
+			if foregroundWindow()==getWin() then
+				local mousePawn;
+				local wx, wy, ww, wh	= windowRect (getWin ());
+				local halfWidth				= ww/2;
+				local halfHeight			= wh/2;
+				local scanWidth				= 3; 		-- Width, in 'steps', of the area to scan
+				local scanHeight			= 2;	 	-- Height, in 'steps', of area to scan
+				local scanStepSize		= 60; 	-- Distance, in pixels, between 'steps'
+				local sx, sy; 								-- scan x/y temp values
+				detach ()
+				for sy = halfHeight-scanStepSize*scanHeight, halfHeight+scanStepSize*scanHeight+1, scanStepSize/2 do
+					for sx = halfWidth-scanStepSize*scanWidth, halfWidth+scanStepSize*scanWidth+1, scanStepSize/2 do
+						mouseSet (sx, sy);
+print (sx..' x '..sy)
+						yrest (10);
+						mousePawn = CPawn (memoryReadRepeat ("intptr", getProc(), addresses.staticbase_char, addresses.mousePtr_offset))
+						if mousePawn.Address~=0 and mousePawn.Name==pot.Name and string.find (mousePawn.Address, pot.Address) then
+							mouseLClick() yrest(500)
+							mouseLClick() yrest(500)
+							local state, name, type = RoMScript ("Plant_GetInfo()") yrest(500)
+print (tostring (state)..' - '..tostring (name)..' - '..tostring (type))
+							if state~=nil then
+								cprintf (cli.green, "We found Pot: %s\n", name)
+								attach (getWin ())
+								return true
+							end
+						end
+					end
+				end
+				attach (getWin ())
+			end
+			return false;
+		end
+
+		memoryWriteIntPtr(getProc(), addresses.staticbase_char, 0x3E4, 1)		-- hide the player
+		camera:setDistance (1) yrest (3000)
+		for i=1,#pots do
+			RoMScript ("HideUIPanel (PlantFrame);")
+			local pot		= pots[i];
+			player:moveTo (CWaypoint (pot.X, pot.Z), true)
+			player:update ()
+			local angle = math.atan2 (pot.Z - player.Z, pot.X - player.X);
+			camera:setRotation (angle)
+			while not clickPot (pot) do
+				yrest (2000)
+			end
+			local state, name, type = RoMScript ("Plant_GetInfo();")
+print (tostring (state)..' - '..tostring (name)..' - '..tostring (type));
+			player:sleep ()
+		end
+		memoryWriteIntPtr(getProc(), addresses.staticbase_char, 0x3E4, 0)		-- unhide the player
+
+	]]></onLoad>
+
+</waypoints>

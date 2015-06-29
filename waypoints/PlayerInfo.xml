@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload>
+		local dummy = {}
+		for k,v in pairs (player) do
+			dummy[k] = v
+		end
+		table.save(dummy, getFilePath(__WPL.FileName)..'/'..player.Name..'.txt');
+table.print (dummy);
+	</onload>
+</waypoints>

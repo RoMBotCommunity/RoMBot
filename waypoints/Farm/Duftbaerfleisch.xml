@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints>
+	
+	<onload><![CDATA[
+	
+		item				= 243153
+		logout			= true
+		
+		changeOptionFriends ( 'add', 108422 )
+		changeOptionMobs ('add', {108528, 108682})	-- pango
+		
+		changeProfileOption ('LOOT',										true)
+		changeProfileOption ('LOOT_ALL',								true)
+		changeProfileOption ('LOOT_IN_COMBAT',					false)
+		changeProfileOption ('LOOT_DISTANCE',						250)
+		changeProfileOption ('MAX_TARGET_DIST', 				250)
+		changeProfileOption ('HARVEST_DISTANCE',				250)
+		changeProfileOption ('AUTO_ELITE_FACTOR',				50)
+		
+		function MyOnLeaveCombat ()
+			player:lootAll ()
+			local mBag = player:findNearestNameOrId ('Geheimnisvoller Beutel')	--GetIdName (105930))
+      if mBag and inventory:itemTotalCount(0)~=0 then
+				print("\n\a"..mBag.Name.."\n")
+				player:target_Object(mBag.Id) yrest(1000) -- If not enough time to pick up bag, increase it.
+				player:target_Object(mBag.Id) yrest(1000)
+				inventory:update()
+      end
+			local cavy = player:findNearestNameOrId (103567)
+			if cavy and inventory:itemTotalCount(0)~=0 then
+				catchCavy (cavy.Id)
+				inventory:update()
+			end
+			if inventory:itemTotalCount (0)==0 or inventory:itemTotalCount (item)>=500 then
+				print ("\a\a")
+				print ('stack or bag is full')
+				if logout then
+					player:logout ()
+				else
+					player:sleep()
+				end
+			end
+		end
+		
+	]]></onload>
+
+	<!-- #  1 --><waypoint x="19782" z="37595"/>
+	<!-- #  2 --><waypoint x="19549" z="37728"/>
+	<!-- #  3 --><waypoint x="19200" z="37624"/>
+	<!-- #  4 --><waypoint x="19049" z="37462"/>
+	<!-- #  5 --><waypoint x="19098" z="37335"/>
+	<!-- #  6 --><waypoint x="19182" z="37219"/>
+	<!-- #  7 --><waypoint x="19264" z="37111"/>
+	<!-- #  8 --><waypoint x="19466" z="37155"/>
+	<!-- #  9 --><waypoint x="19674" z="37122"/>
+	<!-- # 10 --><waypoint x="19805" z="37165"/>
+	<!-- # 11 --><waypoint x="19775" z="37337"/>
+	
+</waypoints>

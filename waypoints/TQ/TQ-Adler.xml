@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+		questID					= 427019
+		questID_public	= 427029
+		questNPC				= 123313
+		questMob				= 108514
+		questItem				= 201590
+	]]></onload>
+	<!-- #  1 --><waypoint x="21154" z="38279"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD)
+		repeat
+print (0)
+print ('public: '..getQuestStatus (questID_public))
+print ('daily: '..getQuestStatus (questID))
+			if getQuestStatus (questID)=='not accepted' then
+				player:target_NPC (questNPC)
+				AcceptAllQuests ()
+			end
+print (1)
+print ('public: '..getQuestStatus (questID_public))
+print ('daily: '..getQuestStatus (questID))
+			if getQuestStatus (questID)=='complete' then
+				player:target_NPC (questNPC) yrest (200)
+				CompleteQuestByName (questID) yrest (200)
+				while inventory:itemTotalCount (questItem)>0 do
+					inventory:useItem (questItem) yrest (200)
+				end
+			end
+print (2)
+print ('public: '..getQuestStatus (questID_public))
+print ('daily: '..getQuestStatus (questID))
+--player:sleep ()
+		until getQuestStatus (questID)=='incomplete'
+		player:mount ()
+	]]></waypoint>
+	<!-- #  2 --><waypoint x="21252" z="38537" />
+	<!-- #  3 --><waypoint x="21238" z="39180" />
+	<!-- #  4 --><waypoint x="21227" z="39640" />
+	<!-- #  5 --><waypoint x="21138" z="39815" />
+	<!-- #  6 --><waypoint x="21134" z="39920" tag="return" />
+	<!-- #  7 --><waypoint x="21282" z="40066" />
+	<!-- #  8 --><waypoint x="21519" z="40109"><![CDATA[
+		repeat
+			mob	= player:findNearestNameOrId (questMob)
+			if mob then
+				player:dismount ()
+				
+				-- CHANGE THIS FOR YOUR CLASS --
+				player:cast ('MAGE_ESSENCE_OF_MAGIC') yrest (1000)
+				player:cast ('MAGE_ENERGY_INFLUX') yrest (1000)
+				player:cast ("MAGE_ELECTROSTATIC_CHARGE") yrest (1000)
+				player:target (CPawn (mob))
+				player:cast ("MAGE_FLAME") yrest (1000)
+				player:cast ("MAGE_LIGHTNING") yrest (1000)
+				player:cast ("MAGE_FIREBALL") yrest (1000)
+				player:cast ("MAGE_FLAME") yrest (1000)
+				player:cast ("MAGE_FLAME") yrest (1000)
+				player:cast ("MAGE_FLAME") yrest (1000)
+				-- FIGHT --
+				
+			end
+			if getQuestStatus (questID)=='complete' then
+				__WPL:setDirection (WPT_BACKWARD)
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("return"))
+				player:mount ()
+				break
+			end
+			yrest (5000)
+		until false
+	]]></waypoint>
+</waypoints>

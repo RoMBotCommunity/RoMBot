@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<waypoint x="-433" z="-5971"/>
+	<waypoint x="-433" z="-5797"/>
+	<waypoint x="-757" z="-5654"/>
+	<waypoint x="-959" z="-5604"/>
+	<waypoint x="-1167" z="-5527"/>
+	<!--#  1--><waypoint x="-1163" z="-5535" tag="logar"><![CDATA[
+    player:target_NPC (111256) yrest (500)
+		if travelTo ('Varanas') then 
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("varanas"))
+		end
+		mount ()
+	]]></waypoint>
+	<!--#  2--><waypoint x="-1183" z="-5564"/>
+	<!--#  3--><waypoint x="-1061" z="-5412"/>
+	<!--#  4--><waypoint x="-1078" z="-5329"/>
+	<!--#  5--><waypoint x="-1367" z="-5171"/>
+	<!--#  6--><waypoint x="-1472" z="-5010"/>
+	<!--#  7--><waypoint x="-1489" z="-4832"/>
+	<!--#  8--><waypoint x="-1368" z="-4518"/>
+	<!--#  9--><waypoint x="-1333" z="-4337"/>
+	<!--# 10--><waypoint x="-1169" z="-4169"/>
+	<!--# 11--><waypoint x="-985" z="-4046"/>
+	<!--# 12--><waypoint x="-793" z="-3877"/>
+	<!--# 13--><waypoint x="-640" z="-3723"/>
+	<!--# 14--><waypoint x="-536" z="-3538"/>
+	<!--# 15--><waypoint x="-484" z="-3320"/>
+	<!--# 16--><waypoint x="-563" z="-2974"/>
+	<!--# 17--><waypoint x="-569" z="-2672"/>
+	<!--# 18--><waypoint x="-569" z="-2271"/>
+	<!--# 19--><waypoint x="-596" z="-2089"/>
+	<!--# 20--><waypoint x="-638" z="-1842"/>
+	<!--# 21--><waypoint x="-406" z="-1463"/>
+	<!--# 22--><waypoint x="-153" z="-1368"/>
+	<!--# 23--><waypoint x="107" z="-1193"/>
+	<!--# 24--><waypoint x="297" z="-923"/>
+	<!--# 25--><waypoint x="538" z="-669"/>
+	<!--# 26--><waypoint x="660" z="-370"/>
+	<!--# 27--><waypoint x="819" z="-180"/>
+	<!--# 28--><waypoint x="853" z="23"/>
+	<!--# 29--><waypoint x="865" z="245"/>
+	<!--# 30--><waypoint x="907" z="564"/>
+	<!--# 31--><waypoint x="1008" z="852"/>
+	<!--# 32--><waypoint x="1062" z="1096"/>
+	<!--# 33--><waypoint x="1149" z="1228"/>
+	<!--# 34--><waypoint x="1325" z="1227"/>
+	<!--# 35--><waypoint x="1538" z="1195"/>
+	<!--# 36--><waypoint x="1753" z="1130"/>
+	<!--# 37--><waypoint x="1966" z="1166"/>
+	<!--#  1--><waypoint x="2307" z="1152" tag="varanas"><![CDATA[
+		player:target_NPC (122115) yrest (500)
+		loadLastPaths ()
+		error ('',0)
+	]]></waypoint>
+</waypoints>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<!--#  1--><waypoint x="2307" z="1152" tag="varanas"><![CDATA[
+		player:target_NPC (122115) yrest (500)
+		if travelTo ('Silverfall') then 
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("silverfall"))
+		end
+		mount ()
+	]]></waypoint>
+	<!--#  2--><waypoint x="2316" z="1169"/>
+	<!--#  3--><waypoint x="2485" z="1327"/>
+	<!--#  4--><waypoint x="2648" z="1828"/>
+	<!--#  5--><waypoint x="2614" z="2098"/>
+	<!--#  6--><waypoint x="2277" z="2699"/>
+	<!--#  7--><waypoint x="2049" z="3206"/>
+	<!--#  8--><waypoint x="1999" z="3483"/>
+	<!--#  9--><waypoint x="1868" z="3877"/>
+	<!--# 10--><waypoint x="2149" z="4332"/>
+	<!--# 11--><waypoint x="2263" z="4808"/>
+	<!--# 12--><waypoint x="2599" z="5273"/>
+	<!--# 13--><waypoint x="2684" z="5714"/>
+	<!--# 14--><waypoint x="2774" z="5951"/>
+	<!--# 15--><waypoint x="2989" z="6274"/>
+	<!--# 16--><waypoint x="3536" z="6670"/>
+	<!--# 17--><waypoint x="3661" z="6815"/>
+	<!--# 18--><waypoint x="3764" z="7028"/>
+	<!--# 19--><waypoint x="3817" z="7104"/>
+	<!--# 20--><waypoint x="3938" z="7474"/>
+	<!--# 21--><waypoint x="3882" z="7607"/>
+	<!--# 22--><waypoint x="3352" z="8058"/>
+	<!--# 23--><waypoint x="3263" z="8487"/>
+	<!--# 24--><waypoint x="2984" z="8829"/>
+	<!--# 25--><waypoint x="2446" z="8631"/>
+	<!--# 26--><waypoint x="2191" z="8452"/>
+	<!--# 27--><waypoint x="1902" z="8128"/>
+	<!--# 28--><waypoint x="1709" z="8106"/>
+	<!--# 29--><waypoint x="1547" z="8401"/>
+	<!--# 30--><waypoint x="1393" z="8703"/>
+	<!--# 31--><waypoint x="1176" z="8752"/>
+	<!--# 32--><waypoint x="882" z="8576"/>
+	<!--# 33--><waypoint x="660" z="8583"/>
+	<!--# 34--><waypoint x="348" z="8799"/>
+	<!--# 35--><waypoint x="79" z="8883"/>
+	<!--# 36--><waypoint x="-456" z="8838"/>
+	<!--# 37--><waypoint x="-1045" z="9189"/>
+	<!--# 38--><waypoint x="-1363" z="9396"/>
+	<!--# 39--><waypoint x="-1825" z="9610"/>
+	<!--# 40--><waypoint x="-2086" z="9709"/>
+	<!--# 41--><waypoint x="-2352" z="9690"/>
+	<!--# 42--><waypoint x="-2475" z="9552"/>
+	<!--# 43--><waypoint x="-2695" z="9048"/>
+	<!--# 44--><waypoint x="-2854" z="8892"/>
+	<!--# 45--><waypoint x="-3184" z="8641"/>
+	<!--# 46--><waypoint x="-3298" z="8153"/>
+	<!--# 47--><waypoint x="-3489" z="7694"/>
+	<!--# 48--><waypoint x="-3609" z="7533"/>
+	<!--# 49--><waypoint x="-3826" z="7389"/>
+	<!--# 50--><waypoint x="-4131" z="7445"/>
+	<!--# 51--><waypoint x="-4489" z="7672"/>
+	<!--# 52--><waypoint x="-4929" z="7751"/>
+	<!--# 53--><waypoint x="-5195" z="7585"/>
+	<!--# 54--><waypoint x="-5485" z="7439"/>
+	<!--# 55--><waypoint x="-5850" z="7267"/>
+	<!--# 56--><waypoint x="-6173" z="7018"/>
+	<!--# 57--><waypoint x="-6400" z="6617"/>
+	<!--# 58--><waypoint x="-6575" z="6357"/>
+	<!--# 59--><waypoint x="-6703" z="5989"/>
+	<!--# 60--><waypoint x="-6513" z="5581"/>
+	<!--# 61--><waypoint x="-6572" z="5353"/>
+	<!--# 62--><waypoint x="-6619" z="5121"/>
+	<!--# 63--><waypoint x="-6502" z="4940"/>
+	<!--# 64--><waypoint x="-6188" z="4749"/>
+	<!--# 65--><waypoint x="-5873" z="4611"/>
+	<!--# 66--><waypoint x="-5611" z="4341"/>
+	<!--# 67--><waypoint x="-5389" z="4083"/>
+	<!--# 68--><waypoint x="-5233" z="3839"/>
+	<!--# 69--><waypoint x="-5186" z="3672"/>
+	<!--# 70--><waypoint x="-5212" z="3476"/>
+	<!--# 71--><waypoint x="-5318" z="3311"/>
+	<!--# 72--><waypoint x="-5457" z="3302"/>
+	<!--# 73--><waypoint x="-5653" z="3307"/>
+	<!--# 74--><waypoint x="-5787" z="3224"/>
+	<!--# 75--><waypoint x="-5881" z="3106"/>
+	<!--# 76--><waypoint x="-5913" z="2867" tag="silverfall"><![CDATA[
+		player:target_NPC (111256) yrest (500)
+		loadLastPaths ()
+		error ('',0)
+	]]></waypoint>
+</waypoints>

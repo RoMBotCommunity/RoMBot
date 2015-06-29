@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="NORMAL">
+	
+	<onload><![CDATA[
+	
+  	function createTargetTable ()
+			local tmp, tbl		= {}, {}
+			local objectList	= CObjectList ()
+			objectList:update ()
+			for i = 0, objectList:size () do
+				local obj = objectList:getObject (i)
+				if obj.Attackable then
+					tmp[obj.Id] = obj.Name
+				end
+			end
+			for id,name in pairs (tmp) do
+				table.insert (tbl, '('..id..') '..name)
+			end
+			return tbl
+		end
+
+		function waitForTarget ()
+			local trgt
+			local function checkDistance (address)
+				local pawn = CPawn (address)
+print (distance (startPosition, pawn))
+				return distance (startPosition, pawn)<radius
+			end
+			repeat
+				trgt = player:findNearestNameOrId (settings.profile.mobs, checkDistance)
+				if trgt then player:target (trgt) Attack () end
+			until trgt
+			return trgt
+		end
+
+		local targetTable = createTargetTable ()
+		local chooseTable = table.copy (targetTable)
+		chooseTable ['a'] = 'all' chooseTable ['c'] = 'cancel'
+
+		target = UMMD_chooseList (chooseTable, 'Which mob do you want to farm?')
+		if target=='c' then return end
+		radius = UMMD_chooseNumber (0, 1000, 'Wich radius do you want to wander?')
+		startPosition = CWaypoint (player.X, player.Z)
+
+		if target=='a' then
+			changeOptionMobs ('add', targetTable)
+		else
+			changeOptionMobs ('add', targetTable[target])
+		end
+
+		changeProfileOption ('PATH_TYPE', 				'wander')
+		changeProfileOption ('WANDER_RADIUS', 		radius)
+		changeProfileOption ('MAX_TARGET_DIST',		radius)
+		changeProfileOption ('LOOT',							true)
+		changeProfileOption ('LOOT_ALL',					true)
+		changeProfileOption ('LOOT_IN_COMBAT',		false)
+		changeProfileOption ('LOOT_DISTANCE',			radius)
+		__WPL:setForcedWaypointType ('NORMAL')
+
+		while true do
+			waitForTarget ()
+			player:lootAll ()
+		end
+
+	]]></onload>
+
+</waypoints>

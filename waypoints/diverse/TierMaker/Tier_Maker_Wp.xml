@@ -1,0 +1,800 @@
+<waypoints type="TRAVEL"><!-- Tier_Maker by Bot_romka -->
+
+	<onLoad>
+	WAYPOINTNAME	= "Tier_Maker"
+	WAYPOINTVERSION	= "v1.3.6"
+
+	<!-- Global Variables -->
+		-- MailSenders Names
+		MailSender1	= "CharName1"						<!-- Name of Mail Sender 1 -->
+		MailSender2 = "CharName2"						<!-- Name of Mail Sender 2 -->
+		MailSender3 = "CharName3"						<!-- Name of Mail Sender 3 -->
+		MailSender4 = "CharName4"						<!-- Name of Mail Sender 4 -->
+		LastMailSender = MailSender4					<!-- Set Last Mail Sender -->
+		MailRecipient = MailSender2						<!-- Set Name of MailResiver after error sending Mail -->
+
+		-- Messages
+		TierChannelName = "Tiermaker"					<!-- Channel for send messege to Mail Sender -->
+		TierMessage1 = "SendMe"							<!-- Message to Mail Sender -->
+		TierMessage2 = "Go."							<!-- Message to Twink-Mail Receiver -->
+
+		-- Waypoint setings
+		Make2StatTier = false; 							<!-- Set to false or true for make 2 stat tier -->
+		RestartAfterAllError = true;					<!-- set to false or true for restart after all error -->
+
+		-- Set Twink Client for restart.
+		TierTwinkClient = "C_Tirodel"					<!-- Set Twink Client for restart. specify you client shortcut links name if it not contains *client* -->
+
+		-- Set whait time in seconds
+		MailSenderWhaitTime = 3500;						<!-- Set whait time in seconds -->
+		MailReceiverWhaitTime = 120;					<!-- Set whait time in seconds -->
+
+		-- Names table of Tier Mana stones Receivers on same account.
+		TierReceiver = {"TierRec1",		-- Name of Tier Receiver 1. T10 and above
+						"TierRec2",			-- Name of Tier Receiver 2. T4, T5 and T6
+						"TierRec3",			-- Name of Tier Receiver 3. T4, T5 and T6
+						"TierRec4",			-- Name of Tier Receiver 4. T4, T5 and T6
+						"TierRec5",			-- Name of Tier Receiver 5. T4, T5 and T6
+						"TierRec6",			-- Name of Tier Receiver 6. T7, T8 and T9
+						};									<!-- Names table of Tier Mana stones Receivers. -->
+		LastManaStoneSender = TierReceiver[#TierReceiver]	<!-- Set Last Mail Sender Name -->
+
+		-- Set CharList. Account grope of MailSender1 must be ferst and account grope Fusion Stone Sender must be second
+		-- for Set account and character number for MailSender and FusionSender
+		CharList = {
+					{	-- Mail Sender 1
+						{account=50,chars={2}},
+						},
+					{	-- Fusion Stone Sender
+						{account=53,chars={1}},
+						},
+					{	-- Mana Stone Sender and resivers
+						{account=55,chars={}},
+						},
+					{	-- Mail Sender 2-4
+						{account=56,chars={1,2,3,4}},
+						},
+					{	-- 2 Stat Fusion  Stone Senders
+						{account=39,chars={}}, {account=40,chars={}}, {account=41,chars={}},
+						},
+					{	-- 2 Stat Mana Stone Senders
+						{account=60,chars={}}, {account=61,chars={}}, {account=62,chars={}},
+						},
+					{	-- account group 1
+						{account=1,chars={}}, {account=2,chars={}}, {account=3,chars={}}, {account=4,chars={}}, {account=5,chars={}},
+						{account=6,chars={}}, {account=7,chars={}}, {account=8,chars={}}, {account=9,chars={}},
+						},
+					{	-- account group 2
+						{account=20,chars={}}, {account=21,chars={}}, {account=22,chars={}}, {account=23,chars={}}, {account=24,chars={}},
+						{account=25,chars={}}, {account=26,chars={}}, {account=27,chars={}}, {account=28,chars={}},
+						},
+					{	-- account group 3
+						{account=71,chars={}}, {account=72,chars={}}, {account=73,chars={}}, {account=74,chars={}}, {account=75,chars={}},
+						{account=76,chars={}}, {account=77,chars={}}, {account=78,chars={}}, {account=79,chars={}},
+						},
+					{	-- account group 4
+						{account=90,chars={}}, {account=91,chars={}}, {account=92,chars={}}, {account=93,chars={}}, {account=94,chars={}},
+						{account=95,chars={}}, {account=96,chars={}}, {account=97,chars={}}, {account=98,chars={}},
+						},
+					{	-- account group 5
+						{account=11,chars={}}, {account=12,chars={}}, {account=13,chars={}}, {account=14,chars={}}, {account=15,chars={}},
+						{account=16,chars={}}, {account=17,chars={}}, {account=18,chars={}}, {account=19,chars={}},
+						},
+					{	-- account group 6
+						{account=30,chars={}}, {account=31,chars={}}, {account=32,chars={}}, {account=33,chars={}}, {account=34,chars={}},
+						{account=35,chars={}}, {account=36,chars={}}, {account=37,chars={}}, {account=38,chars={}},
+						},
+					{	-- account group 7
+						{account=81,chars={}}, {account=82,chars={}}, {account=83,chars={}}, {account=84,chars={}}, {account=85,chars={}},
+						{account=66,chars={}}, {account=87,chars={}}, {account=88,chars={}}, {account=89,chars={}},
+						},
+					{	-- account group 8
+						{account=100,chars={}}, {account=101,chars={}}, {account=102,chars={}}, {account=103,chars={}}, {account=104,chars={}},
+						{account=105,chars={}}, {account=106,chars={}}, {account=107,chars={}}, {account=108,chars={}},
+						},
+					}
+		SetCharList(CharList);
+		--PrintCharList();
+
+		-- Variants table for Send Mana Stones
+		SendVariants = {--4,5,6,7,8,9,10	-- Amount of Mana Stones
+						{18,6,0,0,0,0,0},	-- Variant1,  T4 and T5
+						{6,18,0,0,0,0,0},	-- Variant2,  T5 and T4
+						{0,18,6,0,0,0,0},	-- Variant3,  T5 and T6
+						{0,6,18,0,0,0,0},	-- Variant4,  T6 and T5
+						{0,0,18,6,0,0,0},	-- Variant5,  T6 and T7
+						{0,0,6,18,0,0,0},	-- Variant6,  T7 and T6
+						{0,0,18,0,6,0,0},	-- Variant7,  T6 and T8
+						{0,0,0,18,6,0,0},	-- Variant8,  T7 and T8
+						{0,0,0,24,0,6,0},	-- Variant9,  T7 and T9
+						{0,0,0,6,18,0,0},	-- Variant10, T8 and T7
+						{0,0,0,0,6,22,0},	-- Variant11, T9 and T8
+						{0,0,0,0,18,12,0},	-- Variant12, T8 and T9
+						{0,0,0,12,0,18,0},	-- Variant13, T9 and T7
+						{0,0,0,0,12,18,0},	-- Variant14, T9 and T8
+						{0,0,0,9,9,5,0},	-- Variant15, T7, T8 and T9
+						{0,0,0,6,10,8,0},	-- Variant16, T8, T9 and T7
+						{24,0,0,0,0,0,0},	-- Variant17, T4
+						{0,24,0,0,0,0,0},	-- Variant18, T5
+						{0,0,24,0,0,0,0},	-- Variant19, T6
+						{0,0,0,24,0,0,0},	-- Variant20, T7
+						{0,0,0,0,24,0,0},	-- Variant21, T8
+						{0,0,0,0,0,30,0},	-- Variant22, T9
+					};
+
+		-- tables for send stones and orb
+		StonesOrbs	= {202999, 203001, 203276}			<!-- Fusion and Orb -->
+		ManaStones1	= {202843, 202844, 202845}			<!-- T4, T5 and T6 -->
+		ManaStones2	= {202846, 202847, 202848}			<!-- T7, T8 and T9 -->
+		ManaStones3	= {202849, 202850, 202851}			<!-- T10, T11 and T12 -->
+		-- Mana Stones table. T5, T6, T7, T8, T9, T10, T11 and T12
+		ManaStones = {202844, 202845, 202846, 202847, 202848, 202849, 202850, 202851}	<!-- T5, T6, T7, T8, T9, T10, T11 and T12 -->
+
+		-- =======================================END===================================== --
+
+		-- Set to use FusionSender and Set to Buy Random Fusion Stones or Fusion Stones with stats.
+		UseFusionSender = false							<!-- Set to false or true -->
+		BuyFusionStoneWithStat = false					<!-- Set to false or true -->
+		FusionSender = "Charstone"						<!-- Set Name of Fusion stone Sender -->
+
+		-- Names table of Fusion Stones with 2 stats Receivers.
+		FusionStonesReceiver = {
+							-- Fusion stones receiver account 1
+						"Charstreg",	--  1. Выносливость + Сила, Stamina I + Strength I
+						"Charsexte",	--  2. Выносливость + Ловкость, Stamina I + Dexterity I
+						"Charsnell",	--  3. Выносливость + Интелект, Stamina I + Intellect I
+						"Charspirt",	--  4. Выносливость + Мудрость, Stamina I + Spirit I
+						"Charsaili",	--  5. Выносливость + Все параметры, Stamina I + Ability I
+						"Charsleme",	--  6. Выносливость + Защита от всех стихий, Stamina I + Element I
+							-- Fusion stones receiver account 2
+						"Charsartx",	--  7. Выносливость + Устойчивость к Земле, Stamina I + Earth I
+						"Charsmser",	--  8. Выносливость + Устойчивость к Воде, Stamina I + Mist I
+						"Charsfamd",	--  9. Выносливость + Устойчивость к Огню, Stamina I + Flame I
+						"Charswife",	-- 10. Выносливость + Устойчивость к Ветру, Stamina I + Whiff I
+						"Charsighh",	-- 11. Выносливость + Устойчивость к Свету, Stamina I + Light I
+						"Charsdake",	-- 12. Выносливость + Устойчивость к Тьме, Stamina I + Dark I
+							-- Fusion stones receiver account 3
+						"Charseegy",	-- 13. Выносливость + Магическая атака, Stamina I + Energy I
+						"Charsomad",	-- 14. Выносливость + Физическая атака, Stamina I + Command I
+						"Charslfel",	-- 15. Выносливость + Максимум здоровья, Stamina I + Life I
+						"Charspelt",	-- 16. Выносливость + Максимум маны, Stamina I + Spell I
+						"Charsarrc",	-- 17. Выносливость + Магическая защита, Stamina I + Barricade I
+						"Charsolii",	-- 18. Выносливость + Физическая защита, Stamina I + Solidity I
+						};								<!-- Names table of Stone with stats Receivers. -->
+
+		-- Names table of Mana Stones with stats Receivers.
+		ManaStonesReceiver = {
+							-- Mana stones receiver group 1
+						"Tierssten",	--  1. Выносливость + Сила, Stamina + Strength
+						"Tiersdxte",	--  2. Выносливость + Ловкость, Stamina + Dexterity
+						"Tiersntel",	--  3. Выносливость + Интелект, Stamina + Intellect
+						"Tierspirt",	--  4. Выносливость + Мудрость, Stamina + Spirit
+						"Tiersbilt",	--  5. Выносливость + Все параметры, Stamina I + Ability I
+						"Tierslemn",	--  6. Выносливость + Защита от всех стихий, Stamina I + Element I
+							-- Mana stones receiver group 2
+						"Tiersartx",	--  7. Выносливость + Устойчивость к Земле, Stamina I + Earth I
+						"Tiersistr",	--  8. Выносливость + Устойчивость к Воде, Stamina I + Mist I
+						"Tierslaed",	--  9. Выносливость + Устойчивость к Огню, Stamina I + Flame I
+						"Tiershife",	-- 10. Выносливость + Устойчивость к Ветру, Stamina I + Whiff I
+						"Tiersighh",	-- 11. Выносливость + Устойчивость к Свету, Stamina I + Light I
+						"Tiersarde",	-- 12. Выносливость + Устойчивость к Тьме, Stamina I + Dark I
+							-- Mana stones receiver group 3
+						"Tierseery",	-- 13. Выносливость + Магическая атака, Stamina I + Energy I
+						"Tierscman",	-- 14. Выносливость + Физическая атака, Stamina I + Command I
+						"Tierslfel",	-- 15. Выносливость + Максимум здоровья, Stamina I + Life I
+						"Tiersspll",	-- 16. Выносливость + Максимум маны, Stamina I + Spell I
+						"Tiersbari",	-- 17. Выносливость + Магическая защита, Stamina I + Barricade I
+						"Tierssodi",	-- 18. Выносливость + Физическая защита, Stamina I + Solidity I
+						};
+
+		-- Stats tables.
+		StatsTables0 = {510360}				-- 0 Выносливость
+		StatsTables1 = {510360, 510380}		-- 1 Выносливость + Сила
+		StatsTables2 = {510360, 510060}		-- 2 Выносливость + Ловкость
+		StatsTables3 = {510360, 510320}		-- 3 Выносливость + Интелект
+		StatsTables4 = {510360, 510340}		-- 4 Выносливость + Мудрость
+		StatsTables5 = {510360, 510300}		-- 5 Выносливость + Все параметры
+		StatsTables6 = {510360, 510560}		-- 6 Выносливость + Защита от всех стихий
+		StatsTables7 = {510360, 510500}		-- 7 Выносливость + Устойчивость к Земле
+		StatsTables8 = {510360, 510440}		-- 8 Выносливость + Устойчивость к Воде
+		StatsTables9 = {510360, 510460}		-- 9 Выносливость + Устойчивость к Огню
+		StatsTables10 = {510360, 510520}	-- 10 Выносливость + Устойчивость к Ветру
+		StatsTables11 = {510360, 510480}	-- 11 Выносливость + Устойчивость к Свету
+		StatsTables12 = {510360, 510540}	-- 12 Выносливость + Устойчивость к Тьме
+		StatsTables13 = {510360, 510400}	-- 13 Выносливость + Магическая атака
+		StatsTables14 = {510360, 510100}	-- 14 Выносливость + Физическая атака
+		StatsTables15 = {510360, 510020}	-- 15 Выносливость + Максимум здоровья
+		StatsTables16 = {510360, 510040}	-- 16 Выносливость + Максимум маны
+		StatsTables17 = {510360, 510420}	-- 17 Выносливость + Магическая защита
+		StatsTables18 = {510360, 510120}	-- 18 Выносливость + Физическая защита
+		
+		-- =======================================END===================================== --
+
+		--[[ Stat table.
+		510020 "Жизнь I", "Life I"
+		510040 "Заклятье I", "Spell I"
+		510060 "Сноровка I", "Dexterity I"
+		510100 "Повеление I", "Command I"
+		510120 "Твердость I", "Solidity I"
+		510140 "Меткость I", "Accuracy I"
+		510200 "Уклонение I", "Dodge I"
+		510300 "Умение I", "Ability I"
+		510320 "Интеллект I", "Intellect I"
+		510340 "Дух I", "Spirit I"
+		510360 "Выносливость I", "Stamina I"
+		510400 "Энергия I", "Energy I"
+		510420 "Заграждение I", "Barricade I"
+		510440 "Туман I", "Mist I"
+		510460 "Пламя I", "Flame I"
+		510480 "Свет I", "Light I"
+		510500 "Земля I", "Earth I"
+		510520 "Дуновение I", "Whiff I"
+		510540 "Тьма I", "Dark I"
+		510560 "Стихия I", "Element I"
+		510820 "Скорость I", "Speed I"
+		510840 "Клык I", "Fang I"
+		510860 "Реакция I", "Reflex I"
+		510880 "Ловкость I", "Agility I"
+		510900 "Точность I", "Precision I"
+		510920 "Соблюдение I", "Observance I"
+		510940 "Сообразительность I", "Keen I"
+		-- max stats in fusions stones = 18
+		510360 "Выносливость I", "Stamina I"	-- 0
+		510380 "Сила I", "Strength I"
+		510060 "Сноровка I", "Dexterity I"
+		510320 "Интеллект I", "Intellect I"		-- 1
+		510340 "Дух I", "Spirit I"
+		510300 "Умение I", "Ability I"
+		510560 "Стихия I", "Element I"			-- 2
+		510500 "Земля I", "Earth I"
+		510440 "Туман I", "Mist I"
+		510460 "Пламя I", "Flame I"				-- 3
+		510520 "Дуновение I", "Whiff I"
+		510480 "Свет I", "Light I"
+		510540 "Тьма I", "Dark I"				-- 4
+		510400 "Энергия I", "Energy I"
+		510100 "Повеление I", "Command I"
+		510020 "Жизнь I", "Life I"				-- 5
+		510040 "Заклятье I", "Spell I"
+		510420 "Заграждение I", "Barricade I"
+		510120 "Твердость I", "Solidity I"		-- 6
+		--]]
+
+		-- Variables for onClientCrash
+		local currAcc = RoMScript("LogID");
+		local currChar = RoMScript("CHARACTER_SELECT.selectedIndex");
+		local dirPath = string.gsub( getExecutionPath()," ","\" \"" );
+		local currPath = __WPL.FileName;
+		local Clientlink = TierTwinkClient;		-- specify you client shortcut links name if it not contains *client*
+		cprintf(cli.white, "Current Acc: %s, Char: %s, Path: %s, dirPath: %s, Client: %s\n\n", currAcc, currChar, currPath, dirPath, Clientlink)
+		-- onClientCrash
+		function onClientCrash()
+			if RestartAfterAllError then
+				killClient()
+			else
+				yrest(5000)
+			end
+			if( not windowValid(getAttachedHwnd()) or  RestartAfterAllError ) then
+				-- write Crash Log
+				local filename = ""..dirPath.."/logs/CrashLog.log";
+				local file, err = io.open(filename, "a+");
+				if file then
+					file:write("Account: "..currAcc.." \tName: " ..string.format("%-10s",player.Name ).." \tDate: "..os.date().." \tPath: "..currPath.." \n")
+					file:close()
+				end
+				-- Restart client and Bot
+				os.execute("START "..dirPath.."/../../micromacro.exe "..dirPath.."/login acc:"..currAcc.." char:"..currChar.." client:"..Clientlink.." path:"..currPath.."")
+				--os.exit()
+			--elseif( TryRestartBot == 0 ) then
+				-- Restart Bot
+				--include("bot.lua")
+				--TryRestartBot = 1
+			end
+		end;
+		-- check Clientlink
+		if( Clientlink ) then
+			atError(onClientCrash)
+		end;
+
+		-- Start Crash Window Killer
+		local name, version = "Crash Window Killer", "v0.1"
+		local windowname = name.." ["..version.."] started."
+		local crashwinkiller = findWindow(windowname)
+		if( crashwinkiller == 0 ) then
+			local a,b,c = os.execute("START "..dirPath.."/../../micromacro.exe "..dirPath.."/CrashWindowKiller.lua")
+			if not a then
+				error("Trouble executing file. Values returned were: "..(a or "nil")..", "..(b or "nil")..", "..(c or "nil"))
+			end
+		end;
+
+	<!-- Include onLoad -->
+		include("waypoints/Tier_Maker_onLoad.lua",true)
+	</onLoad>
+<!-- ==================================================================================== -->
+
+<!--== 1 ==-->
+<!--== Auto MailSender1. Kampel Town ==-->
+<!-- #  1 --><waypoint x="-3203" z="48882" y="176" tag="KampelTownMailbox">
+		KampelTownMailbox();
+	</waypoint>
+<!-- #  2 --><waypoint x="-3164" z="48891" y="175"></waypoint>
+<!-- #  3 --><waypoint x="-3138" z="48903" y="173" tag="FreudDinksStore">
+		FreudDinksStore();
+	</waypoint>
+<!-- #  4 --><waypoint x="-3164" z="48891" y="175" tag="Go2KampelTownMailbox">
+		__WPL:setWaypointIndex(__WPL:findWaypointTag("KampelTownMailbox"));
+	</waypoint>
+
+<!--== 2 ==-->
+<!--== Auto MailSender2. Sascilia Steppes ==-->
+<!-- #  5 --><waypoint x="-38220" z="1758" y="24" tag="SasciliaSteppesMailbox">
+		SasciliaSteppesMailbox();
+	</waypoint>
+
+<!--== 3 ==-->
+<!--== Auto MailSender3. Wailing Fjord ==-->
+<!-- #  6 --><waypoint x="-10255" z="2260" y="19" tag="SpiderfootStore">
+		SpiderfootStore();
+	</waypoint>
+<!-- #  7 --><waypoint x="-10144" z="2259" y="20">	</waypoint>
+<!-- #  8 --><waypoint x="-10067" z="2260" y="23">	</waypoint>
+<!-- #  9 --><waypoint x="-9974" z="2259" y="23">	</waypoint>
+<!-- # 10 --><waypoint x="-9887" z="2262" y="23" tag="WailingFjordMailbox">
+		if( CheckTierItems() >= 8 ) then
+			WailingFjordMailbox();
+		end;
+	</waypoint>
+<!-- # 11 --><waypoint x="-9958" z="2256" y="23">	</waypoint>
+<!-- # 12 --><waypoint x="-10051" z="2253" y="23">	</waypoint>
+<!-- # 13 --><waypoint x="-10192" z="2255" y="18">
+		__WPL:setWaypointIndex(__WPL:findWaypointTag("SpiderfootStore"));
+	</waypoint>
+<!-- # 14 --><waypoint x="-9251" z="2819" y="24" tag="SenderUnstick">	</waypoint>
+<!-- # 15 --><waypoint x="-9400" z="2734" y="23">	</waypoint>
+<!-- # 16 --><waypoint x="-9503" z="2637" y="24">	</waypoint>
+<!-- # 17 --><waypoint x="-9638" z="2500" y="24">	</waypoint>
+<!-- # 18 --><waypoint x="-9794" z="2354" y="23">
+		__WPL:setWaypointIndex(__WPL:findWaypointTag("WailingFjordMailbox"));
+	</waypoint>
+
+<!--== 4 ==-->
+<!--== Auto MailReceiver ==-->
+<!-- # 19 --><waypoint x="31954" z="3278" tag="StartTwink">
+		StartTwink();
+	</waypoint>
+<!-- # 20 --><waypoint x="31925" z="3391"></waypoint>
+<!-- # 21 --><waypoint x="31890" z="3511"></waypoint>
+<!-- # 22 --><waypoint x="31844" z="3555"></waypoint>
+<!-- # 23 --><waypoint x="31797" z="3597" tag="ElvenIslandMailbox">
+		-- Elven Island Mailbox
+		ElvenIslandMailbox();
+	</waypoint>
+
+<!-- ElfError -->
+<!-- # 24 --><waypoint x="31726" z="3592" y="0" tag="ElfError">
+		__WPL:setWaypointIndex(__WPL:findWaypointTag("ElvenIslandMailbox"));
+	</waypoint>
+
+<!-- VaranasResurrectionStone -->
+<!-- # 25 --><waypoint x="2297" z="1763" y="47" tag="ResurrectionStone"></waypoint>
+<!-- # 26 --><waypoint x="2474" z="1529" y="2"></waypoint>
+<!-- # 27 --><waypoint x="2616" z="1176" y="32">
+		__WPL:setWaypointIndex(__WPL:findWaypointTag("VaranasTwinkUnstick"));
+	</waypoint>
+
+<!-- CoastOpp -->
+<!-- # 28 --><waypoint x="-6323" z="-3907" tag="CoastOpp">
+		-- Tp to Varanas
+		player:target_NPC(118002); yrest(1000);						-- Упрямый снуп
+		RoMScript("ChoiceOption(1);"); yrest(1000);
+		RoMScript("StaticPopup_OnClick(StaticPopup1, 1);");
+		print("		Tp to Varanas");
+		waitForLoadingScreen(60);
+		player:update();
+
+		-- Check error
+		local Cur_Gold = RoMScript("GetPlayerMoney('copper');");
+		if( 20 > Cur_Gold ) then
+			inventory:update();
+			inventory:useItem(201843);								-- 1 Lvl Giftbag
+			inventory:useItem(201844);								-- 2 Lvl Giftbag
+			yrest(1500);
+		end;
+		if ( getZoneId() ~= 2 and getZoneId() ~= 1002 ) then
+			__WPL:setWaypointIndex(__WPL:findWaypointTag("CoastOpp"));
+		end;
+	</waypoint>
+<!-- # 29 --><waypoint x="2296" z="1161" tag="VaranasSnup">
+		inventory:update();
+		player:mount();
+	</waypoint>
+<!-- # 30 --><waypoint x="2458" z="1107"></waypoint>
+<!-- # 31 --><waypoint x="2603" z="1036"></waypoint>
+<!-- # 32 --><waypoint x="2765" z="964" tag="VaranasTwinkUnstick">
+		VaranasTwinkUnstick()
+	</waypoint>
+
+<!-- Escape1 -->
+<!-- # 33 --><waypoint x="31726" z="3592" y="0" tag="Esc1">	</waypoint>
+<!-- # 34 --><waypoint x="31616" z="3570" y="5"></waypoint>
+<!-- # 35 --><waypoint x="31486" z="3526" y="18"></waypoint>
+<!-- # 36 --><waypoint x="31456" z="3489" y="29"></waypoint>
+<!-- # 37 --><waypoint x="31459" z="3446" y="40"></waypoint>
+<!-- # 38 --><waypoint x="31511" z="3369" y="59"></waypoint>
+<!-- # 39 --><waypoint x="31598" z="3287" y="59"></waypoint>
+<!-- # 40 --><waypoint x="31708" z="3211" y="59"></waypoint>
+<!-- # 41 --><waypoint x="31772" z="3147" y="62"></waypoint>
+<!-- # 42 --><waypoint x="31756" z="3085" y="62"></waypoint>
+<!-- # 43 --><waypoint x="31707" z="2940" y="62"></waypoint>
+<!-- # 44 --><waypoint x="31634" z="2735" y="57">__WPL:setWaypointIndex(__WPL:findWaypointTag("Escape"));</waypoint>
+
+<!-- Escape2 -->
+<!-- # 45 --><waypoint x="31722" z="3600" y="0" tag="Esc2">	</waypoint>
+<!-- # 46 --><waypoint x="31546" z="3588" y="3"></waypoint>
+<!-- # 47 --><waypoint x="31478" z="3558" y="12"></waypoint>
+<!-- # 48 --><waypoint x="31445" z="3501" y="23"></waypoint>
+<!-- # 49 --><waypoint x="31466" z="3429" y="43"></waypoint>
+<!-- # 50 --><waypoint x="31546" z="3332" y="59"></waypoint>
+<!-- # 51 --><waypoint x="31648" z="3246" y="59"></waypoint>
+<!-- # 52 --><waypoint x="31768" z="3168" y="59"></waypoint>
+<!-- # 53 --><waypoint x="31770" z="3115" y="62"></waypoint>
+<!-- # 54 --><waypoint x="31731" z="3007" y="62"></waypoint>
+<!-- # 55 --><waypoint x="31681" z="2863" y="62">__WPL:setWaypointIndex(__WPL:findWaypointTag("Escape"));</waypoint>
+
+<!-- Escape3 -->
+<!-- # 56 --><waypoint x="31649" z="3582" tag="Esc3"></waypoint>
+<!-- # 57 --><waypoint x="31540" z="3552"></waypoint>
+<!-- # 58 --><waypoint x="31497" z="3527"></waypoint>
+<!-- # 59 --><waypoint x="31472" z="3420"></waypoint>
+<!-- # 60 --><waypoint x="31531" z="3351"></waypoint>
+<!-- # 61 --><waypoint x="31644" z="3256"></waypoint>
+<!-- # 62 --><waypoint x="31648" z="3246" y="59"></waypoint>
+<!-- # 63 --><waypoint x="31768" z="3168" y="59"></waypoint>
+<!-- # 64 --><waypoint x="31770" z="3115" y="62"></waypoint>
+<!-- # 65 --><waypoint x="31731" z="3007" y="62"></waypoint>
+<!-- # 66 --><waypoint x="31681" z="2863" y="62">__WPL:setWaypointIndex(__WPL:findWaypointTag("Escape"));</waypoint>
+
+<!-- Escape4 -->
+<!-- # 67 --><waypoint x="31815" z="3604" tag="Esc4"></waypoint>
+<!-- # 68 --><waypoint x="31858" z="3579"></waypoint>
+<!-- # 69 --><waypoint x="31965" z="3510"></waypoint>
+<!-- # 70 --><waypoint x="32055" z="3399"></waypoint>
+<!-- # 71 --><waypoint x="32121" z="3288"></waypoint>
+<!-- # 72 --><waypoint x="32156" z="3184"></waypoint>
+<!-- # 73 --><waypoint x="32123" z="3144"></waypoint>
+<!-- # 74 --><waypoint x="31981" z="3143"></waypoint>
+<!-- # 75 --><waypoint x="31843" z="3156"></waypoint>
+<!-- # 76 --><waypoint x="31772" z="3147" y="62">	</waypoint>
+<!-- # 77 --><waypoint x="31756" z="3085" y="62">	</waypoint>
+<!-- # 78 --><waypoint x="31707" z="2940" y="62">	</waypoint>
+<!-- # 79 --><waypoint x="31634" z="2735" y="57">__WPL:setWaypointIndex(__WPL:findWaypointTag("Escape"));</waypoint>	
+	
+<!-- Rove -->
+<!-- # 80 --><waypoint x="31644" z="2752" tag="Rove">	</waypoint>
+<!-- # 81 --><waypoint x="31733" z="3010">	</waypoint>
+<!-- # 82 --><waypoint x="31793" z="3153">	</waypoint>
+<!-- # 83 --><waypoint x="31859" z="3160"></waypoint>
+<!-- # 84 --><waypoint x="32029" z="3147"></waypoint>
+<!-- # 85 --><waypoint x="32143" z="3159"></waypoint>
+<!-- # 86 --><waypoint x="32147" z="3207"></waypoint>
+<!-- # 87 --><waypoint x="32094" z="3262"></waypoint>
+<!-- # 88 --><waypoint x="32025" z="3280">__WPL:setWaypointIndex(__WPL:findWaypointTag("StartTwink"));</waypoint>
+
+<!-- Elf_Escape -->
+<!-- # 89 --><waypoint x="31635" z="2735" y="57" tag="Escape">	</waypoint>
+<!-- # 90 --><waypoint x="31419" z="2384" tag="ElfCheckError">
+	ElfCheckError()
+</waypoint>
+<!-- # 91 --><waypoint x="31397" z="2361" y="55">	</waypoint>
+<!-- # 92 --><waypoint x="31265" z="2220" y="76">	</waypoint>
+<!-- # 93 --><waypoint x="31139" z="2143" y="86">	</waypoint>
+<!-- # 94 --><waypoint x="30974" z="2134" y="104">	</waypoint>
+<!-- # 95 --><waypoint x="30759" z="2154" y="113">	</waypoint>
+<!-- # 96 --><waypoint x="30565" z="2164" y="94">	</waypoint>
+<!-- # 97 --><waypoint x="30384" z="2191" y="66">	</waypoint>
+<!-- # 98 --><waypoint x="30240" z="2261" y="56">	</waypoint>
+<!-- # 99 --><waypoint x="30099" z="2377" y="51">	</waypoint>
+<!-- #100 --><waypoint x="29904" z="2583" y="35">	</waypoint>
+<!-- #101 --><waypoint x="29718" z="2794" y="7">	</waypoint>
+<!-- #102 --><waypoint x="29645" z="2899" y="6">	</waypoint>
+<!-- #103 --><waypoint x="29568" z="3069" y="0">	</waypoint>
+<!-- #104 --><waypoint x="29490" z="3316" y="9">	</waypoint>
+<!-- #105 --><waypoint x="29428" z="3517" y="28">	</waypoint>
+<!-- #106 --><waypoint x="29358" z="3733" y="29">	</waypoint>
+<!-- #107 --><waypoint x="29281" z="3950" y="39">	</waypoint>
+<!-- #108 --><waypoint x="29200" z="4151" y="43">	</waypoint>
+<!-- #109 --><waypoint x="29126" z="4319" y="31">	</waypoint>
+<!-- #110 --><waypoint x="29064" z="4421" y="42">	</waypoint>
+<!-- #111 --><waypoint x="28953" z="4539" y="37">	</waypoint>
+<!-- #112 --><waypoint x="28816" z="4630" y="28">	</waypoint>
+<!-- #113 --><waypoint x="28684" z="4701" y="44">	</waypoint>
+<!-- #114 --><waypoint x="28511" z="4762" y="48">	</waypoint>
+<!-- #115 --><waypoint x="28410" z="4782" y="25">	</waypoint>
+<!-- #116 --><waypoint x="28357" z="4763" y="24">	</waypoint>
+<!-- #117 --><waypoint x="28258" z="4654" y="37">	</waypoint>
+<!-- #118 --><waypoint x="28170" z="4549" y="57">	</waypoint>
+<!-- #119 --><waypoint x="28096" z="4499" y="68">	</waypoint>
+<!-- #120 --><waypoint x="27970" z="4440" y="88">	</waypoint>
+<!-- #121 --><waypoint x="27875" z="4370" y="97">	</waypoint>
+<!-- #122 --><waypoint x="27852" z="4319" y="103">	</waypoint>
+<!-- #123 --><waypoint x="27879" z="4271" y="112">	</waypoint>
+<!-- #124 --><waypoint x="27948" z="4225" y="134">	</waypoint>
+<!-- #125 --><waypoint x="28071" z="4152" y="168">	</waypoint>
+<!-- #126 --><waypoint x="28245" z="4048" y="179">	</waypoint>
+<!-- #127 --><waypoint x="28352" z="3980" y="211">	</waypoint>
+<!-- #128 --><waypoint x="28417" z="3900" y="233">	</waypoint>
+<!-- #129 --><waypoint x="28443" z="3776" y="261">	</waypoint>
+<!-- #130 --><waypoint x="28441" z="3630" y="288">	</waypoint>
+<!-- #131 --><waypoint x="28410" z="3525" y="312">	</waypoint>
+<!-- #132 --><waypoint x="28348" z="3460" y="332">	</waypoint>
+<!-- #133 --><waypoint x="28246" z="3429" y="352">	</waypoint>
+<!-- #134 --><waypoint x="28104" z="3425" y="350"> </waypoint>
+<!-- #135 --><waypoint x="27937" z="3427" tag="TptoVaranas">
+		-- Tp to Varanas
+		TptoVaranas()
+	</waypoint>
+	
+<!-- Varanas -->
+<!-- #136 --><waypoint x="4406" z="-3621" tag="Varanas"></waypoint>
+<!-- #137 --><waypoint x="4550" z="-3508"></waypoint>
+<!-- #138 --><waypoint x="4755" z="-3529"></waypoint>
+<!-- #139 --><waypoint x="4845" z="-3541"></waypoint>
+<!-- #140 --><waypoint x="4948" z="-3624"></waypoint>
+<!-- #141 --><waypoint x="5095" z="-3735"></waypoint>
+<!-- #142 --><waypoint x="5230" z="-3850"></waypoint>
+	
+<!-- Arcane Transmutor -->
+<!-- #143 --><waypoint x="5284" z="-3927" tag="Transmutor">
+		-- Take Giftbags
+		--inventory:useItem(201849);									-- 7 Lvl Giftbag
+	</waypoint>
+<!-- #144 --><waypoint x="5266" z="-3971"></waypoint>
+<!-- #145 --><waypoint x="5238" z="-4023"></waypoint>
+<!-- #146 --><waypoint x="5321" z="-4120"></waypoint>
+<!-- #147 --><waypoint x="5431" z="-4238"></waypoint>
+<!-- #148 --><waypoint x="5503" z="-4343" tag="ErrorSendStones">
+		-- Check for Error Send Stone
+		if( ErrorSendStone == true ) then
+			if( player.Class1 == CLASS_ROGUE ) then
+				player:target_NPC(110008); yrest(1000);						-- Энгер
+				RoMScript("ChoiceOption(1);"); yrest(500);
+				RoMScript("ChoiceOption(1);");
+			else
+				player:target_NPC(110307); yrest(1000);						-- Эльсон
+				RoMScript("ChoiceOption(1);"); yrest(500);
+				RoMScript("ChoiceOption(1);");
+			end
+			__WPL:setWaypointIndex(__WPL:findWaypointTag("ErrorSendMail"));
+		end;
+	</waypoint>
+<!-- #149 --><waypoint x="5540" z="-4422" tag="VaranasCharges">
+		-- Varanas Charges
+		VaranasCharges();
+	</waypoint>
+<!-- #150 --><waypoint x="5523" z="-4377"></waypoint>
+<!-- #151 --><waypoint x="5401" z="-4208" tag="ErrorSendMail"></waypoint>
+<!-- #152 --><waypoint x="5307" z="-4103"></waypoint>
+<!-- #153 --><waypoint x="5238" z="-4024"></waypoint>
+<!-- #154 --><waypoint x="5270" z="-3973"></waypoint>
+<!-- #155 --><waypoint x="5285" z="-3905" tag="VaranasLyeve">
+		VaranasLyeve();
+	</waypoint>
+	
+<!-- Varanas VCS Error Way. -->
+<!-- #156 --><waypoint x="2846" z="-853" tag="IPV"></waypoint>
+<!-- #157 --><waypoint x="2682" z="-998"></waypoint>
+<!-- #158 --><waypoint x="2501" z="-1164"></waypoint>
+<!-- #159 --><waypoint x="2480" z="-1229"></waypoint>
+<!-- #160 --><waypoint x="2633" z="-1460">
+		__WPL:setWaypointIndex(__WPL:findWaypointTag("VaranasBuyFusionStone"));
+	</waypoint>
+	
+<!-- 1st Way. Buy Random Fusion Stone -->
+<!-- #161 --><waypoint x="4535" z="-1956" tag="BuyFS"></waypoint>
+<!-- #162 --><waypoint x="4307" z="-1927"></waypoint>
+<!-- #163 --><waypoint x="4218" z="-1868"></waypoint>
+<!-- #164 --><waypoint x="3835" z="-1692"></waypoint>
+<!-- #165 --><waypoint x="3666" z="-1722"></waypoint>
+<!-- #166 --><waypoint x="3448" z="-1621"></waypoint>
+<!-- #167 --><waypoint x="3036" z="-1727"></waypoint>
+<!-- #168 --><waypoint x="2846" z="-1608"></waypoint>
+<!-- #169 --><waypoint x="2753" z="-1637" tag="VaranasBuyFusionStone">
+		-- Check for Varanas Error
+		if not player:findNearestNameOrId(110576) then TirodelUnstick() end
+		local Odeley = player:findNearestNameOrId(110576)
+		if (Odeley.Y - player.Y) > 30 then TirodelUnstick() end
+		-- Varanas Buy Fusion Stone
+		VaranasBuyFusionStone()
+	</waypoint>
+<!-- #170 --><waypoint x="2912" z="-1639"></waypoint>
+<!-- #171 --><waypoint x="3064" z="-1740"></waypoint>
+<!-- #172 --><waypoint x="3498" z="-1619"></waypoint>
+<!-- #173 --><waypoint x="3711" z="-1731"></waypoint>
+<!-- #174 --><waypoint x="3840" z="-1691"></waypoint>
+<!-- #175 --><waypoint x="4202" z="-1856"></waypoint>
+<!-- #176 --><waypoint x="4334" z="-1941"></waypoint>
+<!-- #177 --><waypoint x="4440" z="-2060">
+		__WPL:setWaypointIndex(__WPL:findWaypointTag("VaranasMailbox"));
+	</waypoint>
+	
+	
+<!-- 2nd Way. Make Mana Stones -->
+<!-- #178 --><waypoint x="4673" z="-2004" tag="MakeMS"></waypoint>
+<!-- #179 --><waypoint x="4621" z="-2059"></waypoint>
+<!-- #180 --><waypoint x="4595" z="-2115"></waypoint>
+<!-- #181 --><waypoint x="4575" z="-2175" tag="VaranasMailbox">
+		-- Varanas Mailbox
+		TierMakerMailbox("Varanas");
+	</waypoint>
+
+<!-- 3nd Way. Make Mana Stones -->
+<!-- #182 --><waypoint x="31954" z="3278" tag="ELF10Lvl">
+		-- Set faceDirection and Rotation
+		local angle = math.atan2(31925 - player.Z, 3391 - player.X)
+		player:faceDirection(angle)
+		camera:setRotation(angle)
+	</waypoint>
+<!-- #183 --><waypoint x="31925" z="3391"></waypoint>
+<!-- #184 --><waypoint x="31890" z="3511"></waypoint>
+<!-- #185 --><waypoint x="31844" z="3555"></waypoint>
+<!-- #186 --><waypoint x="31797" z="3597" tag="ElvenIslandMailbox2">
+		-- Elven Island Mailbox2
+		TierMakerMailbox("ElvenIsland");
+	</waypoint>
+
+
+<!--== 5 ==-->
+<!--== Auto MailReceiver 2 ==-->
+<!-- #187 --><waypoint x="-4069" z="-8247" y="244" tag="StartTwink2">
+	</waypoint>
+<!-- #188 --><waypoint x="-4059" z="-8270" y="244">
+		player:target_NPC(110484)	-- Р›РµР№С„ РЎРёРЅРґР°Р№
+		AcceptQuestByName(420660)	-- СђЕђЯђЫђЬђСђФ Рѕ РїТђСђЩђТ‘Р›ТђУђЩђШЌ
+	</waypoint>
+<!-- #189 --><waypoint x="-3969" z="-8339" y="226"></waypoint>
+<!-- #190 --><waypoint x="-3885" z="-8405" y="217"></waypoint>
+<!-- #191 --><waypoint x="-3787" z="-8496" y="210"></waypoint>
+<!-- #192 --><waypoint x="-3733" z="-8599" y="213"></waypoint>
+<!-- #193 --><waypoint x="-3701" z="-8673" y="223">
+		player:target_NPC(110482)		-- Р›РµР№С‚РѕРЅ
+		CompleteQuestByName(420660)		-- СђЕђЯђЫђЬђСђФ Рѕ РїТђСђЩђТ‘Р›ТђУђЩђШЌ
+		player:target_NPC(110482)		-- Р›РµР№С‚РѕРЅ
+		AcceptQuestByName(420661)		-- СђРђЯђЬ‘Р“ТђШђЦђЮђЩђХ РѕТђС‘Р“Р¶РёТђЯЌ
+	</waypoint>
+<!-- #194 --><waypoint x="-3741" z="-8594" y="215"></waypoint>
+<!-- #195 --><waypoint x="-3785" z="-8543" y="218">
+		player:target_NPC(110658)		-- РњСЌР»Р»РѕСЂ
+		CompleteQuestByName(420661)		-- СђРђЯђЬ‘Р“ТђШђЦђЮђЩђХ РѕТђС‘Р“Р¶РёТђЯЌ
+		player:target_NPC(110658)		-- РњСЌР»Р»РѕСЂ
+		AcceptQuestByName(420662)		-- СђРђЯђЬ‘Р“ТђШђЦђЮђЩђХ РґРѕТђТђа ђЦ‘Р•РѕРІ
+	</waypoint>
+<!-- #196 --><waypoint x="-3772" z="-8569" y="218">
+		player:target_NPC(110657)		-- РЁСЌРјРї
+		CompleteQuestByName(420662)		-- СђРђЯђЬ‘Р“ТђШђЦђЮђЩђХ РґРѕТђТђа ђЦ‘Р•РѕРІ
+		player:target_NPC(110657)		-- РЁСЌРјРї
+		AcceptQuestByName(420663)		-- СђРђЯђЬ‘Р“ТђШђЦђЮђЩђХ Р·РµР»РёР№
+	</waypoint>
+<!-- #197 --><waypoint x="-3769" z="-8652" y="224">
+		player:target_NPC(110489)		-- Р РµР№РґРёРЅ
+		CompleteQuestByName(420663)		-- СђРђЯђЬ‘Р“ТђШђЦђЮђЩђХ Р·РµР»РёР№
+		player:target_NPC(110489)		-- Р РµР№РґРёРЅ
+		AcceptQuestByName(420665)		-- СђИђСђУђЦ‘РђТђЩђЦђЮђЩђХ РїТђСђЩђФђЯ‘Р’РѕРІР»РµРЅРёР№
+	</waypoint>
+<!-- #198 --><waypoint x="-3705" z="-8672" y="223">
+		StartTwink()					-- StartTwink
+		player:target_NPC(110482)		-- Р›РµР№С‚РѕРЅ
+		CompleteQuestByName(420665)		-- СђИђСђУђЦ‘РђТђЩђЦђЮђЩђХ РїТђСђЩђФђЯ‘Р’РѕРІР»РµРЅРёР№
+		-- Take Giftbags
+		local starttimer = os.clock()
+		repeat
+			if( inventory:itemTotalCount(201843) ) then
+				inventory:useItem(201843); yrest(2500);					-- 1 Lvl Giftbag
+			end
+			inventory:useItem(201844); yrest(2500);						-- 2 Lvl Giftbag
+			player:rest(math.random(5));
+			inventory:update();
+			player:mount();
+			player:update();
+		until player.Mounted or os.clock() - starttimer > 30
+	</waypoint>
+<!-- #199 --><waypoint x="-3548" z="-8680" y="235"></waypoint>
+<!-- #200 --><waypoint x="-3295" z="-8679" y="219"></waypoint>
+<!-- #201 --><waypoint x="-2967" z="-8666" y="199"></waypoint>
+<!-- #202 --><waypoint x="-2619" z="-8644" y="205"></waypoint>
+<!-- #203 --><waypoint x="-2316" z="-8628" y="250"></waypoint>
+<!-- #204 --><waypoint x="-1960" z="-8612" y="218"></waypoint>
+<!-- #205 --><waypoint x="-1484" z="-8587" y="203"></waypoint>
+<!-- #206 --><waypoint x="-1123" z="-8382" y="115"></waypoint>
+<!-- #207 --><waypoint x="-805" z="-8233" y="110"></waypoint>
+<!-- #208 --><waypoint x="-570" z="-8120" y="81"></waypoint>
+<!-- #209 --><waypoint x="-422" z="-7934" y="75"></waypoint>
+<!-- #210 --><waypoint x="-361" z="-7760" y="71"></waypoint>
+<!-- #211 --><waypoint x="-310" z="-7520" y="77"></waypoint>
+<!-- #212 --><waypoint x="-242" z="-7196" y="49"></waypoint>
+<!-- #213 --><waypoint x="-210" z="-6931" y="50"></waypoint>
+<!-- #214 --><waypoint x="-209" z="-6611" y="29"></waypoint>
+<!-- #215 --><waypoint x="-256" z="-6451" y="29"></waypoint>
+<!-- #216 --><waypoint x="-387" z="-6203" y="18"></waypoint>
+<!-- #217 --><waypoint x="-439" z="-6086" y="33"></waypoint>
+<!-- #218 --><waypoint x="-416" z="-6011" y="38" tag="LogarMailbox">
+		ElvenIslandMailbox()
+	</waypoint>
+<!-- #219 --><waypoint x="-565" z="-5908" y="39"></waypoint>
+<!-- #220 --><waypoint x="-687" z="-5758" y="53"></waypoint>
+<!-- #221 --><waypoint x="-836" z="-5538" y="39"></waypoint>
+<!-- #222 --><waypoint x="-1016" z="-5327" y="7"></waypoint>
+<!-- #223 --><waypoint x="-1236" z="-5152" y="10"></waypoint>
+<!-- #224 --><waypoint x="-1422" z="-4987" y="-12"></waypoint>
+<!-- #225 --><waypoint x="-1465" z="-4835" y="-16"></waypoint>
+<!-- #226 --><waypoint x="-1396" z="-4605" y="-19"></waypoint>
+<!-- #227 --><waypoint x="-1328" z="-4361" y="-3"></waypoint>
+<!-- #228 --><waypoint x="-1214" z="-4207" y="8"></waypoint>
+<!-- #229 --><waypoint x="-979" z="-4036" y="10"></waypoint>
+<!-- #230 --><waypoint x="-750" z="-3834" y="11"></waypoint>
+<!-- #231 --><waypoint x="-580" z="-3637" y="9"></waypoint>
+<!-- #232 --><waypoint x="-494" z="-3417" y="-2"></waypoint>
+<!-- #233 --><waypoint x="-488" z="-3273" y="-8"></waypoint>
+<!-- #234 --><waypoint x="-550" z="-2997" y="-27"></waypoint>
+<!-- #235 --><waypoint x="-577" z="-2750" y="-40"></waypoint>
+<!-- #236 --><waypoint x="-574" z="-2431" y="-53"></waypoint>
+<!-- #237 --><waypoint x="-588" z="-2189" y="-42"></waypoint>
+<!-- #238 --><waypoint x="-631" z="-1919" y="-46"></waypoint>
+<!-- #239 --><waypoint x="-620" z="-1732" y="-41"></waypoint>
+<!-- #240 --><waypoint x="-480" z="-1536" y="-34"></waypoint>
+<!-- #241 --><waypoint x="-268" z="-1415" y="-6"></waypoint>
+<!-- #242 --><waypoint x="-11" z="-1285" y="19"></waypoint>
+<!-- #243 --><waypoint x="130" z="-1159" y="35"></waypoint>
+<!-- #244 --><waypoint x="314" z="-909" y="31"></waypoint>
+<!-- #245 --><waypoint x="481" z="-719" y="39"></waypoint>
+<!-- #246 --><waypoint x="611" z="-494" y="40"></waypoint>
+<!-- #247 --><waypoint x="754" z="-266" y="36"></waypoint>
+<!-- #248 --><waypoint x="833" z="-108" y="34"></waypoint>
+<!-- #249 --><waypoint x="856" z="92" y="35"></waypoint>
+<!-- #250 --><waypoint x="890" z="460" y="43"></waypoint>
+<!-- #251 --><waypoint x="970" z="736" y="57"></waypoint>
+<!-- #253 --><waypoint x="1064" z="1093" y="25"></waypoint>
+<!-- #254 --><waypoint x="1146" z="1212" y="21"></waypoint>
+<!-- #255 --><waypoint x="1381" z="1218" y="35"></waypoint>
+<!-- #256 --><waypoint x="1708" z="1149" y="13"></waypoint>
+<!-- #257 --><waypoint x="1962" z="1152" y="-1"></waypoint>
+<!-- #258 --><waypoint x="2192" z="1153" y="4">
+		__WPL:setWaypointIndex(__WPL:findWaypointTag("VaranasSnup"));
+	</waypoint>
+
+
+<!--== 6 ==-->
+<!--== Auto FusionStoneSender. Varanas ==-->	
+<!-- Odeley Prole -->
+<!-- #259 --><waypoint x="2708" z="-1643" y="53" tag="MassBuyFusionStones">
+		MassBuyFusionStones()
+	</waypoint>
+<!-- #260 --><waypoint x="2664" z="-1594" y="53"></waypoint>
+<!-- #261 --><waypoint x="2558" z="-1477" y="53"></waypoint>
+<!-- #262 --><waypoint x="2506" z="-1420" y="53" tag="ToGuildHouse">
+		ToGuildHouse()
+	</waypoint>
+<!-- #263 --><waypoint x="0" z="-485" y="5" tag="Guild">	</waypoint>
+<!-- #264 --><waypoint x="-6" z="-322" y="5"></waypoint>
+<!-- #265 --><waypoint x="-6" z="-315" y="5"></waypoint>
+<!-- #266 --><waypoint x="-14" z="-125" y="5" tag="GuildFortressGate">
+		GuildFortressGate()
+	</waypoint>
+<!-- #267 --><waypoint x="-22" z="93" y="7"></waypoint>
+<!-- #268 --><waypoint x="-31" z="313" y="7"></waypoint>
+<!-- #269 --><waypoint x="-39" z="506" y="7"></waypoint>
+<!-- #270 --><waypoint x="-43" z="615" y="7" tag="GuildFortressMailbox">
+		GuildFortressMailbox()
+	</waypoint>
+<!-- #271 --><waypoint x="2560" z="-1480" y="53"></waypoint>
+<!-- #272 --><waypoint x="2621" z="-1547" y="53"></waypoint>
+<!-- #273 --><waypoint x="2708" z="-1645" y="53">
+		__WPL:setWaypointIndex(__WPL:findWaypointTag("MassBuyFusionStones"))
+	</waypoint>
+
+<!--== 7 ==-->
+<!--== Auto Mana stones MailSender ==-->
+<!-- #274 --><waypoint x="-444" z="-5975" y="20" tag="ManaStonesLogarMailbox">
+		ManaStonesLogarMailbox()
+	</waypoint>
+	
+</waypoints>

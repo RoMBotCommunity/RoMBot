@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+		include ("../../includes/afterCrash.lua")
+		
+		questNPC							= 123213
+		questID								= 426846
+		questObject						= 123215
+		questItem							= 242942
+		lastKey								= nil
+		acceptClass						= ChooseAvailableClass (0, "class to accept quest");
+		completeClass					= ChooseAvailableClass (0, "class to complete quest");
+		complete,  numTqCards	= dayliesComplete ()
+		
+		DN_AutoQuest (questID)
+
+		repeat zid = getZoneId (); yrest (200) until zid;
+		while zid==400 do	-- in house
+			message ('leave the house', true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+--[[ salioca not implemented
+		while zid~=29 and not travelTo ('Sarlo') do
+			message ('unable to go to Sarlo', true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+]]--
+
+		function swapClasses (class1, class2)
+			while player.Class1 ~= class1 do
+				-- going home
+				repeat
+					if getZoneId()~=400 then
+						repeat
+							inventory:update ()
+							if inventory:itemTotalCount(items.homeRune.id)<=0 then
+								message ('no more '..items.homeRune.name..' left', true)
+							else
+								message ('using '..items.homeRune.name)
+								inventory:useItem (items.homeRune.id)
+								waitForLoadingScreen ()
+								break;
+							end
+						until true
+					else
+						break
+					end
+				until true
+				-- swap classes
+				while player.Class1 ~= class1 do
+					while not player:target_NPC (110758) do
+						message ('you are to far away from house maid', true);
+					end
+					message ('exchange classes '..tostring(class1)..'/'..tostring(class2))
+					sendMacro("ChoiceListDialogOption(1);"); yrest(750)
+					sendMacro("ExchangeClass("..(class1+1)..","..(class2+1)..");"); yrest(3000)
+					player:update ()
+				end
+				-- going back
+				repeat
+					if getZoneId()==400 then
+						while not player:target_NPC (110758) do
+							message ('you are to far away from house maid', true);
+						end
+						sendMacro("ChoiceListDialogOption(0);")
+						waitForLoadingScreen ()
+					else
+						break
+					end
+				until true
+			end		
+		end
+
+	]]></onload>
+	
+
+	<!-- #  7 --><waypoint x="13795" z="26166" tag="Benjamin Muir"><![CDATA[
+		complete, numTqCards	= dayliesComplete (numTqCards)
+		while not complete do 
+		
+			if getQuestStatus (questID)=='not accepted' then
+				swapClasses (acceptClass, completeClass)
+				player:target_NPC (questNPC)
+				AcceptQuestByName (questID)
+			end
+			
+			while getQuestStatus (questID)=='incomplete' do
+				if inventory:itemTotalCount (questItem)<=0 then
+					player:target_NPC (questNPC)
+					sendMacro("ChoiceOption(1)") yrest (1000)
+				end
+				while inventory:itemTotalCount (questItem)>0 do
+					player:target_NPC (questObject)
+					Attack ()
+					yrest (5000)
+					if lastKey==nil or lastKey==settings.hotkeys.MOVE_BACKWARD.key then
+						lastKey = settings.hotkeys.MOVE_FORWARD.key
+					else
+						lastKey = settings.hotkeys.MOVE_BACKWARD.key
+					end
+					keyboardHold (lastKey) 	yrest (200)
+					keyboardRelease (lastKey)	yrest (200)
+					inventory:update ()
+				end
+			end
+			
+			if getQuestStatus (questID)=='complete' then
+				swapClasses (completeClass, acceptClass)
+				player:target_NPC (questNPC)
+				CompleteQuestByName (questID)
+			end
+			complete, numTqCards	= dayliesComplete (numTqCards)
+		end
+		print ("\a\a\a")
+		player:sleep ()
+	]]></waypoint>
+</waypoints>

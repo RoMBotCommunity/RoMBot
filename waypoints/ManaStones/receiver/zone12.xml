@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+
+		function todoFinished ()
+			if player.Level==1 then
+				cprintf (cli.lightblue, "This char is new. Starting daily prequests.\n")
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("level_1"))
+				return false
+			end
+
+			if player.Level>=10 and not RoMScript ("IsMagicBoxEnable ()") then
+				cprintf (cli.lightblue, "Going to enable MagicBox.\n")
+				if not player.Mounted then player:mount () end
+				__WPL:setWaypointIndex (__WPL:getNearestWaypoint (player.X, player.Z, player.Y, __WPL:findWaypointTag ("enable_magicbox"), __WPL:findWaypointTag ("varanas_snoop")))
+				if RoMScript ("IsMagicBoxEnable ()") and __WPL.CurrentWaypoint<=__WPL:findWaypointTag ("haven_snoop") then
+					-- after a crash while going back to mailbox
+					__WPL:setDirection (WPT_BACKWARD)
+				end
+				return false
+			end
+
+			local dqCount, dqPerDay = RoMScript ("Daily_count ()")
+			if dqCount<dqPerDay then
+				cprintf (cli.lightblue, "Starting daily quest.\n")
+				__WPL:setWaypointIndex (__WPL:getNearestWaypoint (player.X, player.Z, player.Y, __WPL:findWaypointTag ("mailbox_to_daily"), __WPL:findWaypointTag ("daily_item")))
+				return false
+			else
+				cprintf (cli.lightblue, "dailies complete.\n")
+				__WPL:setDirection (WPT_BACKWARD)
+				__WPL:setWaypointIndex (__WPL:getNearestWaypoint (player.X, player.Z, player.Y, __WPL:findWaypointTag ("mailbox"), __WPL:findWaypointTag ("daily_to_mailbox")))
+			end
+			return true
+		end
+
+	]]></onload>
+
+
+	<!-- mailbox -->
+	<!--#  1--><waypoint x="31768" z="3607" tag="mailbox"><![CDATA[
+		if todoFinished () then
+			handleReceiver ()
+			if checkRelog then
+				checkRelog ()
+			else
+				error ('finished')
+			end
+		end
+	]]></waypoint>
+
+
+	<!-- daily <-> mailbox -->
+	<!--#  2--><waypoint x="31812" z="4142" tag="mailbox_to_daily"><![CDATA[
+		if __WPL.Direction==WPT_BACKWARD then
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ('mailbox'))
+		end
+	]]></waypoint>
+	<!--#  3--><waypoint x="31839" z="4262"/>
+	<!--#  4--><waypoint x="31954" z="4400"/>
+	<!--#  5--><waypoint x="31846" z="4586" tag="daily_to_mailbox"><![CDATA[
+		if __WPL.Direction==WPT_FORWARD then
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ('daily'))
+		end
+	]]></waypoint>
+
+
+	<!-- daily 422340 -->
+	<!--#  6--><waypoint x="31803" z="4605" tag="daily"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD)
+		DN_AutoQuest (422340)
+		if getQuestStatus (422340) == 'complete' then
+			player:target_NPC (112794)
+			yrest (300)
+		end
+		local dqCount, dqPerDay = RoMScript ('Daily_count ()')
+		if dqPerDay == dqCount then
+			DN_AutoQuest (422340, false)
+			__WPL:setDirection (WPT_BACKWARD)
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ('daily_to_mailbox'))
+			return
+		end
+		if getQuestStatus (422340) == 'not accepted' then
+			player:target_NPC (112794)
+			yrest (300)
+		end
+	]]></waypoint>
+	<!--#  7--><waypoint x="31635" z="4667"/>
+	<!--#  8--><waypoint x="31703" z="4902"/>
+	<!--#  9--><waypoint x="31416" z="5715" tag="daily_item"><![CDATA[
+		while getQuestStatus (422340) == 'incomplete' do
+			player:target_Object (112976, 300)
+			yrest (500)
+		end
+		__WPL:setDirection (WPT_BACKWARD)
+	]]></waypoint>
+
+
+	<!-- prepare new char for daily -->
+	<!--# 10--><waypoint x="31954" z="3263" tag = "level_1"><![CDATA[
+		player:target_NPC (112793)
+		AcceptQuestByName (422241)
+		CompleteQuestByName (422241)
+	]]></waypoint>
+	<!--# 11--><waypoint x="32153" z="3400"/>
+	<!--# 12--><waypoint x="32226" z="3333"/>
+	<!--# 13--><waypoint x="32315" z="3350"><![CDATA[
+		player:target_NPC (112949)
+		AcceptQuestByName (422263)
+		CompleteQuestByName (422263)
+	]]></waypoint>
+	<!--# 14--><waypoint x="32201" z="3345"><![CDATA[
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ('mailbox'))
+	]]></waypoint>
+
+
+	<!-- repare new char for magicbox -->
+	<!--# 15--><waypoint x="31526" z="3614" tag="enable_magicbox"><![CDATA[
+		if __WPL.Direction==WPT_BACKWARD then
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ('mailbox'))
+		end
+	]]></waypoint>
+	<!--# 16--><waypoint x="31441" z="3483"/>
+	<!--# 17--><waypoint x="31483" z="3404"/>
+	<!--# 18--><waypoint x="31594" z="3257"/>
+	<!--# 19--><waypoint x="31787" z="3181"/>
+	<!--# 20--><waypoint x="31662" z="2810"/>
+	<!--# 21--><waypoint x="31613" z="2665"/>
+	<!--# 22--><waypoint x="31445" z="2429"/>
+	<!--# 23--><waypoint x="31324" z="2255"/>
+	<!--# 24--><waypoint x="31009" z="2158"/>
+	<!--# 25--><waypoint x="30936" z="2137"/>
+	<!--# 26--><waypoint x="30615" z="2162"/>
+	<!--# 27--><waypoint x="30349" z="2186"/>
+	<!--# 28--><waypoint x="30062" z="2217"/>
+	<!--# 29--><waypoint x="29888" z="2454"/>
+	<!--# 30--><waypoint x="29705" z="2664"/>
+	<!--# 31--><waypoint x="29561" z="2829"/>
+	<!--# 32--><waypoint x="29437" z="3169"/>
+	<!--# 33--><waypoint x="29334" z="3462"/>
+	<!--# 34--><waypoint x="29252" z="3744"/>
+	<!--# 35--><waypoint x="29297" z="3900"/>
+	<!--# 36--><waypoint x="29177" z="4212"/>
+	<!--# 37--><waypoint x="28748" z="4670"/>
+	<!--# 38--><waypoint x="28405" z="4787"/>
+	<!--# 39--><waypoint x="27937" z="4364"/>
+	<!--# 40--><waypoint x="28018" z="4187"/>
+	<!--# 41--><waypoint x="28411" z="3972"/>
+	<!--# 42--><waypoint x="28505" z="3463" tag="haven_snoop"/>
+	<!--# 43--><waypoint x="28202" z="3432"/>
+	<!--# 44--><waypoint x="27928" z="3422"><![CDATA[
+		player:target_NPC (112797)
+		sendMacro ('ChoiceOption (1)')
+		waitForLoadingScreen ()
+	]]></waypoint>
+	<!--# 45--><waypoint x="4407" z="-3621"/>
+	<!--# 46--><waypoint x="4535" z="-3530"/>
+	<!--# 47--><waypoint x="4742" z="-3534"/>
+	<!--# 48--><waypoint x="4898" z="-3546"/>
+	<!--# 49--><waypoint x="5058" z="-3693"/>
+	<!--# 50--><waypoint x="5213" z="-3847"/>
+	<!--# 51--><waypoint x="5310" z="-3943"/>
+	<!--# 52--><waypoint x="5386" z="-3892"/>
+	<!--# 53--><waypoint x="5419" z="-3934"/>
+	<!--# 54--><waypoint x="5460" z="-4073"/>
+	<!--# 55--><waypoint x="5496" z="-4234"/>
+	<!--# 56--><waypoint x="5525" z="-4420"><![CDATA[
+		player:target_NPC (111367)
+		AcceptQuestByName (421457)
+		CompleteQuestByName (421457)
+	]]></waypoint>
+	<!--# 57--><waypoint x="5525" z="-4416"/>
+	<!--# 58--><waypoint x="5519" z="-4378"/>
+	<!--# 59--><waypoint x="5498" z="-4253"/>
+	<!--# 60--><waypoint x="5485" z="-4164"/>
+	<!--# 61--><waypoint x="5473" z="-4111"/>
+	<!--# 62--><waypoint x="5443" z="-3993"/>
+	<!--# 63--><waypoint x="5428" z="-3934"/>
+	<!--# 64--><waypoint x="5415" z="-3908"/>
+	<!--# 65--><waypoint x="5387" z="-3887"/>
+	<!--# 66--><waypoint x="5370" z="-3896"/>
+	<!--# 67--><waypoint x="5339" z="-3919"/>
+	<!--# 68--><waypoint x="5319" z="-3934"/>
+	<!--# 69--><waypoint x="5289" z="-3911"/>
+	<!--# 70--><waypoint x="5295" z="-3914" tag="varanas_snoop"><![CDATA[
+		travelTo ('Haven')
+		__WPL:setDirection (WPT_BACKWARD)
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ('haven_snoop'))
+	]]></waypoint>
+
+</waypoints>

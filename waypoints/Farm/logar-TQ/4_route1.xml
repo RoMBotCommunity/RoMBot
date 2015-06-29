@@ -1,0 +1,51 @@
+<waypoints type="NORMAL">
+	
+	<onload><![CDATA[
+	
+		include ('onload.lua')
+		saveLastFile (__WPL.FileName)
+		
+		function MyOnLeaveCombat ()
+      player:lootAll ()
+      checkBag ()
+			if isBagFull () or not isLowLevel () then
+				stopWander ()
+				__WPL:setWaypointIndex(2)
+			end
+		end
+		
+		function startWander ()
+			settings.profile.friends	= {"Bubsitan"}				-- don't attack elite
+			settings.profile.mobs 		= {"Jungb\132r"}			-- farm mobs
+			changeProfileOption ("PATH_TYPE", 'wander')
+			changeProfileOption ("WANDER_RADIUS", 50)
+			changeProfileOption ("MAX_TARGET_DIST", 350)
+			__WPL:setForcedWaypointType ('NORMAL')
+		end
+		
+		if __WPL:getNearestWaypoint(player.X, player.Z)>=2 then startWander () end
+
+	]]></onload>
+	
+	<!-- #  1 --><waypoint x="-491" z="-8045" type="TRAVEL"><![CDATA[
+		__WPL:setDirection( WPT_FORWARD )
+		if isBagFull () or not isLowLevel () then loadLastPaths () end
+	]]></waypoint>
+	<!-- #  2 --><waypoint x="-200" z="-8444" type="TRAVEL"><![CDATA[
+		if not isBagFull () and isLowLevel () then
+			startWander ()
+			__WPL:setDirection( WPT_FORWARD )
+		else
+			stopWander ()
+			__WPL:setDirection( WPT_BACKWARD )
+		end
+	]]></waypoint>
+	<!-- #  3 --><waypoint x="-200" z="-8445"><![CDATA[
+		MyOnLeaveCombat ()
+		__WPL:setDirection( WPT_FORWARD )
+	]]></waypoint>
+	<!-- #  4 --><waypoint x="-225" z="-8625"><![CDATA[
+		MyOnLeaveCombat ()
+		__WPL:setDirection( WPT_BACKWARD )
+	]]></waypoint>
+</waypoints>

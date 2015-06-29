@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+		include ("../../includes/afterCrash.lua")
+	
+		charNames = {
+		 "Mainbänker","Foodbänker","Matsbänker","Manabänker","Steinbänker","Restebänker","Crapbänker",
+		 "Dailybänker","Kräuterbänker","Holzbänker","Erzbänker","Runenbänker","Statsbänker","Brisinga",		 
+		}
+		sendMountCard		= true
+
+		repeat zid = getZoneId (); yrest (200) until zid;
+		while zid==400 do	-- in house
+			message ('leave the house', true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		while not travelTo ('LogarHousemaid') do
+			message ('unable to go to logar', true);
+		end
+		mount ()
+
+		combatMode (false)
+		
+		function isFirstChar ()
+			return (getAcc ()==47 and getChar ()==7)
+		end
+		
+		function checkMailBox ()
+			message ("checking mailbox");
+			repeat
+				UMM_TakeMail()
+			until RoMScript("UMMMailManager.MailCount") == 0
+			RoMScript("HideUIPanel(UMMFrame);")
+		end
+		
+		function prepareItems ()
+			message ("preparing items");
+			local receipients		= {};
+			for i=2,#charNames do
+				table.insert (receipients, charNames[i])
+			end
+			
+			for i=1,#receipients do
+				inventory:update();
+				local item_200624		= inventory:itemTotalCount(200624)
+				local item_200609		= inventory:itemTotalCount(200609)
+				local text_200624		= RoMScript("TEXT('Sys200624_name')")
+				local text_200609		= RoMScript("TEXT('Sys200609_name')")
+				local text_203033		= RoMScript("TEXT('Sys203033_name')")
+				local num_203033		= ((inventory:itemTotalCount(203033)>0 and 1) or 0)
+				local num_200624		= 0
+				local num_200609		= 0
+				repeat
+					if item_200624 >= 5 or item_200609 >= 5 then
+						if item_200624 >= 5 then
+							item_200624 = item_200624 - 5
+							num_200624	= num_200624 + 5
+						end
+						if item_200609 >= 5 then
+							item_200609 = item_200609 - 5
+							num_200609	= num_200609 + 5
+						end
+					else
+						print ('not enought items', 0);
+						print ("\a\a\a");
+						yrest (5000)
+						return;
+					end
+				until (num_200624 + num_200609) == 50;
+				
+				message ("  -> "..receipients[i]..": "..text_200624.." ("..num_200624..") "..text_200609.." ("..num_200609..") "..text_203033.." ("..num_203033..")");
+				if num_200624>0 then
+					UMM_SendByNameOrId(receipients[i], 200624, num_200624) 
+					saveReport (num_200624..' '..text_200624..' sent to '..receipients[i])
+				end
+				if num_200609>0 then
+					UMM_SendByNameOrId(receipients[i], 200609, num_200609) 
+					saveReport (num_200609..' '..text_200609..' sent to '..receipients[i])
+				end
+				if num_203033>0 and sendMountCard then
+					UMM_SendByNameOrId(receipients[i], 203033, num_203033)
+					saveReport (num_203033..' '..text_203033..' sent to '..receipients[i])
+				end
+			end
+			RoMScript("HideUIPanel(UMMFrame);")
+		end
+		
+	]]></onload>
+	
+	<waypoint x="-433" z="-5971" tag="Hausmädchen"><![CDATA[
+		checkMailBox()
+		prepareItems() 
+		loadPaths("/TQ_return")
+	]]></waypoint>
+	
+</waypoints>

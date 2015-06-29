@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints type="TRAVEL" >
+<!-- Rock5's Course of Terror waypoint file with teleport -->
+<!--   version 1.81 . Thanks to lisa for original script  -->
+<onload><![CDATA[
+   --=== User Options ===--
+
+	local When_Finished = "/TQ_return"
+      -- "end" to end script, "relog" to log next survivalnext and "waypointfilename" to load that waypointfile.
+  ExitBeforeNextFile    = true   -- If you want it to exit game before loading next "waypointfilename".
+
+  CharList = {
+  }
+   --====================--
+
+
+   --====================--
+
+   function checkRelog()
+      -- Log result
+      local filename = getExecutionPath() .. "/logs/cot.log";
+      local file, err = io.open(filename, "a+");
+      if file then
+         file:write("Acc: "..RoMScript("GetAccountName()").."\tName: " ..string.format("%-10s",player.Name ).." \tDate: " .. os.date() ..
+         " \tShells gained/total: "..inventory:getItemCount(240181) - numshells.."/".. inventory:getItemCount(240181).. "\t" ..logentry .. "\n")
+         file:close();
+      end
+
+      if When_Finished == "relog" then
+         sendMacro("}LoginNextToon=true;a={")
+         sendMacro("Logout();");
+         waitForLoadingScreen();
+         loadPaths(__WPL.FileName);
+      elseif When_Finished == "charlist" then
+         SetCharList(CharList)
+         LoginNextChar()
+         loadPaths(__WPL.FileName);
+      elseif When_Finished == "end" then
+         error("Ending script",2)
+      else
+         -- Leave before continuing
+         if ExitBeforeNextFile == true then
+            local Malatina = 113120
+            local IWantToLeave = RoMScript("TEXT(\"SC_111813_YU_42\")")
+            local Confirm = RoMScript("TEXT(\"SC_OKAY\")")
+
+            -- Exit COT if still in COT
+            if getZoneId() == 353 and player:target_NPC(Malatina) then
+               ChoiceOptionByName(IWantToLeave)
+               ChoiceOptionByName(Confirm)
+               waitForLoadingScreen()
+               yrest(100)
+            end
+         end
+				 
+				if type (When_Finished)=='function' then
+					When_Finished ()
+				else
+					if not string.find(When_Finished,".", 1, true) then
+						When_Finished = When_Finished .. ".xml"
+					end
+					local filename = getExecutionPath() .. "/waypoints/" .. When_Finished
+					local file, err = io.open(filename, "r");
+					if file then
+						file:close();
+						loadPaths(When_Finished)
+					else
+						error("'When_Finished' option is invalid",0)
+					end
+				end
+      end
+  end
+
+   function checkaggro()
+      repeat
+         player:update()
+         if player.Battling then
+            local clown = player:findEnemy(true)
+            player.X = clown.X player.Z = clown.Z -- Temporarily change player coords so we can find nearest seal to mob
+            local seal = player:findNearestNameOrId(102384)
+            player:target(seal) -- kills the summoning portal and not the ghost clown.
+            player:fight()
+            yrest(1000) -- give a couple of seconds for the clown to disappear.
+            player:update()
+         end
+      until not player.Battling
+   end
+
+   function getallkeys()
+      local lastSealAddress = 0
+      repeat
+         player:update()
+         local seal = player:findNearestNameOrId(113112, lastSealAddress)
+         if seal then
+            -- goto seal
+            teleport(nil,nil,75)            -- go up to height if 75
+            teleport(seal.X, seal.Z, 75)   -- teleport to above seal
+            teleport(seal.X + 1, seal.Z, 57)   -- teleport in range to click seal
+
+            -- click seal
+            repeat
+               checkaggro()
+               player:target(seal)
+               yrest(100)
+               Attack()
+               yrest(1000)
+               player:update()
+            until player:findNearestNameOrId(113106) -- until a key appears
+
+            -- Remember last seal
+            lastSealAddress = seal.Address
+
+            -- Collect key
+            local keys = inventory:itemTotalCount(203027)
+
+            repeat
+               checkaggro()
+               player:target_Object(113106,nil,nil,true) -- harvests key
+            until inventory:itemTotalCount(203027) == keys + 1
+            yrest(500)
+
+         end
+      until gotAllKeys()
+   end
+
+   function gotogate()
+      teleport(nil,nil,75)          -- go up to height if 75
+      teleport(4080,3948.5,75)       -- teleport to above portal
+      teleport(4080,3974,30)       -- teleport into portal
+      player:faceDirection(3.14/2) -- Face forward
+      keyboardPress( settings.hotkeys.MOVE_FORWARD.key );
+
+      repeat
+         player:update()
+         dist = distance(player.X, player.Z, 4081, 3335)
+         yrest(700)
+      until 100 > dist
+      yrest(100)
+      player:update()
+      if 18 > player.Y then
+         print("\a")
+         local y = player.Y
+         for i = 1,20 do teleport(nil,nil,y+i) player:turnDirection(1) yrest(50) end
+         keyboardPress( settings.hotkeys.MOVE_FORWARD.key ); yrest(500)
+         player:update()
+         if 18 > player.Y then
+            print("\a\aplayer is stuck")
+            player:sleep()
+         end
+      end
+
+      printf("Distance checked and continuing.\n")
+   end
+
+   function gotAllKeys()
+      local room = currentRoom()
+      local keys = inventory:itemTotalCount(203027)
+      local keyGoal = (room == 1 and 1) or (room == 2 and 3) or (room == 3 and 6) or (room == 4 and 10)
+      return keys >= keyGoal
+   end
+
+   function currentRoom()
+      return memoryReadRepeat("int",getProc(), player.Address + 0x1cc)
+   end
+
+
+
+   if teleport_GetVersion == nil or  teleport_GetVersion() < 2.0 then
+      cprintf(cli.yellow,"This waypoint file requires the userfunction \"teleport\" version 2.0 or newer.\n")
+      error("You can download it from this address. http://www.solarstrike.net/phpBB3/viewtopic.php?f=27&t=2721",0)
+   end
+
+   numshells = inventory:getItemCount(240181)
+   logentry = nil
+   Malatina = GetIdName(111813)
+
+   table.insert(settings.profile.friends, "102382") -- adds the barrier to friend so doesn't try to kill it.
+   changeProfileOption("HARVEST_DISTANCE", 450);
+
+   local zoneid = RoMScript("GetZoneID()")
+   if zoneid ~= 353 then -- not in Course of Terror
+      RoMScript("TimeKeeperFrame:Hide()") -- Just in case it's still open from another minigame (bug)
+      if 50 > player.Level and (player.Level2 >= 50 or player.Level3 >= 50) then
+         -- Wait for user to change class
+         cprintf(cli.yellow,"If you want to earn Phirius Shells, change to your 50+ class before continuing.\n")
+         player:sleep()
+      end
+      if inventory:itemTotalCount(240181) > 950 then
+         -- Wait for user to use some shells.
+         cprintf(cli.yellow,"Reaching the maximum number of Phirius Shells (1000). Please spend some before continuing.\n")
+         player:sleep()
+         numshells = inventory:getItemCount(240181)
+      end
+      local empties = inventory:itemTotalCount(0)
+      if 10 > empties then
+         -- Wait for user to make some space in inventory.
+         cprintf(cli.yellow,"Not much space left in inventory. Are you sure you want to continue with only %d spaces left?\n",empties)
+         player:sleep()
+      end
+      if 30 > inventory:itemTotalCount(203038) then
+         print("Not enough Phirius Token Coins.")
+         logentry = "Not enough Phirius Token Coins."
+         checkRelog()
+         return
+      end
+
+      -- Try to find Malatina and teleport in
+			while not player:findNearestNameOrId(Malatina) do
+				travelTo ('VaranasCentral')
+			end
+			
+      if player:target_NPC(Malatina) then
+         yrest(1000)
+
+         if 2 > RoMScript("GetNumSpeakOption()") then -- try again
+            player:target_NPC(Malatina) yrest(100)
+         end
+
+         sendMacro("ChoiceOption(2);");
+         yrest(100)
+
+         if RoMScript("GetNumSpeakOption()") > 0 then -- enter game
+            sendMacro("ChoiceOption(1);");
+            if not waitForLoadingScreen(30) then
+               print("Failed to teleport into Course of Terror")
+               logentry = "Failed to teleport into Course of Terror."
+               checkRelog()
+            end
+            yrest(100)
+            __WPL:setWaypointIndex(__WPL:getNearestWaypoint(player.X,player.Z))
+         else
+            print("This character already did Course of Terror.")
+            logentry = "Already did Course of Terror."
+            checkRelog()
+         end
+      else
+         print("You are too far from Malatina")
+         logentry = "Too far from Malatina."
+         checkRelog()
+      end
+   end
+
+]]></onload>
+
+<!-- AT THE START POINT -->
+   <!-- # 1 --><waypoint x="4081" z="3340" y="18" tag="START">
+      if currentRoom() == 1 then -- Just arrived
+         if not RoMScript("TimeKeeperFrame:IsVisible()") then
+            player:target_NPC(Malatina);
+            yrest(100)
+            sendMacro("ChoiceOption(2);");
+            yrest(100)
+            sendMacro("ChoiceOption(1);");
+            repeat yrest(100) until RoMScript("TimeKeeperFrame:IsVisible()")
+         end
+      elseif currentRoom() > 4 then -- Finished. Open chests
+         --=== Create table for chests ===--
+         chests = {left = {}, right = {}}
+
+         local objectList = CObjectList();
+         objectList:update();
+         local objSize = objectList:size()
+
+         for i = 0,objSize do
+            local obj = objectList:getObject(i);
+            if obj.Id == 113137 or obj.Id == 113114 then
+               if obj.X > 4081 then -- right side
+                  table.insert(chests.right, table.copy(obj))
+               else -- left side
+                  table.insert(chests.left, table.copy(obj))
+               end
+            end
+         end
+
+         -- Sort chests
+         table.sort(chests.left, function(a,b) return b.Z > a.Z end)
+         table.sort(chests.right, function(a,b) return a.Z > b.Z end)
+
+         -- Get left side
+         for k,v in pairs(chests.left) do
+            player:target(v.Address);
+            Attack()
+            yrest(2000)
+            Attack()
+            if k == 1 then yrest(2000) Attack() end
+            repeat
+               yrest(2000)
+               player:update()
+            until not player.Casting
+            repeat yrest(500) player:update() until player.Stance== 0
+         end
+
+         -- Get right side
+         for k,v in pairs(chests.right) do
+            player:target(v.Address);
+            Attack()
+            yrest(2000)
+            Attack()
+            if k == 1 then yrest(2000) Attack() end
+            repeat
+               yrest(2000)
+               player:update()
+            until not player.Casting
+            repeat yrest(500) player:update() until player.Stance== 0
+         end
+
+         player:moveTo(CWaypoint(4081,3335))
+
+         local secondsleft = RoMScript("TimeKeeperFrame.startTime-GetTime()")
+         local mm = string.format("%2s", math.floor(secondsleft/ 60))
+         local ss = string.format("%02s", math.floor(math.fmod(secondsleft, 60)))
+         printf("Succeeded with %s:%s remaining.\n",mm,ss)
+         logentry = string.format("Succeeded with %s:%s remaining.",mm,ss)
+         checkRelog()
+      end
+   </waypoint>
+<!-- JUST BEFORE THE DOOR -->
+   <!-- # 2 --><waypoint x="4081" z="3499" y="18" >
+			--speed(75);
+		</waypoint>
+<!-- JUST AFTER THE DOOR -->
+   <!-- # 3 --><waypoint x="4081" z="3600" y="28" >
+      logentry = "Ran out of time." -- default
+      yrest(100)
+      fly()
+      getallkeys()
+      gotogate()
+      flyoff()
+      __WPL:setWaypointIndex(__WPL:findWaypointTag("START"));--speed(75);
+   </waypoint>
+</waypoints>

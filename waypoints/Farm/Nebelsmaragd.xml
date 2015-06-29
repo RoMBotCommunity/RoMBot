@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+		nebelsmaragd	= 112798
+		
+		changeProfileOption ('LOOT', false)
+		changeProfileOption ('TARGET_LEVELDIF_BELOW', 0)
+		
+		repeat zid = getZoneId (); yrest (200) until zid;
+		while zid==400 do	-- in house
+			message ('leave the house',  true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		while zid~=110 and zid~=1 and not travelTo ('Logar') do
+			message ('unable to go to Logar',  true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		if zid==1 then
+			mount ()
+		end
+		__WPL:setWaypointIndex (__WPL:getNearestWaypoint (player.X,  player.Z))
+		
+		function resetParty ()
+			local twink = RoMScript ("UnitName ('party1')")
+			RoMScript ("UninviteFromParty ('party1')")	yrest (1000)
+			waitForLoadingScreen (20)
+			RoMScript ("InviteByName ('"..twink.."')")	yrest (1000)
+		end
+		
+	]]></onload>
+	<!-- #  1 --><waypoint x="-1577" z="-5912" type="TRAVEL"/>
+	<!-- #  2 --><waypoint x="-1524" z="-5040" type="TRAVEL"/>
+	<!-- #  3 --><waypoint x="-1750" z="-4175" type="TRAVEL"/>
+	<!-- #  4 --><waypoint x="-2110" z="-3737" type="TRAVEL"/>
+	<!-- #  5 --><waypoint x="-2527" z="-3353" type="TRAVEL"/>
+	<!-- #  6 --><waypoint x="-2929" z="-3249" type="TRAVEL"/>
+	<!-- #  7 --><waypoint x="-3441" z="-3281" type="TRAVEL"/>
+	<!-- #  8 --><waypoint x="-3924" z="-3303" type="TRAVEL"/>
+	<!-- #  9 --><waypoint x="-4072" z="-3347" type="TRAVEL"/>
+	<!-- # 10 --><waypoint x="-4149" z="-3293" type="TRAVEL"/>
+	<!-- # 11 --><waypoint x="-4266" z="-2914" type="TRAVEL"/>
+	<!-- # 12 --><waypoint x="-4452" z="-2943" type="TRAVEL"/>
+	<!-- # 13 --><waypoint x="-4578" z="-2876" type="TRAVEL"/>
+	<!-- # 14 --><waypoint x="-4636" z="-2902" type="TRAVEL" tag="retry"><![CDATA[
+		player:dismount ()
+	]]></waypoint>
+	<!-- # 14 --><waypoint x="-4651" z="-2984" type="TRAVEL"/>
+	<!-- #  1 --><waypoint x="-4659" z="-2984" type="NORMAL"><![CDATA[
+		player:dismount ()
+		keyboardHold (settings.hotkeys.MOVE_FORWARD.key)
+		yrest (1000)
+		keyboardRelease (settings.hotkeys.MOVE_FORWARD.key)
+		waitForLoadingScreen (10)
+		if getZoneId () ~= 110 then
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("retry"))
+		end
+	]]></waypoint>
+	<!-- #  2 --><waypoint x="1765" z="1371" type="TRAVEL"/>
+	<!-- #  3 --><waypoint x="1773" z="1501" type="TRAVEL"/>
+	<!-- #  4 --><waypoint x="1947" z="1850" type="TRAVEL"/>
+	<!-- #  5 --><waypoint x="1959" z="1975" type="TRAVEL"/>
+	<!-- #  6 --><waypoint x="2023" z="2032" type="TRAVEL"/>
+	<!-- #  7 --><waypoint x="2312" z="2039" type="TRAVEL"/>
+	<!-- #  8 --><waypoint x="2312" z="2039" type="NORMAL"><![CDATA[
+			player:target_Object (nebelsmaragd, 3000) -- 1
+	]]></waypoint>
+	<!-- #  9 --><waypoint x="2521" z="1688" type="TRAVEL"/>
+	<!-- # 10 --><waypoint x="2751" z="1566" type="TRAVEL"/>
+	<!-- # 11 --><waypoint x="2829" z="1715" type="TRAVEL"/>
+	<!-- # 12 --><waypoint x="2860" z="2101" type="TRAVEL"/>
+	<!-- # 13 --><waypoint x="2860" z="2101" type="NORMAL"><![CDATA[
+			player:target_Object (nebelsmaragd, 3000) -- 2
+	]]></waypoint>
+	<!-- # 14 --><waypoint x="2859" z="2025" type="TRAVEL"/>
+	<!-- # 15 --><waypoint x="3048" z="2038" type="TRAVEL"/>
+	<!-- # 16 --><waypoint x="3186" z="2042" type="TRAVEL"/>
+	<!-- # 17 --><waypoint x="3193" z="1816" type="TRAVEL"/>
+	<!-- # 18 --><waypoint x="3243" z="1620" type="TRAVEL"/>
+	<!-- # 19 --><waypoint x="3385" z="1573" type="TRAVEL"/>
+	<!-- # 20 --><waypoint x="3548" z="1477" type="TRAVEL"/>
+	<!-- # 21 --><waypoint x="3548" z="1477" type="NORMAL"><![CDATA[
+			player:target_Object (nebelsmaragd, 3000) -- 3
+	]]></waypoint>
+	<!-- # 22 --><waypoint x="3384" z="1405" type="TRAVEL"/>
+	<!-- # 23 --><waypoint x="3259" z="1331" type="TRAVEL"/>
+	<!-- # 24 --><waypoint x="3361" z="1189" type="TRAVEL"/>
+	<!-- # 25 --><waypoint x="3514" z="965" type="TRAVEL"/>
+	<!-- # 26 --><waypoint x="3467" z="921" type="TRAVEL"/>
+	<!-- # 27 --><waypoint x="3467" z="921" type="NORMAL"><![CDATA[
+			player:target_Object (nebelsmaragd, 3000) -- 4
+	]]></waypoint>
+	<!-- # 28 --><waypoint x="3331" z="909" type="TRAVEL"/>
+	<!-- # 29 --><waypoint x="3080" z="1111" type="TRAVEL"/>
+	<!-- # 30 --><waypoint x="3035" z="1301" type="TRAVEL"/>
+	<!-- # 31 --><waypoint x="3035" z="1301" type="NORMAL"><![CDATA[
+			player:target_Object (nebelsmaragd, 3000) -- 5
+	]]></waypoint>
+	<!-- # 32 --><waypoint x="3016" z="1190" type="TRAVEL"/>
+	<!-- # 33 --><waypoint x="2790" z="941" type="TRAVEL"/>
+	<!-- # 34 --><waypoint x="2618" z="890" type="TRAVEL"/>
+	<!-- # 35 --><waypoint x="2618" z="890" type="NORMAL"><![CDATA[
+			player:target_Object (nebelsmaragd, 3000) -- 6
+	]]></waypoint>
+	<!-- # 36 --><waypoint x="2473" z="1140" type="TRAVEL"/>
+	<!-- # 37 --><waypoint x="2387" z="997" type="TRAVEL"/>
+	<!-- # 38 --><waypoint x="2387" z="997" type="NORMAL"><![CDATA[
+			player:target_Object (nebelsmaragd, 3000) -- 7
+	]]></waypoint>
+	<!-- # 39 --><waypoint x="2281" z="1030" type="TRAVEL"/>
+	<!-- # 40 --><waypoint x="2253" z="845" type="TRAVEL"/>
+	<!-- # 41 --><waypoint x="2315" z="657" type="TRAVEL"/>
+	<!-- # 42 --><waypoint x="2036" z="550" type="TRAVEL"/>
+	<!-- # 43 --><waypoint x="1949" z="718" type="TRAVEL"/>
+	<!-- # 44 --><waypoint x="1949" z="718" type="NORMAL"><![CDATA[
+			player:target_Object (nebelsmaragd, 3000) -- 8
+	]]></waypoint>
+	<!-- # 45 --><waypoint x="1725" z="716" type="TRAVEL"/>
+	<!-- # 46 --><waypoint x="1555" z="783" type="TRAVEL"/>
+	<!-- # 47 --><waypoint x="1590" z="860" type="TRAVEL"/>
+	<!-- # 48 --><waypoint x="1693" z="914" type="TRAVEL"/>
+	<!-- # 49 --><waypoint x="1693" z="914" type="NORMAL"><![CDATA[
+			player:target_Object (nebelsmaragd, 3000) -- 9
+	]]></waypoint>
+	<!-- # 50 --><waypoint x="1516" z="1045" type="NORMAL"><![CDATA[
+		changeProfileOption ('LOOT', true)
+		changeProfileOption ('TARGET_LEVELDIF_BELOW', player.Level)
+		player:target (101462)
+		Attack ()
+		player:loot ()
+		changeProfileOption ('LOOT', false)
+		changeProfileOption ('TARGET_LEVELDIF_BELOW', 0)
+	]]></waypoint>
+	<!-- # 51 --><waypoint x="1419" z="1204" type="TRAVEL"/>
+	<!-- # 52 --><waypoint x="1428" z="1220" type="TRAVEL"/>
+	<!-- # 53 --><waypoint x="1428" z="1220" type="NORMAL"><![CDATA[
+			player:target_Object (nebelsmaragd, 3000) -- 10
+			resetParty ()
+			loadPaths (__WPL.FileName)
+	]]></waypoint>
+</waypoints>

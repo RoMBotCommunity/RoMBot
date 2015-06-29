@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+		include ("../../includes/afterCrash.lua")
+	
+		questID								= 425186
+		questNPC							= 119733
+		questItem							= 119791
+		complete, numTqCards	= dayliesComplete ();
+
+		DN_AutoQuest (questID)
+
+		__WPL:setForcedWaypointType("TRAVEL")
+		combatMode (false)
+		
+		repeat zid = getZoneId (); yrest (200) until zid;
+		while zid==400 do	-- in house
+			message ('leave the house',  true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		while zid~=22 and not travelTo ('Rorazan') do
+			message ('unable to go to Rorazan',  true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		
+	]]></onload>
+	<!-- #  1 --><waypoint x="-20708" z="-22750"><![CDATA[
+		if complete then
+			print ('\a'); yrest (5000);
+			loadPaths ('/TQ_return')
+		end
+	]]></waypoint>
+	<!-- #  2 --><waypoint x="-21128" z="-22909"/>
+	<!-- #  3 --><waypoint x="-21548" z="-22940"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD);
+		if getQuestStatus (questID)=='complete' then
+			player:target_NPC (questNPC)
+			CompleteQuestByName (questID)
+		end
+		complete,       numTqCards	= dayliesComplete (numTqCards)
+		if complete then
+			__WPL:setDirection (WPT_BACKWARD)
+		end
+		if getQuestStatus (questID)=='not accepted' then
+			player:target_NPC (questNPC)
+			AcceptQuestByName (questID)
+		end
+	]]></waypoint>
+	<!-- #  4 --><waypoint x="-21673" z="-23113" />
+	<!-- #  5 --><waypoint x="-21743" z="-23056"><![CDATA[
+		while getQuestStatus (questID)=='incomplete' do
+			player:target_Object (questItem)
+		end
+		__WPL:setDirection (WPT_BACKWARD)
+	]]></waypoint>
+</waypoints>

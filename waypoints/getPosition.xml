@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints>
+	<onload><![CDATA[
+	
+	local target 				= player:getTarget() 
+	local zoneName			= getZoneName() or '<unknown>'
+	local zoneLocalName	= getZoneLocalName () or '<unknown>'
+	
+	cprintf (cli.green, "\nZone:      ")	cprintf (cli.yellow, getZoneId()..' - '..zoneLocalName..' - '..zoneName)
+	cprintf (cli.green, "\nX:         ")	cprintf (cli.yellow, math.floor (player.X))
+	cprintf (cli.green, "\nZ:         ")	cprintf (cli.yellow, math.floor (player.Z))
+	cprintf (cli.green, "\nY:         ")	cprintf (cli.yellow, math.floor (player.Y))
+	cprintf (cli.green, "\nTarget:    ")	cprintf (cli.yellow, (target and target.Name) or '<unknown>')
+	cprintf (cli.green, "\nTarget-ID: ")	cprintf (cli.yellow, (target and target.Id) or '<unknown>')
+	print ("\n")
+
+	]]></onload>
+</waypoints>

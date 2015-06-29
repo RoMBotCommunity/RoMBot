@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints>
+	<onload><![CDATA[
+		include ("../../includes/afterCrash.lua")
+		
+		questID								= 424154
+		questNPC							= 118057
+		questItem							= 118048
+		numTqCards						= CheckTqCardCount ()
+		complete,  numTqCards	= dayliesComplete (numTqCards);
+		combatMode (false)
+		
+		DN_AutoQuest (questID)
+
+		zID = getZoneId ()
+		if zID~=14 then
+			if not travelTo ('Heffner') then
+				error ('',  0);
+			else
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("Heffner"))
+			end
+		end
+		
+	]]></onload>
+	<!--#  1--><waypoint x="-6948" z="-3652" tag="Nicole Rebecca"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD);
+		if complete then
+			if checkRelog and type (checkRelog)=='function' then 
+				checkRelog ()
+				return
+			else
+				message ('finished',  false,  true);
+			end
+		end
+	]]></waypoint>
+	
+	<!--#  2--><waypoint x="-6360" z="-3886" tag="Heffner"><![CDATA[
+		if not complete then 
+			travelTo ('RuinsResearch')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("snoop_ruines"))
+		else
+			__WPL:setDirection (WPT_BACKWARD);
+		end
+	]]></waypoint>
+	
+	<!--#  3--><waypoint x="989" z="13370" tag="snoop_ruines"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD);
+		if complete then
+			travelTo ('Heffner')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Heffner"))
+		else
+			player:mount ()
+		end
+	]]></waypoint>
+	<!--#  4--><waypoint x="1139" z="12893"/>
+	<!--#  5--><waypoint x="1355" z="12580"/>
+	<!--#  6--><waypoint x="1624" z="12556"/>
+	<!--#  7--><waypoint x="2043" z="12228"/>
+	<!--#  8--><waypoint x="2397" z="11777"/>
+	<!--#  9--><waypoint x="2916" z="11264" tag="restart"><![CDATA[
+		if getQuestStatus (questID)=='complete' then
+			player:target_NPC (questNPC);
+			CompleteQuestByName (questID)
+		end
+		complete,  numTqCards = dayliesComplete (numTqCards);
+		if complete then
+			__WPL:setDirection (WPT_BACKWARD);
+			return
+		else
+			player:target_NPC (questNPC);
+			AcceptQuestByName (questID)
+		end
+		player:mount ()
+	]]></waypoint>
+	<!--# 10--><waypoint x="3165" z="10866"/>
+	<!--# 11--><waypoint x="3164" z="10865"/>
+	<!--# 12--><waypoint x="3200" z="10865"><![CDATA[
+		while not player:target_Object (questItem,  5000) do
+			yrest (2000)
+		end
+		player:mount ()
+	]]></waypoint>
+	<!--# 13--><waypoint x="3260" z="10872"/>
+	<!--# 14--><waypoint x="3275" z="10984"/>
+	<!--# 15--><waypoint x="3407" z="10959"/>
+	<!--# 16--><waypoint x="3824" z="10898"/>
+	<!--# 17--><waypoint x="3966" z="10918"/>
+	<!--# 18--><waypoint x="3969" z="10938"><![CDATA[
+		while not player:target_Object (questItem,  5000) do
+			yrest (2000)
+		end
+	]]></waypoint>
+	<!--# 19--><waypoint x="3979" z="11209"/>
+	<!--# 20--><waypoint x="3945" z="11212"><![CDATA[
+		while not player:target_Object (questItem,  5000) do
+			yrest (2000)
+		end
+		player:mount ()
+	]]></waypoint>
+	<!--# 21--><waypoint x="3588" z="11400"/>
+	<!--# 22--><waypoint x="3580" z="11572"/>
+	<!--# 23--><waypoint x="3660" z="11737"/>
+	<!--# 24--><waypoint x="3661" z="11738"><![CDATA[
+		while getQuestStatus (questID)=='incomplete' do
+			player:target_Object (questItem,  5000,  true)
+			yrest (2000)
+		end
+		player:mount ()
+	]]></waypoint>
+	<!--# 25--><waypoint x="3398" z="11700"/>
+	<!--# 26--><waypoint x="3206" z="11673"/>
+	<!--# 27--><waypoint x="2969" z="11348"/>
+	<!--# 28--><waypoint x="2916" z="11264"><![CDATA[
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("restart"))
+	]]></waypoint>
+</waypoints>

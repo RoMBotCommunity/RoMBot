@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints type="RUN">
+<onLoad><![CDATA[
+         startGMDetect()
+		 ]]>
+		 setwindow("Iron Ore")
+		 		 	changeProfileOption("HARVEST_WOOD", false)
+					 	changeProfileOption("HARVEST_HERB", false)
+								 	changeProfileOption("HARVEST_ORE", true)
+											 		 	changeProfileOption("LOOT", false)
+																												changeProfileOption("playerDETECT", true);
+														    function beingfollowed()
+															player:rest();
+	player:sleep();
+	end
+		 </onLoad>
+	<!-- #  1 --><waypoint x="-1578" z="9715" y="153">player:harvest();</waypoint>
+	<!-- #  2 --><waypoint x="-1759" z="9770" y="76">	</waypoint>
+	<!-- #  3 --><waypoint x="-1961" z="10227" y="23">	</waypoint>
+	<!-- #  4 --><waypoint x="-2074" z="10129" y="75">	</waypoint>
+	<!-- #  5 --><waypoint x="-2182" z="10100" y="78">player:harvest();</waypoint>
+	<!-- #  6 --><waypoint x="-2240" z="10432" y="-3">player:harvest();</waypoint>
+	<!-- #  7 --><waypoint x="-2428" z="10455" y="-13">	</waypoint>
+	<!-- #  8 --><waypoint x="-2408" z="10521" y="37">player:harvest();</waypoint>
+	<!-- #  9 --><waypoint x="-2536" z="10490" y="-12">	</waypoint>
+	<!-- # 10 --><waypoint x="-2607" z="10542" y="14">	</waypoint>
+	<!-- # 11 --><waypoint x="-2624" z="10630" y="19">player:harvest();</waypoint>
+	<!-- # 12 --><waypoint x="-2894" z="10705" y="6">	</waypoint>
+	<!-- # 13 --><waypoint x="-3067" z="10796" y="11">	</waypoint>
+	<!-- # 14 --><waypoint x="-3372" z="10689" y="33">	</waypoint>
+	<!-- # 15 --><waypoint x="-3364" z="10586" y="93"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- # 16 --><waypoint x="-3279" z="10591" y="96">player:harvest();</waypoint>
+	<!-- # 17 --><waypoint x="-3017" z="10182" y="47">	</waypoint>
+	<!-- # 18 --><waypoint x="-2962" z="10128" y="80">	</waypoint>
+	<!-- # 19 --><waypoint x="-2891" z="10163" y="85">player:harvest();</waypoint>
+	<!-- # 20 --><waypoint x="-2690" z="9763" y="25">	</waypoint>
+	<!-- # 21 --><waypoint x="-2627" z="9704" y="63">player:harvest();</waypoint>
+	<!-- # 22 --><waypoint x="-2932" z="9248" y="-24">	</waypoint>
+	<!-- # 23 --><waypoint x="-2838" z="9073" y="24">	</waypoint>
+	<!-- # 24 --><waypoint x="-2954" z="9037" y="75">	</waypoint>
+	<!-- # 25 --><waypoint x="-3069" z="9048" y="96">player:harvest();</waypoint>
+	<!-- # 26 --><waypoint x="-3228" z="9713" y="97">player:harvest();</waypoint>
+	<!-- # 27 --><waypoint x="-3668" z="9998" y="14">	</waypoint>
+	<!-- # 28 --><waypoint x="-3846" z="10053" y="65">	</waypoint>
+	<!-- # 29 --><waypoint x="-3845" z="10114" y="72">	</waypoint>
+	<!-- # 30 --><waypoint x="-3778" z="10103" y="96">player:harvest();</waypoint>
+	<!-- # 31 --><waypoint x="-3925" z="10316" y="39">	</waypoint>
+	<!-- # 32 --><waypoint x="-3806" z="10565" y="36">	</waypoint>
+	<!-- # 33 --><waypoint x="-3852" z="10651" y="46">	</waypoint>
+	<!-- # 34 --><waypoint x="-4026" z="10570" y="108"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- # 35 --><waypoint x="-4046" z="10454" y="125">player:harvest();</waypoint>
+	<!-- # 36 --><waypoint x="-4000" z="10910" y="49">player:harvest();</waypoint>
+	<!-- # 37 --><waypoint x="-4117" z="10864" y="10">	</waypoint>
+	<!-- # 38 --><waypoint x="-4383" z="10857" y="12">	</waypoint>
+	<!-- # 39 --><waypoint x="-4441" z="11019" y="29">player:harvest();</waypoint>
+	<!-- # 40 --><waypoint x="-4398" z="10647" y="3">	</waypoint>
+	<!-- # 41 --><waypoint x="-4158" z="9962" y="-19">	</waypoint>
+	<!-- # 42 --><waypoint x="-3771" z="9460" y="28">	</waypoint>
+	<!-- # 43 --><waypoint x="-3631" z="9376" y="100">player:harvest();</waypoint>
+	<!-- # 44 --><waypoint x="-3821" z="9184" y="119">player:harvest();</waypoint>
+	<!-- # 45 --><waypoint x="-4005" z="8865" y="26">	</waypoint>
+	<!-- # 46 --><waypoint x="-3971" z="8759" y="53">player:harvest();</waypoint>
+	<!-- # 47 --><waypoint x="-3893" z="8686" y="68">	</waypoint>
+	<!-- # 48 --><waypoint x="-3639" z="8695" y="65">player:harvest();</waypoint>
+	<!-- # 49 --><waypoint x="-3544" z="8732" y="92">player:harvest();</waypoint>
+	<!-- # 50 --><waypoint x="-3584" z="8301" y="51">	</waypoint>
+	<!-- # 51 --><waypoint x="-3524" z="8148" y="68">	</waypoint>
+	<!-- # 52 --><waypoint x="-3602" z="8069" y="79">	</waypoint>
+	<!-- # 53 --><waypoint x="-3718" z="8177" y="123">player:harvest();</waypoint>
+	<!-- # 54 --><waypoint x="-3462" z="7637" y="35">	</waypoint>
+	<!-- # 55 --><waypoint x="-3360" z="7430" y="0">player:harvest();</waypoint>
+	<!-- # 56 --><waypoint x="-3388" z="7526" y="27">	</waypoint>
+	<!-- # 57 --><waypoint x="-3376" z="7690" y="29">	</waypoint>
+	<!-- # 58 --><waypoint x="-3333" z="7968" y="28">	</waypoint>
+	<!-- # 59 --><waypoint x="-3278" z="8105" y="45">	</waypoint>
+	<!-- # 60 --><waypoint x="-3149" z="8118" y="105">player:harvest();</waypoint>
+	<!-- # 61 --><waypoint x="-3097" z="8499" y="57">	</waypoint>
+	<!-- # 62 --><waypoint x="-3086" z="8637" y="62"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- # 63 --><waypoint x="-2954" z="8691" y="68">	</waypoint>
+	<!-- # 64 --><waypoint x="-2894" z="8585" y="140">	</waypoint>
+	<!-- # 65 --><waypoint x="-2914" z="8590" y="138">player:harvest();</waypoint>
+	<!-- # 66 --><waypoint x="-2683" z="8457" y="68">	</waypoint>
+	<!-- # 67 --><waypoint x="-2516" z="8416" y="130">player:harvest();</waypoint>
+	<!-- # 68 --><waypoint x="-2373" z="8646" y="37">player:harvest();</waypoint>
+	<!-- # 69 --><waypoint x="-2422" z="8951" y="16">	</waypoint>
+	<!-- # 70 --><waypoint x="-1991" z="9204" y="18">player:harvest();</waypoint>
+	<!-- # 71 --><waypoint x="-2303" z="9544" y="54">player:harvest();</waypoint>
+	<!-- # 72 --><waypoint x="-1973" z="9657" y="30">	</waypoint>
+	<!-- # 73 --><waypoint x="-947" z="9148" y="93">	</waypoint>
+	<!-- # 74 --><waypoint x="-520" z="8808" y="17">	</waypoint>
+	<!-- # 75 --><waypoint x="-390" z="8791" y="11">	</waypoint>
+	<!-- # 76 --><waypoint x="-645" z="8425" y="89">player:harvest();</waypoint>
+	<!-- # 77 --><waypoint x="-563" z="8470" y="89">	</waypoint>
+	<!-- # 78 --><waypoint x="-344" z="8358" y="70">	</waypoint>
+	<!-- # 79 --><waypoint x="-343" z="8188" y="66">player:harvest();</waypoint>
+	<!-- # 80 --><waypoint x="-96" z="8154" y="66">	</waypoint>
+	<!-- # 81 --><waypoint x="17" z="8186" y="110">	</waypoint>
+	<!-- # 82 --><waypoint x="142" z="8094" y="48">player:harvest();</waypoint>
+	<!-- # 83 --><waypoint x="114" z="8032" y="64">player:harvest();</waypoint>
+	<!-- # 84 --><waypoint x="415" z="8166" y="32">player:harvest();</waypoint>
+	<!-- # 85 --><waypoint x="484" z="8205" y="14">player:harvest();</waypoint>
+	<!-- # 86 --><waypoint x="772" z="8341" y="-13"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- # 87 --><waypoint x="909" z="8386" y="4">player:harvest();</waypoint>
+	<!-- # 88 --><waypoint x="852" z="8304" y="-4">	</waypoint>
+	<!-- # 89 --><waypoint x="905" z="8229" y="2">	</waypoint>
+	<!-- # 90 --><waypoint x="785" z="7959" y="67">player:harvest();</waypoint>
+	<!-- # 91 --><waypoint x="1078" z="7973" y="65">	</waypoint>
+	<!-- # 92 --><waypoint x="1224" z="7916" y="96">player:harvest();</waypoint>
+	<!-- # 93 --><waypoint x="1359" z="7873" y="37">	</waypoint>
+	<!-- # 94 --><waypoint x="1423" z="7784" y="58">player:harvest();</waypoint>
+	<!-- # 95 --><waypoint x="1601" z="7706" y="44">	</waypoint>
+	<!-- # 96 --><waypoint x="1811" z="7616" y="40">	</waypoint>
+	<!-- # 97 --><waypoint x="1902" z="7420" y="56">player:harvest();</waypoint>
+	<!-- # 98 --><waypoint x="2014" z="7517" y="101">	</waypoint>
+	<!-- # 99 --><waypoint x="2092" z="7455" y="119">	</waypoint>
+	<!-- #100 --><waypoint x="2154" z="7450" y="151">	</waypoint>
+	<!-- #101 --><waypoint x="2177" z="7449" y="153">player:harvest();</waypoint>
+	<!-- #102 --><waypoint x="2297" z="7564" y="96">player:harvest();</waypoint>
+	<!-- #103 --><waypoint x="2374" z="7447" y="32">	</waypoint>
+	<!-- #104 --><waypoint x="2354" z="7228" y="50">	</waypoint>
+	<!-- #105 --><waypoint x="2460" z="7219" y="90">	</waypoint>
+	<!-- #106 --><waypoint x="2473" z="7255" y="101">player:harvest();</waypoint>
+	<!-- #107 --><waypoint x="2419" z="6728" y="49">player:harvest();</waypoint>
+	<!-- #108 --><waypoint x="2489" z="6736" y="26">	</waypoint>
+	<!-- #109 --><waypoint x="2503" z="6862" y="54"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- #110 --><waypoint x="2740" z="7060" y="68">	</waypoint>
+	<!-- #111 --><waypoint x="2811" z="7166" y="90">player:harvest();</waypoint>
+	<!-- #112 --><waypoint x="3017" z="7285" y="27">	</waypoint>
+	<!-- #113 --><waypoint x="3113" z="7258" y="74">	</waypoint>
+	<!-- #114 --><waypoint x="3147" z="7302" y="111">player:harvest();</waypoint>
+	<!-- #115 --><waypoint x="3126" z="7600" y="59">	</waypoint>
+	<!-- #116 --><waypoint x="3065" z="7657" y="88">	</waypoint>
+	<!-- #117 --><waypoint x="3038" z="7778" y="22">player:harvest();</waypoint>
+	<!-- #118 --><waypoint x="3181" z="7865" y="1">	</waypoint>
+	<!-- #119 --><waypoint x="3297" z="7794" y="6">	</waypoint>
+	<!-- #120 --><waypoint x="3250" z="7716" y="39">player:harvest();</waypoint>
+	<!-- #121 --><waypoint x="3418" z="7675" y="-11">	</waypoint>
+	<!-- #122 --><waypoint x="3669" z="7610" y="23">	</waypoint>
+	<!-- #123 --><waypoint x="3611" z="7505" y="78">	</waypoint>
+	<!-- #124 --><waypoint x="3626" z="7449" y="120">	</waypoint>
+	<!-- #125 --><waypoint x="3649" z="7340" y="124">player:harvest();</waypoint>
+	<!-- #126 --><waypoint x="3645" z="7120" y="106">player:harvest();</waypoint>
+	<!-- #127 --><waypoint x="3946" z="6932" y="37">	</waypoint>
+	<!-- #128 --><waypoint x="4036" z="6935" y="63">	</waypoint>
+	<!-- #129 --><waypoint x="4099" z="6916" y="97">	</waypoint>
+	<!-- #130 --><waypoint x="4124" z="6839" y="89">player:harvest();</waypoint>
+	<!-- #131 --><waypoint x="4294" z="6711" y="6">	</waypoint>
+	<!-- #132 --><waypoint x="4346" z="6341" y="65"> player:harvest();	</waypoint>
+	<!-- #133 --><waypoint x="4476" z="6339" y="117">	</waypoint>
+	<!-- #134 --><waypoint x="4532" z="6473" y="111">player:harvest();</waypoint>
+	<!-- #135 --><waypoint x="4789" z="6177" y="54"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- #136 --><waypoint x="4837" z="6229" y="79">player:harvest();</waypoint>
+	<!-- #137 --><waypoint x="5283" z="6470" y="15">player:harvest();</waypoint>
+	<!-- #138 --><waypoint x="5318" z="6535" y="42">player:harvest();</waypoint>
+	<!-- #139 --><waypoint x="4961" z="6807" y="9">	</waypoint>
+	<!-- #140 --><waypoint x="4886" z="7117" y="2">	</waypoint>
+	<!-- #141 --><waypoint x="5169" z="7265" y="4">player:harvest();</waypoint>
+	<!-- #142 --><waypoint x="4689" z="7485" y="-10">	</waypoint>
+	<!-- #143 --><waypoint x="4482" z="7574" y="18">	</waypoint>
+	<!-- #144 --><waypoint x="4241" z="7361" y="61">player:harvest();</waypoint>
+	<!-- #145 --><waypoint x="4255" z="7630" y="92">	</waypoint>
+	<!-- #146 --><waypoint x="4311" z="7638" y="102">player:harvest();</waypoint>
+	<!-- #147 --><waypoint x="4047" z="7799" y="-8">	</waypoint>
+	<!-- #148 --><waypoint x="4028" z="7964" y="23">	</waypoint>
+	<!-- #149 --><waypoint x="3906" z="7976" y="60">	</waypoint>
+	<!-- #150 --><waypoint x="3791" z="7979" y="75">player:harvest();</waypoint>
+	<!-- #151 --><waypoint x="3772" z="8039" y="90">	</waypoint>
+	<!-- #152 --><waypoint x="3828" z="8096" y="95">	</waypoint>
+	<!-- #153 --><waypoint x="4188" z="8031" y="-18">player:harvest();</waypoint>
+	<!-- #154 --><waypoint x="4408" z="8323" y="26">	</waypoint>
+	<!-- #155 --><waypoint x="4471" z="8417" y="49">	</waypoint>
+	<!-- #156 --><waypoint x="4568" z="8309" y="95">player:harvest();</waypoint>
+	<!-- #157 --><waypoint x="4733" z="7991" y="-33">	</waypoint>
+	<!-- #158 --><waypoint x="4961" z="7985" y="27"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- #159 --><waypoint x="4978" z="7911" y="56">	</waypoint>
+	<!-- #160 --><waypoint x="5111" z="7911" y="134">	</waypoint>
+	<!-- #161 --><waypoint x="5143" z="7877" y="133">player:harvest();</waypoint>
+	<!-- #162 --><waypoint x="5111" z="8080" y="106">player:harvest();</waypoint>
+	<!-- #163 --><waypoint x="5140" z="7932" y="143">	</waypoint>
+	<!-- #164 --><waypoint x="4983" z="7714" y="54">player:harvest();</waypoint>
+	<!-- #165 --><waypoint x="5199" z="7278" y="1">player:harvest();</waypoint>
+	<!-- #166 --><waypoint x="5429" z="7517" y="-21">	</waypoint>
+	<!-- #167 --><waypoint x="5782" z="7718" y="-9">	</waypoint>
+	<!-- #168 --><waypoint x="5790" z="7995" y="33">	</waypoint>
+	<!-- #169 --><waypoint x="5548" z="8095" y="101">player:harvest();</waypoint>
+	<!-- #170 --><waypoint x="5359" z="8261" y="0">player:harvest();</waypoint>
+	<!-- #171 --><waypoint x="5423" z="8376" y="-3">	</waypoint>
+	<!-- #172 --><waypoint x="5177" z="8662" y="-46">	</waypoint>
+	<!-- #173 --><waypoint x="4930" z="8560" y="-35">player:harvest();</waypoint>
+	<!-- #174 --><waypoint x="5417" z="8616" y="-77">player:harvest();</waypoint>
+	<!-- #175 --><waypoint x="5758" z="8677" y="-55">player:harvest();</waypoint>
+	<!-- #176 --><waypoint x="5766" z="8732" y="-47">	</waypoint>
+	<!-- #177 --><waypoint x="5816" z="8731" y="-13">	</waypoint>
+	<!-- #178 --><waypoint x="5840" z="8644" y="10">player:harvest();</waypoint>
+	<!-- #179 --><waypoint x="6116" z="8665" y="-8">	</waypoint>
+	<!-- #180 --><waypoint x="6860" z="8765" y="0">	</waypoint>
+	<!-- #181 --><waypoint x="7071" z="8845" y="63">player:harvest();</waypoint>
+	<!-- #182 --><waypoint x="6957" z="8945" y="26">	</waypoint>
+	<!-- #183 --><waypoint x="6726" z="9229" y="22"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- #184 --><waypoint x="6783" z="9338" y="22">	</waypoint>
+	<!-- #185 --><waypoint x="6849" z="9341" y="47">player:harvest();</waypoint>
+	<!-- #186 --><waypoint x="6618" z="9611" y="-78">	</waypoint>
+	<!-- #187 --><waypoint x="6215" z="9768" y="-74">	</waypoint>
+	<!-- #188 --><waypoint x="6187" z="9823" y="-47">player:harvest();</waypoint>
+	<!-- #189 --><waypoint x="6089" z="9410" y="-65">	</waypoint>
+	<!-- #190 --><waypoint x="6090" z="9338" y="-61">player:harvest();</waypoint>
+	<!-- #191 --><waypoint x="5957" z="9431" y="-78">	</waypoint>
+	<!-- #192 --><waypoint x="5709" z="9608" y="-10">	</waypoint>
+	<!-- #193 --><waypoint x="5830" z="9673" y="-22">player:harvest();</waypoint>
+	<!-- #194 --><waypoint x="5421" z="9448" y="-7">player:harvest();</waypoint>
+	<!-- #195 --><waypoint x="5224" z="9688" y="-76">	</waypoint>
+	<!-- #196 --><waypoint x="4826" z="9958" y="2">player:harvest();</waypoint>
+	<!-- #197 --><waypoint x="4947" z="9780" y="-2">player:harvest();</waypoint>
+	<!-- #198 --><waypoint x="4984" z="9721" y="14">player:harvest();</waypoint>
+	<!-- #199 --><waypoint x="4948" z="9421" y="10">player:harvest();</waypoint>
+	<!-- #200 --><waypoint x="4773" z="9401" y="-31">	</waypoint>
+	<!-- #201 --><waypoint x="4650" z="9179" y="-47">player:harvest();</waypoint>
+	<!-- #202 --><waypoint x="4333" z="8837" y="-35">	</waypoint>
+	<!-- #203 --><waypoint x="4333" z="8875" y="-33">	</waypoint>
+	<!-- #204 --><waypoint x="4233" z="8820" y="-26">	</waypoint>
+	<!-- #205 --><waypoint x="4081" z="8728" y="-16"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- #206 --><waypoint x="3918" z="8635" y="-9">	</waypoint>
+	<!-- #207 --><waypoint x="3903" z="8584" y="-9">player:harvest();</waypoint>
+	<!-- #208 --><waypoint x="3886" z="8537" y="-9">	</waypoint>
+	<!-- #209 --><waypoint x="3922" z="8491" y="-9">	</waypoint>
+	<!-- #210 --><waypoint x="4192" z="8043" y="-24">player:harvest();</waypoint>
+	<!-- #211 --><waypoint x="4153" z="8109" y="-18">	</waypoint>
+	<!-- #212 --><waypoint x="4085" z="8052" y="11">	</waypoint>
+	<!-- #213 --><waypoint x="3818" z="8021" y="111">	</waypoint>
+	<!-- #214 --><waypoint x="3786" z="7984" y="75">player:harvest();</waypoint>
+	<!-- #215 --><waypoint x="3669" z="8161" y="3">	</waypoint>
+	<!-- #216 --><waypoint x="3799" z="8432" y="0">	</waypoint>
+	<!-- #217 --><waypoint x="3861" z="8556" y="-3">player:harvest();</waypoint>
+	<!-- #218 --><waypoint x="3959" z="8939" y="5">	</waypoint>
+	<!-- #219 --><waypoint x="3873" z="9144" y="1">	</waypoint>
+	<!-- #220 --><waypoint x="3765" z="9294" y="12">	</waypoint>
+	<!-- #221 --><waypoint x="3554" z="9214" y="74">	</waypoint>
+	<!-- #222 --><waypoint x="3485" z="9213" y="70">player:harvest();</waypoint>
+	<!-- #223 --><waypoint x="3214" z="9112" y="2">	</waypoint>
+	<!-- #224 --><waypoint x="3148" z="9079" y="24">	</waypoint>
+	<!-- #225 --><waypoint x="3058" z="9077" y="73">	</waypoint>
+	<!-- #226 --><waypoint x="3016" z="9111" y="86">player:harvest();</waypoint>
+	<!-- #227 --><waypoint x="2601" z="9139" y="-31">player:harvest();</waypoint>
+	<!-- #228 --><waypoint x="2155" z="9416" y="-18">	</waypoint>
+	<!-- #229 --><waypoint x="2110" z="9404" y="0"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- #230 --><waypoint x="2043" z="9472" y="28">	</waypoint>
+	<!-- #231 --><waypoint x="2051" z="9549" y="53">	</waypoint>
+	<!-- #232 --><waypoint x="2117" z="9506" y="65">player:harvest();</waypoint>
+	<!-- #233 --><waypoint x="1366" z="9214" y="-12">	</waypoint>
+	<!-- #234 --><waypoint x="1182" z="9179" y="-10">	</waypoint>
+	<!-- #235 --><waypoint x="1073" z="9193" y="-11">	</waypoint>
+	<!-- #236 --><waypoint x="658" z="9678" y="-8">	</waypoint>
+	<!-- #237 --><waypoint x="556" z="9762" y="40">	</waypoint>
+	<!-- #238 --><waypoint x="620" z="9841" y="93">	</waypoint>
+	<!-- #239 --><waypoint x="665" z="9935" y="78">player:harvest();</waypoint>
+	<!-- #240 --><waypoint x="774" z="9989" y="20">player:harvest();</waypoint>
+	<!-- #241 --><waypoint x="713" z="10066" y="8">	</waypoint>
+	<!-- #242 --><waypoint x="492" z="10137" y="-17">	</waypoint>
+	<!-- #243 --><waypoint x="233" z="10064" y="7">	</waypoint>
+	<!-- #244 --><waypoint x="32" z="10102" y="42">player:harvest();</waypoint>
+	<!-- #245 --><waypoint x="255" z="10183" y="28">	</waypoint>
+	<!-- #246 --><waypoint x="413" z="10337" y="19">	</waypoint>
+	<!-- #247 --><waypoint x="493" z="10543" y="45">player:harvest();</waypoint>
+	<!-- #248 --><waypoint x="557" z="10477" y="38">	</waypoint>
+	<!-- #249 --><waypoint x="648" z="10506" y="60">	</waypoint>
+	<!-- #250 --><waypoint x="773" z="10455" y="-3">	</waypoint>
+	<!-- #251 --><waypoint x="805" z="10604" y="10"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- #252 --><waypoint x="755" z="10674" y="40">player:harvest();</waypoint>
+	<!-- #253 --><waypoint x="884" z="10744" y="15">	</waypoint>
+	<!-- #254 --><waypoint x="902" z="10842" y="35">	</waypoint>
+	<!-- #255 --><waypoint x="1058" z="11004" y="-8">player:harvest();</waypoint>
+	<!-- #256 --><waypoint x="1163" z="10726" y="-13">	</waypoint>
+	<!-- #257 --><waypoint x="1346" z="10496" y="9">	</waypoint>
+	<!-- #258 --><waypoint x="1408" z="10466" y="38">	</waypoint>
+	<!-- #259 --><waypoint x="1370" z="10424" y="46">player:harvest();</waypoint>
+	<!-- #260 --><waypoint x="1339" z="10265" y="3">player:harvest();</waypoint>
+	<!-- #261 --><waypoint x="1599" z="10172" y="-16">	</waypoint>
+	<!-- #262 --><waypoint x="1928" z="10009" y="-18">	</waypoint>
+	<!-- #263 --><waypoint x="2094" z="9990" y="22">player:harvest();</waypoint>
+	<!-- #264 --><waypoint x="2394" z="10147" y="19">	</waypoint>
+	<!-- #265 --><waypoint x="2451" z="10200" y="67">	</waypoint>
+	<!-- #266 --><waypoint x="2452" z="10201" y="67">player:harvest();</waypoint>
+	<!-- #267 --><waypoint x="2554" z="10304" y="115">player:harvest();</waypoint>
+	<!-- #268 --><waypoint x="2654" z="10117" y="25">player:harvest();</waypoint>
+	<!-- #269 --><waypoint x="2738" z="10087" y="62">	</waypoint>
+	<!-- #270 --><waypoint x="2902" z="10149" y="31">	</waypoint>
+	<!-- #271 --><waypoint x="3117" z="10682" y="11">player:harvest();</waypoint>
+	<!-- #272 --><waypoint x="3120" z="10586" y="30">	</waypoint>
+	<!-- #273 --><waypoint x="3228" z="10492" y="14">	</waypoint>
+	<!-- #274 --><waypoint x="3388" z="10577" y="18">player:harvest();</waypoint>
+	<!-- #275 --><waypoint x="3408" z="10507" y="16">	</waypoint>
+	<!-- #276 --><waypoint x="3551" z="10435" y="2"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- #277 --><waypoint x="3732" z="10517" y="60">player:harvest();</waypoint>
+	<!-- #278 --><waypoint x="3725" z="10241" y="91">	</waypoint>
+	<!-- #279 --><waypoint x="3604" z="10105" y="53">	</waypoint>
+	<!-- #280 --><waypoint x="3600" z="10011" y="68">	</waypoint>
+	<!-- #281 --><waypoint x="3771" z="10075" y="163">player:harvest();</waypoint>
+	<!-- #282 --><waypoint x="3448" z="9955" y="61">	</waypoint>
+	<!-- #283 --><waypoint x="3334" z="9885" y="40">	</waypoint>
+	<!-- #284 --><waypoint x="3072" z="9676" y="21">	</waypoint>
+	<!-- #285 --><waypoint x="2910" z="9522" y="90">	</waypoint>
+	<!-- #286 --><waypoint x="2581" z="9133" y="-46">player:harvest();</waypoint>
+	<!-- #287 --><waypoint x="2507" z="9057" y="-46">	</waypoint>
+	<!-- #288 --><waypoint x="2502" z="8824" y="-4">	</waypoint>
+	<!-- #289 --><waypoint x="2393" z="8804" y="27">	</waypoint>
+	<!-- #290 --><waypoint x="2333" z="8829" y="60">	</waypoint>
+	<!-- #291 --><waypoint x="2201" z="8739" y="79">player:harvest();</waypoint>
+	<!-- #292 --><waypoint x="1972" z="8473" y="27">player:harvest();</waypoint>
+	<!-- #293 --><waypoint x="1837" z="8685" y="-42">	</waypoint>
+	<!-- #294 --><waypoint x="1678" z="8653" y="-25">	</waypoint>
+	<!-- #295 --><waypoint x="1644" z="8723" y="30">	</waypoint>
+	<!-- #296 --><waypoint x="1589" z="8781" y="30">player:harvest();</waypoint>
+	<!-- #297 --><waypoint x="1740" z="8800" y="22">player:harvest();</waypoint>
+	<!-- #298 --><waypoint x="1732" z="8683" y="-29">	</waypoint>
+	<!-- #299 --><waypoint x="1635" z="8625" y="-29">	</waypoint>
+	<!-- #300 --><waypoint x="1409" z="8756" y="-16"> if inventory:itemTotalCount(0) == 0 then 
+player:sleep()
+end	</waypoint>
+	<!-- #301 --><waypoint x="1146" z="8864" y="4">	</waypoint>
+		<!-- #  1 --><waypoint x="1170" z="8912" y="-24">	</waypoint>
+	<!-- #  2 --><waypoint x="1158" z="8882" y="-10">	</waypoint>
+	<!-- #  3 --><waypoint x="1114" z="8888" y="7">	</waypoint>
+	<!-- #302 --><waypoint x="1106" z="8884" y="23">player:harvest();</waypoint>
+	<!-- #303 --><waypoint x="838" z="8878" y="4">	</waypoint>
+	<!-- #304 --><waypoint x="779" z="8865" y="29">	</waypoint>
+	<!-- #305 --><waypoint x="695" z="8731" y="35">player:harvest();</waypoint>
+	<!-- #306 --><waypoint x="542" z="8829" y="-19">	</waypoint>
+	<!-- #307 --><waypoint x="-66" z="9285" y="-24">	</waypoint>
+	<!-- #308 --><waypoint x="-406" z="9419" y="20">player:harvest();</waypoint>
+	<!-- #309 --><waypoint x="-574" z="9149" y="9">	</waypoint>
+	<!-- #310 --><waypoint x="-653" z="9182" y="41">player:harvest();</waypoint>
+	<!-- #311 --><waypoint x="-711" z="9064" y="32">	</waypoint>
+	<!-- #312 --><waypoint x="-781" z="9025" y="53">	</waypoint>
+	<!-- #313 --><waypoint x="-1126" z="9245" y="103">	</waypoint>
+	<!-- #314 --><waypoint x="-1517" z="9588" y="122">	</waypoint>
+	<!-- #315 --><waypoint x="-1566" z="9701" y="152">player:harvest();
+	repeat parallelID = RoMScript("GetCurrentParallelID()"); yrest(500) until parallelID
+	if (parallelID == 1) then
+         sendMacro("ChangeParallelID(3);");
+		 player:rest(25);
+      end
+	  if (parallelID == 2) then
+         sendMacro("ChangeParallelID(1);");
+		 player:rest(25);
+      end
+	  if (parallelID == 3) then
+         sendMacro("ChangeParallelID(2);");
+		 player:rest(25);
+      end	</waypoint>
+</waypoints>

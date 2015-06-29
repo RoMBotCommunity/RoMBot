@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+		include ("../../includes/afterCrash.lua")
+	
+		questNPC							= 119856
+		questID								= 425124
+		questTargets					= {106474, 106475, 106476}
+		settings.profile.mobs = questTargets
+
+		player.free_counter1	= UMMD_chooseClass (68, 'which class to accept quest?')
+		player.free_counter2	= UMMD_chooseClass (61, 'which class to complete quest?')
+	
+		changeProfileOption ('WAYPOINT_DEVIATION', 0)
+		changeProfileOption ('MAX_TARGET_DIST', 50)
+		changeProfileOption ('LOOT', false)
+		
+		function isFirstClass ()
+			player:update ()
+			return (player.Class1 == player.free_counter1)
+		end
+		
+		function isSecondClass ()
+			player:update ()
+			return (player.Class1 == player.free_counter2)
+		end
+		
+		function swapClasses (class1, class2, npc)
+			if player.Class1 ~= class1 then	-- swap classes
+				player:target_NPC (npc or 110758)
+				if getZoneId ()==400 then
+					RoMScript ('ChoiceListDialogOption (1)') yrest (750)
+				else
+					RoMScript ('ChoiceOption (3)') yrest (750)
+				end
+				RoMScript ('ExchangeClass ('..(class1+1)..', '..(class2+1)..')') yrest (2000)
+				player:update ()
+			end
+			while getZoneId()==400 do -- leaving home
+				player:target_NPC (110758)
+				RoMScript ('ChoiceListDialogOption (0)')
+				waitForLoadingScreen ()
+			end
+		end
+		
+		function checkFunc (address)
+			local pawn = CPawn (address)
+			return (pawn and pawn.Attackable)
+		end
+		
+	]]></onload>
+	
+	<waypoint x="-18344" z="-22669" y="469" tag="Kampfausbilder"><![CDATA[
+
+		if getQuestStatus (questID) == "complete" then
+			if isSecondClass () then
+				player:target_NPC (questNPC) -- Anthony Taz
+				CompleteQuestByName (questID) yrest (750)
+			else
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("weiter"))
+				return
+			end
+		end
+		
+		local dqCount, dqTotal	= RoMScript ('Daily_count ()')
+		if dqCount>=dqTotal then
+			if player.Level==64 then
+				print ('\a\a\a')
+				player:logout ()
+			elseif inventory:itemTotalCount (202434)>0 then
+				inventory:useItem (202434)
+			else
+				print ('\a\ano more tq cards left')
+				error ('')
+			end
+		end
+
+		if getQuestStatus (questID)=="not accepted" then
+			if isFirstClass () then
+				player:target_NPC (questNPC) -- Anthony Taz
+				AcceptQuestByName (questID) yrest (750)
+			else
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("weiter"))
+				return
+			end
+		end
+		
+message ('quest status: '..getQuestStatus (questID)..' - first class aktive: '..tostring (isFirstClass ()))
+
+		if isFirstClass () and getQuestStatus (questID)=="incomplete" then
+			player:target_NPC (questNPC) -- Anthony Taz
+			sendMacro ("ChoiceOption (1)")
+			if player.Mounted then
+				player:dismount ()
+			end
+		end
+	]]></waypoint>
+	<waypoint x="-18336" z="-22658" y="469" tag="fight" type="NORMAL"><![CDATA[
+		if isFirstClass () and getQuestStatus (questID) == "incomplete" then
+			local timer = 10
+			while timer > 0 do
+				local target = player:findNearestNameOrId (questTargets, nil, checkFunc)
+				if target then
+					player:target (target)
+					player:fight ()
+				end
+				if getQuestStatus (questID)=="complete" then
+					timer=0 
+				end
+				yrest (150)
+				timer = timer - 1
+			end
+		end
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("Kampfausbilder"))
+	]]></waypoint>
+	<waypoint x="-18349" z="-22718" tag="weiter"><![CDATA[
+		if not player.Mounted then
+			player:mount ()
+		end
+	]]></waypoint>
+	<waypoint x="-18372" z="-22850" />
+	<waypoint x="-18321" z="-22945" />
+	<waypoint x="-17850" z="-23100" />
+	<waypoint x="-17630" z="-23340" />
+	<waypoint x="-17602" z="-23534" />
+	<waypoint x="-17271" z="-23419" />
+	<waypoint x="-17217" z="-23476" tag="Hausmädchen"><![CDATA[
+		if getQuestStatus (questID) == "complete" then
+			if not isSecondClass () then
+message ('switch to second class')
+				swapClasses (player.free_counter2, player.free_counter1, 120185)
+			end
+		elseif getQuestStatus (questID) == "not accepted" then
+			if not isFirstClass () then
+message ('switch to first class')
+				swapClasses (player.free_counter1, player.free_counter2, 120185)
+			end
+			player:update ()
+		end
+message ('quest status: '..getQuestStatus (questID)..' - first class aktive: '..tostring (isFirstClass ()))
+		player:mount ()
+	]]></waypoint>
+	<waypoint x="-17289" z="-23380" />
+	<waypoint x="-17556" z="-23351" />
+	<waypoint x="-17846" z="-23084" />
+	<waypoint x="-18138" z="-22956" />
+	<waypoint x="-18454" z="-23110" />
+	<waypoint x="-18502" z="-23062" />
+	<waypoint x="-18447" z="-22957" />
+	<waypoint x="-18368" z="-22786" />
+	<waypoint x="-18344" z="-22669" tag="abgeben"><![CDATA[
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("Kampfausbilder"))
+	]]></waypoint>
+	
+</waypoints>

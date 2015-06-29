@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+		include ("../../includes/afterCrash.lua")
+	
+		-- 423962 - [38] Wichtige Patrouillenarbeit
+		
+		-- 423963 - [40] Waffeninspektion I
+		-- 209082 - Nagamesser
+		-- 209084 - Minotaurengewehr
+		
+		-- 423964 - [40] Waffeninspektion II
+		-- 209083 - Piratenmesser
+		-- 209086 - Anyashin-Zweihandstab
+		
+		changeProfileOption('WAYPOINT_DEVIATION', 0);
+		numTqCards						= CheckTqCardCount ()
+		complete, numTqCards	= dayliesComplete (numTqCards);
+		combatMode (false)
+		
+		DN_AutoQuest (questID)
+
+		function updateFlags()
+			player.free_flag1			= (player.Level>=40 and inventory:itemTotalCount(209082)>=5 and inventory:itemTotalCount(209084)>=5)
+			player.free_flag2			= (player.Level>=40 and inventory:itemTotalCount(209086)>=5 and inventory:itemTotalCount(209083)>=5)
+			complete, numTqCards	= dayliesComplete (numTqCards);
+		end
+		
+		repeat zid = getZoneId (); yrest (200) until zid;
+		while zid==400 do	-- in house
+			message ('leave the house', true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		while not travelTo ('FangersMakeshift') do
+			message ('unable to go to FangersMakeshift', true);
+		end
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("FangersMakeshift"))
+		
+	]]></onload>
+	
+	<!-- #  1 --><waypoint x="-6948" z="-3652" tag="Nicole Rebecca"><![CDATA[
+		updateFlags()
+		__WPL:setDirection (WPT_FORWARD);
+		if complete then 
+			if checkRelog and type(checkRelog)=='function' then 
+				checkRelog ()
+				return
+			else
+				message ('finished', false, true);
+			end
+		end
+	]]></waypoint>
+	
+	<waypoint x="36" z="5083" tag="FangersMakeshift"><![CDATA[
+		updateFlags()
+		if complete then
+			while not travelTo ('HeffnerHousemaid') do
+				message ('unable to go to FangersMakeshift', true);
+			end
+			__WPL:setWaypointIndex(__WPL:findWaypointTag("Nicole Rebecca"))
+		elseif player.free_flag1 or player.free_flag2 then
+			__WPL:setWaypointIndex(__WPL:findWaypointTag("Bluto Munk"))
+		else
+			__WPL:setWaypointIndex(__WPL:findWaypointTag("Katalika"))
+		end
+	]]></waypoint>
+	
+	<waypoint x="-22" z="5236" tag="Bluto Munk"><![CDATA[
+		updateFlags()
+		while not complete and player.free_flag1 do
+			player:target_NPC(117609); -- Bluto Munk
+			AcceptQuestByName(423963)
+			CompleteQuestByName(423963)
+			updateFlags()
+		end
+		while not complete  and player.free_flag2 do
+			player:target_NPC(117609); -- Bluto Munk
+			AcceptQuestByName(423964)
+			if getQuestStatus(423964) == "not accepted" then	-- quest 423963 must be completed at least 1 time before to get this quest
+				break;
+			end
+			CompleteQuestByName(423964)
+			updateFlags()
+		end
+		__WPL:setWaypointIndex(__WPL:findWaypointTag("FangersMakeshift"))
+	]]></waypoint>
+	
+	<waypoint x="150" z="5217" y="717" tag="Katalika"><![CDATA[
+		if getQuestStatus(423962) == "complete" then
+			player:target_NPC(117589); -- Katalika
+			CompleteQuestByName(423962)
+		end
+		updateFlags ()
+		if not complete then
+			if player.free_flag1 or player.free_flag2 then
+				__WPL:setWaypointIndex(__WPL:findWaypointTag("FangersMakeshift"))
+			else
+				player:target_NPC(117589); -- Katalika
+				AcceptQuestByName(423962)
+			end
+		else
+			__WPL:setWaypointIndex(__WPL:findWaypointTag("FangersMakeshift"))
+		end
+	]]></waypoint>
+	
+	<waypoint x="156" z="5048"/>
+	<waypoint x="107" z="4778"><![CDATA[
+		player:target_NPC(117484); -- Ver„ngstigter Abenteurer
+		sendMacro("ChoiceOption(1);"); yrest(750)
+		sendMacro("ChoiceOption(1);"); yrest(750)
+	]]></waypoint>
+	<waypoint x="304" z="4946"><![CDATA[
+		player:target_NPC(117485); -- Nerv”ser Abenteurer
+		sendMacro("ChoiceOption(1);"); yrest(750)
+		sendMacro("ChoiceOption(1);"); yrest(750)
+		sendMacro("ChoiceOption(1);"); yrest(750)
+		mount();
+	]]></waypoint>
+	<waypoint x="595" z="5139" />
+	<waypoint x="947" z="5205" />
+	<waypoint x="1025" z="5311" />
+	<waypoint x="1023" z="5480" />
+	<waypoint x="882" z="5602" />
+	<waypoint x="464" z="5828" />
+	<waypoint x="50" z="5607"><![CDATA[
+		__WPL:setForcedWaypointType("NORMAL")
+		player:dismount()
+		player:updateBattling()
+		while player.Battling do
+			player:fight()
+			player:updateBattling()
+		end
+	]]></waypoint>
+	<waypoint x="129" z="5600" y="865"><![CDATA[
+		player:target_NPC(117486); -- Ersch”pfter Abenteurer
+		sendMacro("ChoiceOption(1);"); yrest(750)
+		sendMacro("ChoiceOption(1);"); yrest(750)
+		sendMacro("ChoiceOption(1);"); yrest(750)
+		local targetlist = {
+			105178,	-- Alter Naga-Rebell
+			105179,	-- Alter Limon-Bandit
+			105180,	-- Altes Ayax-Klansmitglied
+			105181,	-- Alter verbitterter Adept
+		}
+		player:clearTarget()
+		player:target_Object(targetlist);
+		player:updateBattling()
+		while getQuestStatus(423962) == "incomplete" or player:haveTarget() or player.Battling do
+			player:fight()
+			player:updateBattling()
+		end
+		player:lootAll()
+		__WPL:setForcedWaypointType("TRAVEL")
+		mount();
+	]]></waypoint>
+	<waypoint x="205" z="5380" y="707" />
+	<waypoint x="202" z="5278"><![CDATA[
+		__WPL:setWaypointIndex(__WPL:findWaypointTag("Katalika"))
+	]]></waypoint>
+
+</waypoints>

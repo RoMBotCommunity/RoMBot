@@ -1,0 +1,47 @@
+<SEEDS>
+<SEED name="Rat Tail Rattan Seed" id="203994" type="HERB" minlvl="1" />
+<SEED name="Grass Seed" id="203995" type="HERB" minlvl="7" />
+<SEED name="Dog Tail Sickle Seed" id="203996" type="HERB" minlvl="13" />
+<SEED name="Flying Reed Seed" id="203997" type="HERB" minlvl="19" />
+<SEED name="Horsehoof Seed" id="203998" type="HERB" minlvl="25" />
+<SEED name="Swanwool Seed" id="203999" type="HERB" minlvl="31" />
+<SEED name="Nightwalker Seed" id="204000" type="HERB" minlvl="37" />
+<SEED name="Flying Winter Seed" id="204001" type="HERB" minlvl="43" />
+<SEED name="Pegasus Feather Seed" id="204002" type="HERB" minlvl="49" />
+<SEED name="Angelwing Seed" id="204003" type="HERB" minlvl="55" />
+<SEED name="Stardust Seed" id="208594" type="HERB" minlvl="61" />
+<SEED name="Dune Seed" id="208598" type="HERB" minlvl="67" />
+<SEED name="Lovemusk Seed" id="208600" type="HERB" minlvl="73" />
+<SEED name="Sunbathed Seed" id="208618" type="HERB" minlvl="79" />
+
+<SEED name="Vine Seed" id="204181" type="WOOD" minlvl="1" />
+<SEED name="Grass Tree Seed" id="204182" type="WOOD" minlvl="7" />
+<SEED name="Trampled Seed" id="204183" type="WOOD" minlvl="13" />
+<SEED name="Hard Cotton Seed" id="204184" type="WOOD" minlvl="19" />
+<SEED name="Water Chestnut Seed" id="204185" type="WOOD" minlvl="25" />
+<SEED name="Magic Vine Seed" id="204186" type="WOOD" minlvl="31" />
+<SEED name="Long Iron Stick Seed" id="204187" type="WOOD" minlvl="37" />
+<SEED name="Pixie Tree Seed" id="204188" type="WOOD" minlvl="43" />
+<SEED name="Split Wood Seed" id="204189" type="WOOD" minlvl="49" />
+<SEED name="Bridge Seed" id="204190" type="WOOD" minlvl="55" />
+<SEED name="Orange Moon Seed" id="208596" type="WOOD" minlvl="61" />
+<SEED name="Lantern Seed" id="208597" type="WOOD" minlvl="67" />
+<SEED name="Aurora Seed" id="208601" type="WOOD" minlvl="73" />
+<SEED name="Echo Seed" id="208619" type="WOOD" minlvl="79" />
+
+<SEED name="Red Cystalline Seed" id="204191" type="ORE" minlvl="1" />
+<SEED name="Yellow Crystalline Seed" id="204192" type="ORE" minlvl="7" />
+<SEED name="White Crystalline Seed" id="204193" type="ORE" minlvl="13" />
+<SEED name="Green Crystalline Seed" id="204194" type="ORE" minlvl="19" />
+<SEED name="Blue Crystalline Seed" id="204195" type="ORE" minlvl="25" />
+<SEED name="Clay Dragon Nest Seed" id="204196" type="ORE" minlvl="31" />
+<SEED name="Earth Dragon Nest Seed" id="204197" type="ORE" minlvl="37" />
+<SEED name="Fire Dragon Nest Seed" id="204198" type="ORE" minlvl="43" />
+<SEED name="Volcanis Stone Seed" id="204199" type="ORE" minlvl="49" />
+<SEED name="Geocentric Stone Seed" id="204200" type="ORE" minlvl="55" />
+<SEED name="Tidal Seed" id="208595" type="ORE" minlvl="61" />
+<SEED name="Chime Seed" id="208599" type="ORE" minlvl="67" />
+<SEED name="Needle Seed" id="208616" type="ORE" minlvl="73" />
+<SEED name="Green Shine Seed" id="208617" type="ORE" minlvl="79" />
+
+</SEEDS>

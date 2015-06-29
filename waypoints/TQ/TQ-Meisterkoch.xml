@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+		include ("../../includes/afterCrash.lua")
+		
+		questNPC			= 122168
+		questID				= 426333
+		campFire			= 122170
+		egg						= 242576
+		lastKey				= nil
+		numTqCards		= CheckTqCardCount (nil, true)
+		
+		DN_AutoQuest (questID)
+
+		repeat zid = getZoneId (); yrest (200) until zid;
+		while zid==400 do	-- in house
+			message ('leave the house', true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		while zid~=26 and not travelTo ('Sarlo') do
+			message ('unable to go to Sarlo', true);
+			repeat zid = getZoneId (); yrest (200) until zid;
+		end
+		__WPL:setWaypointIndex (__WPL:getNearestWaypoint (player.X, player.Z))
+
+	]]></onload>
+	
+	<!-- #  1 --><waypoint x="-17874" z="-3329" tag="sturobold"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD);
+		if complete then
+			print ('\a'); yrest (5000);
+			loadPaths ('/TQ_return')
+		end
+	]]></waypoint>
+	<!-- #  2 --><waypoint x="-17884" z="-3249"/>
+	<!-- #  3 --><waypoint x="-17920" z="-3154"/>
+	<!-- #  4 --><waypoint x="-17957" z="-2998"/>
+	<!-- #  5 --><waypoint x="-18124" z="-2890"/>
+	<!-- #  6 --><waypoint x="-18336" z="-2834"/>
+	<!-- #  7 --><waypoint x="-18540" z="-2825" tag="Madison Mull"><![CDATA[
+		complete, numTqCards	= dayliesComplete (numTqCards);
+		while not complete do 
+			if getQuestStatus (questID)=='not accepted' then
+				player:target_NPC (questNPC)
+				AcceptQuestByName (questID)
+			end
+			
+			while getQuestStatus (questID)=='incomplete' do
+				if inventory:itemTotalCount (egg)<=0 then
+					player:target_NPC (questNPC)
+					sendMacro("ChoiceOption(1)") yrest (1000)
+				end
+				while inventory:itemTotalCount (egg)>0 do
+					player:target_NPC (122170)
+					Attack ()
+					yrest (5000)
+					if lastKey==nil or lastKey==settings.hotkeys.MOVE_BACKWARD.key then
+						lastKey = settings.hotkeys.MOVE_FORWARD.key
+					else
+						lastKey = settings.hotkeys.MOVE_BACKWARD.key
+					end
+					keyboardPress (lastKey) 	yrest (200)
+					keyboardRelease (lastKey)	yrest (500)
+					inventory:update ()
+				end
+			end
+			
+			if getQuestStatus (questID)=='complete' then
+				player:target_NPC (questNPC)
+				CompleteQuestByName (questID)
+			end
+			complete, numTqCards	= dayliesComplete (numTqCards);
+		end
+		__WPL:setDirection (WPT_BACKWARD);
+	]]></waypoint>
+</waypoints>

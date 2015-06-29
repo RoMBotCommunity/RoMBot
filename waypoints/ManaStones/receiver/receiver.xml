@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+
+		--
+		-- this file is only a placeholder for new zone-files for the receiver
+		-- do what ever you want to do (f.e. making dailies)
+		-- then go to a mailbox
+		--
+		-- TODO at mailbox:
+		--			handleReceiver ()
+		--
+		
+		error ('dont use this file', 1)
+		
+	]]></onload>
+</waypoints>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	
+	<!-- mailbox -->
+	<waypoint x="-433" z="-5971" tag="mailbox"><![CDATA[
+		handleReceiver ()
+		if checkRelog then
+			checkRelog ()
+		else
+			error ('finished')
+		end
+	]]></waypoint>
+	
+</waypoints>

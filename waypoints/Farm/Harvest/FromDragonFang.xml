@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints>
+	<onLoad>
+		settings.profile.options.WAYPOINT_DEVIATION = 0;
+		settings.profile.options.EGGPET_ENABLE_ASSIST = false;
+	</onLoad>
+	
+	<!-- #  1 --><waypoint x="-25617" z="-16809">player:harvest();</waypoint>
+	<!-- #  2 --><waypoint x="-25617" z="-17072">player:harvest();</waypoint>
+	<!-- #  3 --><waypoint x="-25622" z="-17436">player:harvest();</waypoint>
+	<!-- #  4 --><waypoint x="-25725" z="-17486">player:harvest();</waypoint>
+	<!-- #  5 --><waypoint x="-25884" z="-17682">player:harvest();</waypoint>
+	<!-- #  6 --><waypoint x="-25913" z="-17839">player:harvest();</waypoint>
+	<!-- #  7 --><waypoint x="-26199" z="-17767">player:harvest();</waypoint>
+	<!-- #  8 --><waypoint x="-26423" z="-17912">player:harvest();</waypoint>
+	<!-- #  9 --><waypoint x="-26554" z="-18094">player:harvest();</waypoint>
+	<!-- # 10 --><waypoint x="-26751" z="-18148">player:harvest();</waypoint>
+	<!-- # 11 --><waypoint x="-26867" z="-18234">player:harvest();</waypoint>
+	<!-- # 12 --><waypoint x="-26775" z="-18349">player:harvest();</waypoint>
+	<!-- # 13 --><waypoint x="-26830" z="-18465">player:harvest();</waypoint>
+	<!-- # 14 --><waypoint x="-26982" z="-18544">player:harvest();</waypoint>
+	<!-- # 15 --><waypoint x="-27140" z="-18559">player:harvest();</waypoint>
+	<!-- # 16 --><waypoint x="-27283" z="-18557">player:harvest();</waypoint>
+	<!-- # 17 --><waypoint x="-27363" z="-18382">player:harvest();</waypoint>
+	<!-- # 18 --><waypoint x="-27527" z="-18391">	</waypoint>
+	<!-- # 19 --><waypoint x="-27827" z="-18455">	</waypoint>
+	<!-- # 20 --><waypoint x="-27986" z="-18458">	</waypoint>
+	<!-- # 21 --><waypoint x="-28246" z="-18508">	</waypoint>
+	<!-- # 22 --><waypoint x="-28441" z="-18512">	</waypoint>
+	<!-- # 23 --><waypoint x="-28648" z="-18482">	</waypoint>
+	<!-- # 24 --><waypoint x="-28809" z="-18305">	</waypoint>
+	<!-- # 25 --><waypoint x="-29039" z="-18076">	</waypoint>
+	<!-- # 26 --><waypoint x="-29150" z="-17901">	</waypoint>
+	<!-- # 27 --><waypoint x="-29373" z="-17727">	</waypoint>
+	<!-- # 28 --><waypoint x="-29426" z="-17668">loadPaths("DragonFang/DragonCraft");</waypoint>
+</waypoints>

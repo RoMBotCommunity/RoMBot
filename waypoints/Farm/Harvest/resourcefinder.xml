@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints>
+<onLoad>
+	--NTYPE_WOOD = 1
+	--NTYPE_ORE = 2
+	--NTYPE_HERB = 3
+	
+	_node = 1
+	
+	-- Version 1.5
+	local delay = 1 -- time between key presses.
+	local time = os.time()
+	print("start scanning  ........")
+	while(true) do
+		if isInGame() and player:exists() and player:isAlive() then
+			local objectList = CObjectList()
+			objectList:update()
+			for i = 0,objectList:size() do
+				local obj = objectList:getObject(i)
+				obj:update()
+				if( obj ~= nil ) then
+					if obj.Type == PT_NODE then
+						if database.nodes[obj.Id] and database.nodes[obj.Id].Type == _node then
+							if memoryReadRepeat("float", getProc(), obj.Address + 0x74) ~= 4 then 
+								memoryWriteFloat(getProc(), obj.Address + 0x74, 4)
+								print("Found: "..obj.Name.." and made it BIG")
+								if playalarm then playalarm() end
+							end
+						end
+					end
+				end
+				yrest(1)
+			end
+			-- add defend code here.
+			player:update()
+			if player.Battling and not player.Mounted then
+				if player:target(player:findEnemy(true)) then
+					player:fight();
+				end
+			end
+		end		
+		if keyPressed(key.VK_NUMPAD1) and (os.time() - time > delay ) then
+			fly()
+			time = os.time()
+		end
+		if keyPressed(key.VK_NUMPAD2) and (os.time() - time > delay ) then
+			flyoff()
+			time = os.time()
+		end
+		if keyPressed(key.VK_NUMPAD4) and (os.time() - time > delay ) then
+			speed(70)
+			time = os.time()
+		end		
+		if keyPressed(key.VK_NUMPAD5) and (os.time() - time > delay ) then
+			speed("off")
+			time = os.time()
+		end
+		yrest(500)
+	end
+</onLoad>
+</waypoints>

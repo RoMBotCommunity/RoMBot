@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	
+	<onload><![CDATA[
+		
+		repeat zid = getZoneId(); yrest(500) until zid;
+		if zid~=5 then
+			error ('You are not in Harf', 0);
+		end
+	
+		player.free_counter1			= ChooseAvailableClass (32, "Class to accept quest")
+		player.free_counter2			= ChooseAvailableClass (22, "Class to complete quest")
+		
+		function flagUpdate()
+			player.free_flag1				= (getQuestStatus(420436) == "complete")
+			player.free_flag2				= (player.Class1 == player.free_counter1)
+			player.free_flag3 			= dayliesComplete ()
+		end
+		
+		function checkDir(force)
+			if force==true then flagUpdate() end
+			if player.free_flag1 and (player.Class1==player.free_counter2) then
+				__WPL:setDirection( WPT_FORWARD );
+			else
+				__WPL:setDirection( WPT_BACKWARD );
+			end
+			mount(true);
+		end
+
+		harvestMode (false)
+		combatMode (false)
+		flagUpdate (true)
+	]]></onload>
+	
+	<onLeaveCombat><![CDATA[
+		checkDir(true)
+	]]></onLeaveCombat>
+	
+	<!-- 1--><waypoint x="-13872" z="-57" tag="Hausmädchen"><![CDATA[
+		flagUpdate(true)
+		if player.free_flag3 then
+			if checkRelog and type(checkRelog)=='function' then 
+				checkRelog ()
+				return
+			else
+				message ('finished', false, true);
+			end
+		else
+			if getQuestStatus(420436) == "not accepted" then
+				if not player.free_flag2 then
+message ('switch to first class');
+					player:target_NPC(111253)		-- Jeddar Mays
+					sendMacro("ChoiceOption(3);"); yrest(750)
+					sendMacro("ExchangeClass("..(player.free_counter1+1)..","..(player.free_counter2+1)..");"); yrest(3000)
+				end
+			elseif getQuestStatus(420436)=="complete" then
+				if player.free_flag2 then
+message ('switch to second class');
+					player:target_NPC(111253)		-- Jeddar Mays
+					sendMacro("ChoiceOption(3);"); yrest(750)
+					sendMacro("ExchangeClass("..(player.free_counter2+1)..","..(player.free_counter1+1)..");"); yrest(3000)
+				end
+			end
+			player:update()
+			mount()
+			__WPL:setDirection( WPT_FORWARD );
+		end
+	]]></waypoint>
+	<!-- 2--><waypoint x="-14144" z="-108" />
+	<!-- 3--><waypoint x="-14326" z="-334" />
+	<!-- 4--><waypoint x="-14265" z="-437" tag="Schwarzes Brett"><![CDATA[
+		flagUpdate(true)
+		if not player.free_flag3 and getQuestStatus(420436) == "not accepted" then
+			if player.free_flag2 then
+				player:target_NPC(110729)		-- Schwarzes Brett im Harf-Handelsposten
+				AcceptQuestByName(420436)		-- Tagesquest: Lieferung ins Schneemeer
+				if player.free_counter1~=player.free_counter2 then	-- go to class change
+					__WPL:setDirection( WPT_BACKWARD );
+				else
+					__WPL:setDirection( WPT_FORWARD );
+				end
+			else
+				__WPL:setDirection( WPT_BACKWARD );
+			end
+		end
+		checkDir(true)
+	]]></waypoint>
+	<!-- 5--><waypoint x="-13912" z="-1007"><![CDATA[checkDir()]]></waypoint>
+	<!-- 6--><waypoint x="-13778" z="-1269"><![CDATA[checkDir()]]></waypoint>
+	<!-- 7--><waypoint x="-13702" z="-1554"><![CDATA[checkDir()]]></waypoint>
+	<!-- 8--><waypoint x="-13763" z="-1679"><![CDATA[checkDir()]]></waypoint>
+	<!-- 9--><waypoint x="-13698" z="-2593"><![CDATA[checkDir()]]></waypoint>
+	<!--10--><waypoint x="-13885" z="-3342" tag="Siping"><![CDATA[
+		player:target_NPC(110273)		-- Siping
+		CompleteQuestByName(420436)	-- Tagesquest: Lieferung ins Schneemeer
+		checkDir(true)
+	]]></waypoint>
+
+</waypoints>

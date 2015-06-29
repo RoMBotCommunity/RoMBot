@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+
+		--
+		-- this file is only a placeholder for new zone-files for the itemSender
+		-- build a path between vendor and mailbox
+		--
+		-- TODO at vendor:
+		--			handleSender (2, false)
+		--
+		-- TODO at mailbox:
+		--			handleSender (2, true)
+		--
+		
+		error ('dont use this file', 1)
+		
+	]]></onload>
+</waypoints>

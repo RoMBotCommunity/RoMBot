@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><waypoints type="TRAVEL">
+	<onload><![CDATA[
+		for id=203265,203255,-1 do
+			repeat
+				if inventory:itemTotalCount (0)==0 then
+					player:sleep ()
+				end
+				if inventory:itemTotalCount (id)>0 then
+					inventory:useItem (id)
+				end
+			until inventory:itemTotalCount (id)==0
+		end
+	]]></onload>
+</waypoints>
