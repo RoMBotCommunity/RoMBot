@@ -16,7 +16,7 @@
 			if openMats==false then return end
 			local building, tools, product = table.unpack (ids[id])
 			repeat
-				local items = inventory:findItemsRegexp (product)
+				local _,items = inventory:findItem (product, nil, true)
 				if items~=nil then 
 					for _,item in pairs(items) do
 						for i=1,item.ItemCount do

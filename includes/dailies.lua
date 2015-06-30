@@ -24,7 +24,8 @@
 	end
 
 	function getDailyDate (format)
-		return os.date (format)
+		format = format or '%Y%m%d'
+		return os.date (format, os.time () - (6 * 3600))
 	end
 
 	function dayliesComplete (dqCardCount, silent)

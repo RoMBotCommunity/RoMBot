@@ -221,3 +221,4 @@ cache/dummy.txt
 logs/
 .svn/
 *.dat
+waypoints/ManaStones/temp.dat
