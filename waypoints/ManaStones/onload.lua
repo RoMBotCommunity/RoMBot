@@ -44,15 +44,17 @@
 		until msg==nil
 	end
 	
-	local function getNextPlayerName ()
+	local function getNextPlayerName (acc, char)
+		local acc               = acc or getAcc ()
+		local char              = char or getChar ()
 		local curChar, curAcc 	= 0,0
 		local savChar, savAcc 	= 0,0
-		local data    					= loadData ()
+		local data, stop, name	= loadData (), false, nil
 		
 		for a,list in ipairs (charList) do
-			if list.account == getAcc () then
-				for c,char in ipairs (list.chars) do 
-					if char == getChar () then
+			if list.account == acc then
+				for c,id in ipairs (list.chars) do
+					if id == char then
 						curChar = c
 						curAcc	= a
 						break
@@ -75,23 +77,26 @@
 						curAcc  = 1
 	  			end
 				end
+
         if (savAcc==curAcc and savChar==curChar) then
+					-- all chars finished
 					curAcc    = 1
 					curChar   = 1
+					stop      = true
 				end
-        local name  = getPlayerName (charList[curAcc].account, charList[curAcc].chars[curChar])
-				if not name then break end
-				cprintf (cli.lightblue, 'checking next char (acc='..curAcc..' char='..curChar..'): '..name)
 
-        if (savAcc==curAcc and savChar==curChar) or not data[name] or tonumber (data[name].date) < tonumber (getDailyDate ('%Y%m%d')) then
-					cprintf (cli.lightgreen, ' - ok\n')
-          return name
+        name  = getPlayerName (charList[curAcc].account, charList[curAcc].chars[curChar])
+				if name then
+					-- checking next char
+	        if stop or not data[name] or tonumber (data[name].date) < tonumber (getDailyDate ('%Y%m%d')) then
+						stop    = true
+					end
+				else
+					stop  = true
 				end
-				cprintf (cli.lightred, ' - allready finished\n')
-      until false
+      until stop
     end
-		cprintf (cli.lightblue, 'account not in list or no name found. sending mails to '..manaStoneReceiver)
-		return manaStoneReceiver
+		return name, charList[curAcc].account, charList[curAcc].chars[curChar]
 	end
 	
 	local function waitForMails (amountS, amountI)
