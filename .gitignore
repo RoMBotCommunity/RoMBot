@@ -221,3 +221,4 @@ cache/dummy.txt
 logs/
 .svn/
 waypoints/ManaStones/temp.dat
+*.pid
