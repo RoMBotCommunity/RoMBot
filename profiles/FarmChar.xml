@@ -107,10 +107,6 @@
 		if MyOnLeaveCombat then MyOnLeaveCombat() end
 	]]></onLeaveCombat>
 
-	<onSkillCast><![CDATA[
-		if MyOnSkillCast then MyOnSkillCast() end
-	]]></onSkillCast>
-
 	<onLevelup><![CDATA[
 		openGiftbags1To10()
 		levelupSkills1To10(player.Level)

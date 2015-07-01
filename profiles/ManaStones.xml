@@ -85,27 +85,4 @@
 		<hotkey name="MACRO"          					key="VK_0" />
 	</hotkeys>
 
-	<skills>
-		<skill name="MAGE_FIREBALL"          	hotkey="MACRO" priority="90" pullonly="true" />
-		<skill name="ROGUE_THROW"    					hotkey="MACRO" priority="90" pullonly="true" />
-		<skill name="MAGE_FLAME"  	        	hotkey="MACRO" priority="80" maxuse="true" />
-		<skill name="MAGE_LIGHTNING"  	     	hotkey="MACRO" priority="80" autouse="false" />
-		<skill name="ROGUE_SHADOWSTAB"    		hotkey="MACRO" priority="80" />
-		<skill name="ROGUE_LOW_BLOW"      		hotkey="MACRO" priority="80" />
-		<skill name="ROGUE_INFORMER"    			hotkey="MACRO" priority="80" />
-		<skill name="ROGUE_ASSASSINS_RAGE"    hotkey="MACRO" priority="80" />
-		<skill name="ROGUE_WOUND_ATTACK"    	hotkey="MACRO" priority="80" />
-	</skills>
-
-	<onLoad><![CDATA[
-		levelupSkills1To10("loadonly")
-		if MyOnLoad then MyOnLoad() end
-	]]></onLoad>
-
-	<onLevelup><![CDATA[
-		openGiftbags1To10()
-		levelupSkills1To10(player.Level)
-		if MyOnLevelup then MyOnLevelup() end
-	]]></onLevelup>
-
 </profile>
