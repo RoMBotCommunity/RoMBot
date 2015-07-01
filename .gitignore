@@ -220,7 +220,4 @@ cache/dummy.txt
 *.lnk
 logs/
 .svn/
-*.dat
-waypoints/ManaStones/temp.dat
-waypoints/ManaStones/temp.dat
 waypoints/ManaStones/temp.dat
