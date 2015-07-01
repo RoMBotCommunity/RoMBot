@@ -3,12 +3,12 @@ return {
 {
    [91]={2},
    [57]={3},
-   [47]={4},
+   [93]={4},
    [90]={5},
    [92]={6},
-   [94]={7},
+   [47]={7},
    [68]={8},
-   [93]={9},
+   [94]={9},
 },
 -- Table: {2}
 {
@@ -30,14 +30,14 @@ return {
 },
 -- Table: {4}
 {
-   "Brisinga",
-   "Vindictive",
-   "Runenbänker",
-   "Kräuterbänker",
-   "Holzbänker",
-   "Statsbänker",
-   "Mainbänker",
-   "Erzbänker",
+   "Eldone",
+   "Eldtwo",
+   "Eldthree",
+   "Eldfour",
+   "Eldfive",
+   "Eldsix",
+   "Eldseven",
+   "Eldeight",
 },
 -- Table: {5}
 {
@@ -63,14 +63,14 @@ return {
 },
 -- Table: {7}
 {
-   "Eleone",
-   "Eletwo",
-   "Elethree",
-   "Elefour",
-   "Elefive",
-   "Elesix",
-   "Eleseven",
-   "Eleeight",
+   "Brisinga",
+   "Vindictive",
+   "Runenbänker",
+   "Kräuterbänker",
+   "Holzbänker",
+   "Statsbänker",
+   "Mainbänker",
+   "Erzbänker",
 },
 -- Table: {8}
 {
@@ -85,13 +85,13 @@ return {
 },
 -- Table: {9}
 {
-   "Eldone",
-   "Eldtwo",
-   "Eldthree",
-   "Eldfour",
-   "Eldfive",
-   "Eldsix",
-   "Eldseven",
-   "Eldeight",
+   "Eleone",
+   "Eletwo",
+   "Elethree",
+   "Elefour",
+   "Elefive",
+   "Elesix",
+   "Eleseven",
+   "Eleeight",
 },
 }
