@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><waypoints type="TRAVEL">
 	<onload><![CDATA[
-		include ('../../includes/cleanupBags.lua')
-		
 		cleanupBags ()
 		print ("\a\a\a")
 	]]></onload>
