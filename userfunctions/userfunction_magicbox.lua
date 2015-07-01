@@ -79,7 +79,7 @@
 		local items, item, slot	= {...}, nil, 51
 		for idx=1,math.min (5, #items) do
 			if type (items[idx])=='number' or type (items[idx])=='string' then
-				item	= inventory:findItem (items[idx])
+				item	= inventory:findItem (items[idx], 'bags')
 			else
 				item	= items[idx]
 			end
