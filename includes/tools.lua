@@ -53,8 +53,10 @@
 		filename					= filename or getExecutionPath () .. '/cache/names.dat'
 		local saved				= table.load (filename) or {}
 		saved[acc]				= saved[acc] or {}
-		saved[acc][char]	= name
-		table.save (saved, filename)
+		if not saved[acc][char] or saved[acc][char]~=name then
+			saved[acc][char]	= name
+			table.save (saved, filename)
+		end
 	end
 
 	function killStupidNewbiePet ()
