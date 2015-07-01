@@ -17,6 +17,8 @@ function killStupidNewbiePet (...)	return __loadInclude ('killStupidNewbiePet', 
 
 function dayliesComplete (...)			return __loadInclude ('dayliesComplete', table.pack (...), 'dailies')					end
 function getDailyDate (...)					return __loadInclude ('getDailyDate', table.pack (...), 'dailies') 						end
+function exchangeClass (...)				return __loadInclude ('exchangeClass', table.pack (...), 'dailies') 					end
+function RoMBarAutoKeys (...)				return __loadInclude ('RoMBarAutoKeys', table.pack (...), 'dailies') 					end
 
 function setVolume (...)						return __loadInclude ('setVolume', table.pack (...), 'sound')									end
 function soundOn (...)							return __loadInclude ('soundOn', table.pack (...), 'sound')										end

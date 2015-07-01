@@ -41,7 +41,7 @@
 		<option name="TARGET_LEVELDIF_BELOW"		value="20" />
 
 		<!-- Waypoint and movement settings -->
-		<option name="WAYPOINTS"								value="/3_Farm/logar-TQ/1_start" />  			<!-- leave empty to show a list -->
+		<option name="WAYPOINTS"								value="/Farm/logar-TQ/1_start" />  			<!-- leave empty to show a list -->
 		<option name="RETURNPATH"								value="" />
 		<option name="PATH_TYPE"								value="waypoints" />	<!-- waypoints | wander -->
 		<option name="WANDER_RADIUS"						value="200" />
