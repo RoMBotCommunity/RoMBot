@@ -81,6 +81,7 @@
 		
 		function MyOnLeaveCombat ()
       player:lootAll ()
+      clearAndEquipChar (false)
       checkBag ()
 		end
 		

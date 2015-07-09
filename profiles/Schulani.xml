@@ -142,6 +142,10 @@
 		<skill name="PRIEST_URGENT_HEAL"			hotkey="MACRO" priority="98"	hpper="60" />
 		<skill name="PRIEST_REGENERATE"				hotkey="MACRO" priority="97"	hpper="85" />
 
+		<skill name="MAGE_ESSENCE_OF_MAGIC"		hotkey="MACRO" priority="100" autouse="true" />
+		<skill name="MAGE_ENERGY_INFLUX"			hotkey="MACRO" priority="100" inbattle="true" autouse="true" />
+		<skill name="MAGE_ELECTROSTATIC_CHARGE"	hotkey="MACRO" priority="100" inbattle="true" autouse="true" />
+
 		<skill name="MAGE_FLAME"              hotkey="MACRO" priority="90"	autouse="true" />
 		<skill name="MAGE_FIREBALL"          	hotkey="MACRO" priority="85"	autouse="true" />
 		<skill name="MAGE_RISING_TIDE_ELITE" 	hotkey="MACRO" priority="80"	autouse="false" />
@@ -151,11 +155,8 @@
 		
 		<skill name="MAGE_ELEMENTAL_CATALYST" hotkey="MACRO" priority="100"	inbattle="false"	pullonly="true"	autouse="false" />
 		<skill name="MAGE_ENERGY_WELL" 		  	hotkey="MACRO" priority="100"	inbattle="true"		pullonly="true"	autouse="false" />
-		<skill name="MAGE_ESSENCE_OF_MAGIC"		hotkey="MACRO" priority="100" autouse="true" />
-		<skill name="MAGE_ENERGY_INFLUX"			hotkey="MACRO" priority="100" inbattle="true" pullonly="true"	autouse="true" />
 		<skill name="MAGE_INTENSIFICATION"		hotkey="MACRO" priority="100" inbattle="true" pullonly="true"	autouse="true" />
 		<skill name="MAGE_MAGIC_DRAIN"				hotkey="MACRO" priority="100" inbattle="true" pullonly="true" autouse="true" />
-		<skill name="MAGE_ELECTROSTATIC_CHARGE"	hotkey="MACRO" priority="100" inbattle="true" autouse="true" />
 	</skills_mage>
 
 	
@@ -185,14 +186,13 @@
 		if not player:hasBuff (500296) then
 			player:queueSkill ('MAGE_ENERGY_INFLUX')
 		end
-		
+
 		if not player:hasBuff (620209) then
 			player:queueSkill ("MAGE_ELECTROSTATIC_CHARGE")
 		end
 		
 		if arg1.Name=='MAGE_FLAME' then
 			player:queueSkill ("MAGE_FIREBALL")
-			player:queueSkill ("MAGE_LIGHTNING")
 		end
 		
 		return true

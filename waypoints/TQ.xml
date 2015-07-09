@@ -57,7 +57,7 @@
 		if getAcc ()==57 then
 			chars								= {
 				{ name = 'Thunderstrike', account = 57, char = 2, scripts = {'parcour','andor','tq_butterfly'} },
-				{ name = 'Celesteria', 		account = 57, char = 3, scripts = {'parcour','andor','tq_dogs'} },
+				{ name = 'Celesteria', 		account = 57, char = 3, scripts = {'parcour','andor','tq_butterfly'} },
 				{ name = 'Celestron', 		account = 57, char = 1, scripts = {'goldegg','parcour','survival','andor','gobo','tq_flammen'} },
 				{ name = 'Schulani', 			account = 57, char = 4, scripts = {'goldegg','parcour','survival','andor','gobo'} },
 			}
@@ -146,6 +146,7 @@ message ('no scripts found for '..name, true)
 
 		soundOff ()
 		savePlayerName ()
+		UGF_activate (5, true, true)
 		config = getConfig ()
 		
 		if config[1]~=nil then

@@ -12,26 +12,18 @@
 	local triggerKEY = key.VK_SHIFT
 	----------------------------------------------------
 
-	local attackModes = {
+	local modes = {
 		'auto - Auto attacks targeted mobs. The "triggerKEY" toggles it on/off.',
 		'trigger - Have to trigger each attack with the "triggerKEY"',
 		'disabled - Only heal and buff. Never attacks.',
 		'cancel',
 	}
 
-	local catchModes = {
-		'all',
-		'only golden cavy',
-		'none',
-		'cancel',
-	}
-
 	-- Start messages
-	cprintf(cli.lightblue, "\nRombot Assist\n");
+	cprintf(cli.lightblue, "\nRock5's Rombot Assist\n");
 
-	local mode	= tonumber (UMMD_chooseList (attackModes, 'choose attack mode:')) if mode==4 then error ('canceled',0) end
-	local catch	= tonumber (UMMD_chooseList (catchModes, 'catch cavy:')) if mode==4 then error ('canceled',0) end
-
+	local mode  = tonumber (UMMD_chooseList (modes, 'choose attack mode:'))
+	if mode==4 then error ('canceled',0) end
 	local attackMode  = 'disabled'
 	if mode==1 then attackMode = 'auto' end
 	if mode==2 then attackMode = 'trigger' end
@@ -107,7 +99,7 @@
 				target:updateType()
 				if target.Type ~= PT_MONSTER or target:isAlive() == false then
 					player:clearTarget()
-					if catch==1 then catchCavy ('_cavy') elseif catch==2 then catchCavy () end
+					catchCavy ()
 					catchMysteriousBag ()
 				end
 			end

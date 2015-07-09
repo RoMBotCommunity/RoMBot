@@ -1,268 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<waypoints>
-   <!-- Updated>12/31/2011 9:00 AM PST<-->
-   <onLoad>
-      DQ1 = GetIdName(424179);
-      DQ2 = GetIdName(424205);
-      DQNPC12 = "Wernika Diyazi";
-      DQ3 = GetIdName(424181);
-      DQ4 = GetIdName(424180);
-      DQNPC34 = "Robbie Butcher";
-      function tgtInRange(_target, _range)
-         if not _range then
-            _range = 300;
-         end
-         local objectList = CObjectList();
-         objectList:update();
-         player:update();
-         local objSize = objectList:size();
-         cprintf(cli.lightgreen,"Checking if any %s are in range.\n",_target)
-         local _closest = 1000;
-         for i = 0,objSize do
-            obj = objectList:getObject(i);
-            if obj.Name == _target then
-               local _tmpDist = distance(obj.X,obj.Z,player.X,player.Z);
-               if _closest > _tmpDist then
-                  _closest = _tmpDist
-               end
-            end
-         end
-         if _range >= _closest then
-            cprintf(cli.lightgreen,"%s in range.\n",_target)
-            return true;
-         else
-            cprintf(cli.lightgreen,"%s NOT in range.\n",_target)
-            return false;
-         end
-      end
-      function getDailyComplete()
-         return RoMScript("Daily_count();");
-      end
-      function checkDQCount()
-         local _tmpQC = getDailyComplete();
-         cprintf(cli.lightblue,"%s quests completed.\n",tostring(_tmpQC));
-         if (_tmpQC == 10) then
-            cprintf(cli.lightblue,"Completed max number of daily quests, logging out.\n");
-            player:logout();
-         end
-      end
-      
-      settings.profile.friends = {"Ogest","Kupferg\132rtner","Dunkelritenmagier","Dunkelriten-Akolyth","Dunkelritenhexenmeister","Dunkelritenausbilder","Seelenkern","Knochenmahlblume","Wanderskelett"};
-      changeProfileOption("EGGPET_ENABLE_ASSIST",false);
-      changeProfileOption("LOOT_ALL",true);
-      changeProfileOption("TARGET_LEVELDIF_BELOW",30)
-   </onLoad>
-   <!-- #  1 --><waypoint x="6789" z="6301" y="92" tag="teleportFLCamp">
-   </waypoint>
-   <!-- #  2 --><waypoint x="6794" z="6354" y="88">   </waypoint>
-   <!-- #  3 --><waypoint x="6663" z="6508" y="92" tag="questGiver">
-      __WPL:setForcedWaypointType("RUN")
-      dailyQuest1 = getQuestStatus(DQ1);
-      dailyQuest2 = getQuestStatus(DQ2);
-      if (dailyQuest1 == "complete") then
-         checkDQCount();
-         player:target_NPC(DQNPC12);
-         CompleteQuestByName(DQ1);
-      end
-      if (dailyQuest2 == "complete") then
-         checkDQCount();
-         player:target_NPC(DQNPC12);
-         CompleteQuestByName(DQ2);
-      end
-      checkDQCount();
-      player:target_NPC(DQNPC12);
-      AcceptQuestByName(DQ1);
-      player:target_NPC(DQNPC12);
-      AcceptQuestByName(DQ2);
-      cprintf(cli.lightblue,"Quests accepted, moving to objective.\n");
-   </waypoint>
-   
-   <!-- #  4 --><waypoint x="6481" z="6442" y="89"> player:mount();   </waypoint>
-   <!-- #  5 --><waypoint x="6387" z="6297" y="90">   </waypoint>
-   <!-- #  6 --><waypoint x="6395" z="6086" y="95">
-      dailyQuest3 = getQuestStatus(DQ3);
-      dailyQuest4 = getQuestStatus(DQ4);
-      if (dailyQuest3 ~= "not accepted") and (dailyQuest4 ~= "not accepted")  then
-         __WPL:setWaypointIndex(__WPL:findWaypointTag("skipAcceptButterflies"));
-      end
-   </waypoint>
-   <!-- #  7 --><waypoint x="6428" z="5438" y="154" tag="acceptButterflies">
-      dailyQuest1 = getQuestStatus(DQ1);
-      dailyQuest2 = getQuestStatus(DQ2);
-      dailyQuest3 = getQuestStatus(DQ3);
-      dailyQuest4 = getQuestStatus(DQ4);
-      if (dailyQuest1 == "complete") or (dailyQuest2 == "complete") then
-         __WPL:setWaypointIndex(__WPL:findWaypointTag("skipButterflyTurnin"));
-      end
-      if dailyQuest3 == "complete" then
-         checkDQCount();
-         player:target_NPC(DQNPC34);
-         CompleteQuestByName(DQ3);
-         yrest(100);
-         dailyQuest3 = getQuestStatus(DQ3);
-      end
-      if dailyQuest4 == "complete" then
-         checkDQCount();
-         player:target_NPC(DQNPC34);
-         CompleteQuestByName(DQ4);
-         yrest(100);
-         dailyQuest4 = getQuestStatus(DQ4);
-      end
-      if (dailyQuest3 == "not accepted") then
-         checkDQCount();
-         player:target_NPC(DQNPC34);
-         AcceptQuestByName(DQ3);
-      end
-      if (dailyQuest4 == "not accepted") then
-         checkDQCount();
-         player:target_NPC(DQNPC34);
-         AcceptQuestByName(DQ4);
-      end
-   </waypoint>
-   <!-- #  8 --><waypoint x="6254" z="5187" y="168" tag="skipAcceptButterflies">
-   </waypoint>
-   <!-- #  9 --><waypoint x="6348" z="4789" y="168">
-      __WPL:setWaypointIndex(__WPL:findWaypointTag("enterGarden"));
-   </waypoint>
+<waypoints type="TRAVEL">
+	<onload><![CDATA[
+		include ("../../includes/afterCrash.lua")
 
-   <!-- # 10 --><waypoint x="6530" z="4792" y="168" tag="walkAround1"> player:mount();   </waypoint>
-   <!-- # 11 --><waypoint x="6638" z="4338" y="167">   </waypoint>
-   <!-- # 12 --><waypoint x="6635" z="4268" y="168">   </waypoint>
-   <!-- # 13 --><waypoint x="6506" z="4183" y="168" tag="enterGarden">
-   </waypoint>
-   <!-- # 14 --><waypoint x="6583" z="3889" y="190">   </waypoint>
-   <!-- # 19 --><waypoint x="6381" z="3183" y="176">   </waypoint>
-   <!-- # 20 --><waypoint x="6373" z="2893" y="168">   </waypoint>
-   <!-- # 21 --><waypoint x="6381" z="2760" y="168">   </waypoint>
-   <!-- # 22 --><waypoint x="6225" z="2783" y="168">   </waypoint>
-   <!-- # 23 --><waypoint x="6135" z="2867" y="168">   </waypoint>
-   <!-- # 24 --><waypoint x="6086" z="2761" y="168">   </waypoint>
-   <!-- # 25 --><waypoint x="6110" z="2654" y="168">   </waypoint>
-   <!-- # 26 --><waypoint x="6133" z="2549" y="168">   </waypoint>
-   <!-- # 29 --><waypoint x="6405" z="1763" y="168">   </waypoint>
-   <!-- # 30 --><waypoint x="6527" z="1080" y="168">   </waypoint>
-   <!-- # 31 --><waypoint x="6906" z="1223" y="168">   
-      __WPL:setForcedWaypointType("TRAVEL");
-   </waypoint>
-   <!-- # 32 --><waypoint x="7195" z="1333" y="168">   </waypoint>
-   <!-- # 33 --><waypoint x="7227" z="1226" y="190">   </waypoint>
-   <!-- # 34 --><waypoint x="7245" z="1133" y="190">   </waypoint>
-   <!-- # 35 --><waypoint x="7332" z="746" y="176" tag="startQuestKills">
-      player:update();
-      if player.Battling and tgtInRange("Ogest",500) then
-         local _tmpChannel = tonumber(RoMScript("GetLeaderChannelID();"));
-         if _tmpChannel == 3 then
-            _tmpChannel = 1;
-         else
-            _tmpChannel = _tmpChannel + 1;
-         end
-         RoMScript("ChangeParallelID(" .. tostring(_tmpChannel) .. ");");
-         yrest(25000);
-      end
-      __WPL:setForcedWaypointType("NORMAL");
-   </waypoint>
-   <!-- # 36 --><waypoint x="7074" z="736" y="175" tag="startFirstKilling">
-   </waypoint>
-   <!-- # 37 --><waypoint x="6953" z="656" y="175">   </waypoint>
-   <!-- # 38 --><waypoint x="6855" z="484" y="175">   </waypoint>
-   <!-- # 39 --><waypoint x="6752" z="522" y="175">   </waypoint>
-   <!-- # 40 --><waypoint x="6548" z="403" y="175">   </waypoint>
-   <!-- # 41 --><waypoint x="6463" z="511" y="175">   </waypoint>
-   <!-- # 42 --><waypoint x="6583" z="572" y="175" tag="lastFirstKilling">   
-      dailyQuest1 = getQuestStatus(DQ1);
-      dailyQuest2 = getQuestStatus(DQ2);
-      if (dailyQuest1 ~= "incomplete") and (dailyQuest2 ~= "incomplete") then
-         __WPL:setWaypointIndex(__WPL:findWaypointTag("endQuestKilling"));
-         __WPL:setForcedWaypointType("RUN")
-      elseif not (tgtInRange("Schatten des Abgrunds") or tgtInRange("Dunkler Nachtgargoyle")) then
-         __WPL:setWaypointIndex(__WPL:findWaypointTag("startSecondKilling"));
-      else
-         __WPL:setWaypointIndex(__WPL:findWaypointTag("startFirstKilling"));
-      end
-   </waypoint>
-   <!-- # 43 --><waypoint x="7714" z="846" y="175" tag="startSecondKilling">      
-   </waypoint>
-   <!-- # 44 --><waypoint x="7865" z="769" y="175">   </waypoint>
-   <!-- # 45 --><waypoint x="8042" z="797" y="175">   </waypoint>
-   <!-- # 46 --><waypoint x="8229" z="873" y="175">   </waypoint>
-   <!-- # 47 --><waypoint x="7991" z="898" y="175">   </waypoint>
-   <!-- # 48 --><waypoint x="7731" z="855" y="175">   </waypoint>
-   <!-- # 49 --><waypoint x="7725" z="853" y="175">   </waypoint>
-   <!-- # 50 --><waypoint x="7725" z="853" y="175" tag="lastSecondKilling">      
-      dailyQuest1 = getQuestStatus(DQ1);
-      dailyQuest2 = getQuestStatus(DQ2);
-      if (dailyQuest1 ~= "incomplete") and (dailyQuest2 ~= "incomplete") then
-         __WPL:setWaypointIndex(__WPL:findWaypointTag("endQuestKilling"));
-         __WPL:setForcedWaypointType("RUN")
-      elseif not (tgtInRange("Schatten des Abgrunds") or tgtInRange("Dunkler Nachtgargoyle")) then
-         __WPL:setWaypointIndex(__WPL:findWaypointTag("startFirstKilling"));
-      else
-         __WPL:setWaypointIndex(__WPL:findWaypointTag("startSecondKilling"));
-      end
-   </waypoint>
-   <!-- # 51 --><waypoint x="7328" z="774" y="174" tag="endQuestKilling" >
-      cprintf(cli.lightblue,"Quests completed, moving to turnin.\n");
-      __WPL:setForcedWaypointType("RUN");
-   </waypoint>
-   <!-- # 52 --><waypoint x="7291" z="948" y="167">   
-      __WPL:setForcedWaypointType("TRAVEL");
-   </waypoint>
+		questID_d									= 424180
+		questID_b									= 424181
+		questNPC									= 118072
 
-   <!-- # 53 --><waypoint x="7245" z="1130" y="190"> player:mount ();   </waypoint>
-   <!-- # 54 --><waypoint x="7228" z="1253" y="190">   </waypoint>
-   <!-- # 55 --><waypoint x="7198" z="1218" y="190">   </waypoint>
-   <!-- # 56 --><waypoint x="7051" z="1258" y="168">   </waypoint>
-   <!-- # 57 --><waypoint x="6570" z="1137" y="168">   </waypoint>
-   <!-- # 58 --><waypoint x="6478" z="1337" y="168">   </waypoint>
-   <!-- # 59 --><waypoint x="6405" z="1763" y="168">   </waypoint>
-   <!-- # 60 --><waypoint x="6337" z="2314" y="168">   </waypoint>
-   <!-- # 61 --><waypoint x="6128" z="2574" y="168">   </waypoint>
-   <!-- # 62 --><waypoint x="6077" z="2826" y="168">   </waypoint>
-   <!-- # 63 --><waypoint x="6183" z="2855" y="168">   </waypoint>
-   <!-- # 64 --><waypoint x="6253" z="2747" y="168">   </waypoint>
-   <!-- # 65 --><waypoint x="6400" z="2774" y="168">   </waypoint>
-   <!-- # 66 --><waypoint x="6390" z="2873" y="168">   </waypoint>
-   <!-- # 67 --><waypoint x="6378" z="3149" y="176">   </waypoint>
-   <!-- # 68 --><waypoint x="6333" z="3379" y="173">   </waypoint>
-   <!-- # 69 --><waypoint x="6597" z="3765" y="158">   </waypoint>
-   <!-- # 70 --><waypoint x="6549" z="3986" y="190">   </waypoint>
-   <!-- # 71 --><waypoint x="6503" z="4177" y="168">
-      __WPL:setForcedWaypointType("RUN");
-      __WPL:setWaypointIndex(__WPL:findWaypointTag("exitGarden"));
-   </waypoint>
-   <!-- # 72 --><waypoint x="6338" z="4189" y="168" tag="walkAround2">   
-   </waypoint>
-   <!-- # 73 --><waypoint x="6212" z="4721" y="168">   </waypoint>
-   <!-- # 74 --><waypoint x="6347" z="4800" y="168" tag="exitGarden">
-      dailyQuest3 = getQuestStatus(DQ3);
-      dailyQuest4 = getQuestStatus(DQ4);
-      if dailyQuest3 ~= "complete" and dailyQuest4 ~= "complete" then
-         __WPL:setWaypointIndex(__WPL:findWaypointTag("skipButterflyTurnin"));
-      end
-   </waypoint>
-   <!-- # 75 --><waypoint x="6428" z="5438" y="154" tag="completeButterflies">
-      if dailyQuest3 == "complete" then
-         checkDQCount();
-         player:target_NPC(DQNPC34);
-         CompleteQuestByName(DQ3);
-      end
-      if dailyQuest4 == "complete" then
-         checkDQCount();
-         player:target_NPC(DQNPC34);
-         CompleteQuestByName(DQ4);
-      end
-      __WPL:setWaypointIndex(__WPL:findWaypointTag("skipBounce"));
-   </waypoint>
-   <!-- # 76 --><waypoint x="6207" z="5485" y="125" tag="skipButterflyTurnin">   
-   </waypoint>
-   <!-- # 77 --><waypoint x="6310" z="5985" y="98" tag="skipBounce">   </waypoint>
-   <!-- # 78 --><waypoint x="6415" z="6136" y="96">   </waypoint>
-   <!-- # 79 --><waypoint x="6388" z="6239" y="88">   </waypoint>
-   <!-- # 80 --><waypoint x="6461" z="6429" y="91">   </waypoint>
-   <!-- # 81 --><waypoint x="6660" z="6515" y="92" tag="questReciever">
-      __WPL:setWaypointIndex(__WPL:findWaypointTag("questGiver"));
-   </waypoint>
-   <!-- # 82 --><waypoint x="6776" z="6299" y="92">   
-      isTeleport("next","Ailic's Aide",1);
-   </waypoint>
+		settings.profile.mobs			= {105408,105413}
+		settings.profile.friends	= {105412,105414,105290,105291,105292,105293,105294,105299}
+
+		do_b    	          			= config and config.butter or UMMD_chooseFlag ('Do you want to do "'..GetIdName (questID_b)..'"?')
+		do_d		             			= config and config.dogs or UMMD_chooseFlag ('Do you want to do "'..GetIdName (questID_d)..'"?')
+
+		if not do_d and not do_b then
+			error ('canceled')
+			return
+		end
+
+		extendedWP           			= false -- do_d and not do_b and UMMD_chooseFlag ('Use extended waypoints for "'..GetIdName (questID_d)..'"?')
+
+		function dayliesComplete () return false end
+
+		DN_Autoquest (questID_d, do_d)
+		DN_Autoquest (questID_b, do_b)
+
+		complete, numTqCards			= dayliesComplete ()
+
+		if complete then
+			travelTo ('HeffnerHousemaid')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Nicole Rebecca"))
+		else
+			zID = getZoneId ()
+			if zID~=14 then
+				travelTo ('Butterflies')
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("Robbie Butcher"))
+			end
+		end
+	]]></onload>
+
+	<!-- #  1 --><waypoint x="-6895" z="-3645" tag="Nicole Rebecca"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD)
+		if complete then
+			if type (checkRelog)=='function' then
+				checkRelog ()
+				return
+			else
+				error ('finished')
+			end
+		else
+			travelTo ('Butterflies')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Robbie Butcher"))
+		end
+	]]></waypoint>
+
+	<!-- #  2 --><waypoint x="-6336" z="-3913" tag="snoop_Heffner"><![CDATA[
+		if not complete then
+			travelTo ('Butterflies')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Robbie Butcher"))
+		else
+			travelTo ('HeffnerHousemaid')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Nicole Rebecca"))
+		end
+	]]></waypoint>
+
+	<!-- #  3--><waypoint x="6777" z="6312" tag="frontline"><![CDATA[
+		if not complete then
+			travelTo ('Butterflies')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Robbie Butcher"))
+		else
+			travelTo ('HeffnerHousemaid')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Nicole Rebecca"))
+		end
+	]]></waypoint>
+
+	<!-- #  3 --><waypoint x="6424" z="5432" tag="Robbie Butcher"><![CDATA[
+		complete, numTqCards = dayliesComplete (numTqCards)
+		if not complete and getQuestStatus (questID_d)=='complete' then
+			player:target_NPC (questNPC)
+			if getQuestStatus (questID_d)=='complete' then
+				CompleteQuestByName (questID_d)
+			end
+		end
+
+		complete, numTqCards = dayliesComplete (numTqCards)
+		if not complete and getQuestStatus (questID_b)=='complete' then
+			player:target_NPC (questNPC)
+			if getQuestStatus (questID_b)=='complete' then
+				CompleteQuestByName (questID_d)
+			end
+		end
+
+		complete, numTqCards = dayliesComplete (numTqCards)
+		if complete then
+			travelTo ('Heffner')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("snoop_Heffner"))
+			return
+		end
+
+		if do_d and getQuestStatus (questID_d)=='not accepted' then
+			player:target_NPC (questNPC)
+			if getQuestStatus (questID_d)=='not accepted' then
+				AcceptQuestByName (questID_d)
+			end
+		end
+
+		if do_b and getQuestStatus (questID_b)=='not accepted' then
+			player:target_NPC (questNPC)
+			if getQuestStatus (questID_b)=='not accepted' then
+				AcceptQuestByName (questID_b)
+			end
+		end
+
+		__WPL:setDirection (WPT_FORWARD)
+	]]></waypoint>
+
+	<!-- #  1 --><waypoint x="6396" z="5364"><![CDATA[
+		if __WPL.Direction==WPT_FORWARD and do_d==false then
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("no_d"))
+		end
+	]]></waypoint>
+
+	<!-- #  4--><waypoint x="6337" z="4883" tag="start"><![CDATA[
+		if getQuestStatus (questID_d)=='incomplete' then
+			__WPL:setDirection (WPT_BACKWARD)
+		end
+	]]></waypoint>
+
+	<!-- #  5--><waypoint x="6375" z="4715" type="NORMAL"><![CDATA[
+		if combatMode () then
+			__WPL:setDirection (WPT_FORWARD)
+			waitForTarget ()
+		end
+	]]></waypoint>
+	<!-- #  6--><waypoint x="6415" z="4495" type="NORMAL"><![CDATA[
+		waitForTarget ()
+	]]></waypoint>
+	<!-- #  7--><waypoint x="6465" z="4330" type="NORMAL"><![CDATA[
+		if not extendedWP then
+			__WPL:setDirection (WPT_BACKWARD)
+		end
+		waitForTarget ()
+	]]></waypoint>
+
+	<!-- #  2 --><waypoint x="6343" z="5062" tag="no_d"/>
+	<!-- #  3 --><waypoint x="6373" z="4914"/>
+	<!-- #  4 --><waypoint x="6403" z="4824"/>
+	<!-- #  5 --><waypoint x="6509" z="4783"/>
+	<!-- #  6 --><waypoint x="6557" z="4574"/>
+	<!-- #  7 --><waypoint x="6614" z="4357"/>
+	<!-- #  8 --><waypoint x="6639" z="4259"/>
+
+	<!-- #  9 --><waypoint x="6510" z="4181"/>
+	<!-- # 10 --><waypoint x="6551" z="3997"/>
+
+
 </waypoints>

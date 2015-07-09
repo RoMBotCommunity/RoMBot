@@ -222,3 +222,4 @@ logs/
 .svn/
 waypoints/ManaStones/temp.dat
 *.pid
+*.dat

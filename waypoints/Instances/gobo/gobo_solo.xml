@@ -2,7 +2,7 @@
 <waypoints>
 	<onload><![CDATA[
 	
-		smallChests	= true
+		smallChests	= config and config.loot or UMMD_chooseFlag ('Do you want to loot small chests?')
 		bigChests		= { false, false, false, false }
 		
 		repeat zid = getZoneId () yrest (200) until zid
@@ -74,7 +74,7 @@
 			message ('You are too far from Mahler Palo', true)
 		end
 		RoMScript ("ChoiceOption (1)") yrest (200)
-		RoMScript ("StaticPopup_OnClick (StaticPopup1, 1)") yrest (200)
+		AcceptPopup () --RoMScript ("StaticPopup_OnClick (StaticPopup1, 1)") yrest (200)
 		if waitForLoadingScreen (10) then
 			__WPL:setWaypointIndex (2)
 		else
@@ -370,9 +370,6 @@
 	]]></waypoint>
 
 	<!--#219--><waypoint x="-5865" z="3327" tag="outside"><![CDATA[
-		while not travelTo ('Varanas') do
-			message ('unable to go to Varanas', true)
-		end
 		if checkRelog and type (checkRelog)=='function' then 
 			checkRelog ()
 			return

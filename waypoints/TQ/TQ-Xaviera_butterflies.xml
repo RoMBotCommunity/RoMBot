@@ -6,38 +6,35 @@
 		questID								= 424181
 		questNPC							= 118072
 		farmMobs							= 105413
-		complete, numTqCards	= dayliesComplete ();
+		complete, numTqCards	= dayliesComplete ()
+
+		settings.profile.friends	= { 105412, 105414, 105290, 105291, 105292, 105293, 105294, 105299, 105408 }
+		changeProfileOption ('TARGET_LEVELDIF_BELOW', player.Level-50)
+
 		combatMode (false)
-		
 		DN_AutoQuest (questID)
 		
-		zID = getZoneId ()
-		if zID~=14 then
-			if travelTo ('Heffner') then
-				__WPL:setWaypointIndex (__WPL:findWaypointTag ("Heffner"))
-			else
-				error ('', 0);
+		if complete then
+			travelTo ('HeffnerHousemaid')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Nicole Rebecca"))
+		else
+			zID = getZoneId ()
+			if zID~=14 then
+				travelTo ('Butterflies')
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("Robbie Butcher"))
 			end
 		end
-		
-		combatMode (getQuestStatus (questID)~='complete'
-								and __WPL:getNearestWaypoint (player.X, player.Z)>__WPL:findWaypointTag ("butterflies_right")
-								and __WPL:getNearestWaypoint (player.X, player.Z)<__WPL:findWaypointTag ("butterflies_left"), nil, farmMobs)
-								
+
 		function MyOnLeaveCombat ()
 			player:loot ()
 			player:update ()
 			checkDirection (true)
 		end
 		
-		function checkDirection (afterCombat)
-			combatMode ((getQuestStatus (questID)=='incomplete'), nil, farmMobs)
-			if not combatMode () then
-				if __WPL:getNearestWaypoint (player.X, player.Z)>__WPL:findWaypointTag ("butterflies_middle") then
-					__WPL:setDirection (WPT_FORWARD);
-				else
-					__WPL:setDirection (WPT_BACKWARD);
-				end
+		function checkDirection (afterCombat, changeDir)
+			if changeDir~=false then __WPL:setDirection (WPT_FORWARD) end
+			if not combatMode ((getQuestStatus (questID)=='incomplete'), 200, farmMobs) then
+				__WPL:setDirection (WPT_BACKWARD)
 				mount ()
 			end
 			if afterCombat==true then
@@ -47,85 +44,150 @@
 		
 	]]></onload>
 	
-	<!-- #  1 --><waypoint x="-6948" z="-3652" tag="Nicole Rebecca"><![CDATA[
-		__WPL:setDirection (WPT_FORWARD);
-		if complete then 
-			if checkRelog and type(checkRelog)=='function' then 
+	<!-- #  1 --><waypoint x="-6895" z="-3645" tag="Nicole Rebecca"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD)
+		if complete then
+			if type (checkRelog)=='function' then
 				checkRelog ()
 				return
 			else
-				message ('finished', false, true);
+				error ('finished')
+			end
+		else
+			travelTo ('Butterflies')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Robbie Butcher"))
+		end
+	]]></waypoint>
+
+	<!-- #  2 --><waypoint x="-6336" z="-3913" tag="snoop_Heffner"><![CDATA[
+		if not complete then
+			travelTo ('Butterflies')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Robbie Butcher"))
+		else
+			travelTo ('HeffnerHousemaid')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Nicole Rebecca"))
+		end
+	]]></waypoint>
+
+	<!-- #  3--><waypoint x="6777" z="6312" tag="frontline"><![CDATA[
+		if not complete then
+			travelTo ('Butterflies')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Robbie Butcher"))
+		else
+			travelTo ('HeffnerHousemaid')
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Nicole Rebecca"))
+		end
+	]]></waypoint>
+
+	<!-- #  3 --><waypoint x="6424" z="5432" tag="Robbie Butcher"><![CDATA[
+		complete, numTqCards = dayliesComplete (numTqCards)
+		if not complete and getQuestStatus (questID)=='complete' then
+			player:target_NPC (questNPC)
+			if getQuestStatus (questID)=='complete' then
+				CompleteQuestByName (questID)
 			end
 		end
-	]]></waypoint>
-	
-	<!-- #  2 --><waypoint x="-6360" z="-3886" tag="Heffner"><![CDATA[
-		if not complete then 
-			travelTo ('Butterflies')
-			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Robbie Butcher"))
-		else
-			__WPL:setDirection (WPT_BACKWARD);
-		end
-	]]></waypoint>
-	
-	<!-- #  3--><waypoint x="6777" z="6312" tag="frontline"><![CDATA[
-		if not complete then 
-			travelTo ('Butterflies')
-			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Robbie Butcher"))
-		else
-			travelTo ('Heffner')
-			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Heffner"))
-		end
-	]]></waypoint>
-	
-	<!-- #  3 --><waypoint x="6427" z="5459" tag="Robbie Butcher"><![CDATA[
-		if getQuestStatus (questID)=='complete' then
-			player:target_NPC (questNPC);
-			CompleteQuestByName (questID)
-		end
-		
-		complete, numTqCards = dayliesComplete (numTqCards);
+
+		complete, numTqCards = dayliesComplete (numTqCards)
 		if complete then
 			travelTo ('Heffner')
-			__WPL:setWaypointIndex (__WPL:findWaypointTag ("Heffner"))
-		else
-			player:target_NPC (questNPC);
-			AcceptQuestByName (questID)
-			__WPL:setDirection (WPT_FORWARD);
+			__WPL:setWaypointIndex (__WPL:findWaypointTag ("snoop_Heffner"))
+			return
 		end
+
+		if getQuestStatus (questID)=='not accepted' then
+			player:target_NPC (questNPC)
+			if getQuestStatus (questID)=='not accepted' then
+				AcceptQuestByName (questID)
+			end
+		end
+
+		__WPL:setDirection (WPT_FORWARD)
 	]]></waypoint>
-	
-	<!-- #  4 --><waypoint x="6337" z="4883"/>
-	<!-- #  5 --><waypoint x="6363" z="4730"/>
-	<!-- #  6 --><waypoint x="6418" z="4526"/>
-	<!-- #  7 --><waypoint x="6466" z="4315"/>
-	<!-- #  8 --><waypoint x="6497" z="4199"/>
-	<!-- #  9 --><waypoint x="6526" z="4094"/>
-	<!-- # 10 --><waypoint x="6547" z="4002"/>
-	<!-- # 11 --><waypoint x="6572" z="3896"/>
+
+	<!-- #  2 --><waypoint x="6343" z="5062"/>
+	<!-- #  3 --><waypoint x="6373" z="4914"/>
+	<!-- #  4 --><waypoint x="6403" z="4824"/>
+	<!-- #  5 --><waypoint x="6509" z="4783"/>
+	<!-- #  6 --><waypoint x="6513" z="4800"/>
+	<!-- #  7 --><waypoint x="6582" z="4550"/>
+	<!-- #  8 --><waypoint x="6640" z="4306"/>
+	<!-- #  9 --><waypoint x="6510" z="4181"/>
+	<!-- # 10 --><waypoint x="6551" z="3997"/>
+
 	<!-- # 12 --><waypoint x="6607" z="3757" tag="random_dir"><![CDATA[
 		if getQuestStatus (questID)=='complete' then
 			__WPL:setDirection (WPT_BACKWARD)
 		elseif math.random ()>0.5 then
-			__WPL:setDirection (WPT_BACKWARD)
+			__WPL:setDirection (WPT_FORWARD)
 			__WPL:setWaypointIndex (__WPL:findWaypointTag ("to_left"))
 		else
 			__WPL:setDirection (WPT_FORWARD)
 			__WPL:setWaypointIndex (__WPL:findWaypointTag ("to_right"))
 		end
 	]]></waypoint>
-	<!-- # 13 --><waypoint x="6373" z="3353" tag="to_right"/>
+
+
+	<!-- # 13 --><waypoint x="6373" z="3353" tag="to_right"><![CDATA[
+		if __WPL.Direction==WPT_BACKWARD then
+      __WPL:setWaypointIndex (__WPL:findWaypointTag ("random_dir"))
+		end
+	]]></waypoint>
 	<!-- # 14 --><waypoint x="6378" z="3204"/>
 	<!-- # 15 --><waypoint x="6399" z="2836"/>
 	<!-- # 16 --><waypoint x="6356" z="2753"/>
 	<!-- # 17 --><waypoint x="6296" z="2733"/>
 	<!-- # 18 --><waypoint x="6148" z="2860"/>
 	<!-- # 19 --><waypoint x="6079" z="2781"/>
-	<!-- # 20 --><waypoint x="6126" z="2593" tag="butterflies_right"/>
-	<!-- # 21 --><waypoint x="6212" z="2502"><![CDATA[
-		__WPL:setDirection ((combatMode (getQuestStatus (questID)=='incomplete', nil, farmMobs) and WPT_FORWARD) or WPT_BACKWARD)
+	<!-- # 20 --><waypoint x="6126" z="2593"/>
+	<!-- # 21 --><waypoint x="6212" z="2502" tag="butterflies_right"><![CDATA[
+		__WPL:setDirection ((combatMode (getQuestStatus (questID)=='incomplete', nil, farmMobs) and WPT_BACKWARD) or WPT_FORWARD)
+		if combatMode () then
+--			if math.random ()>0.5 then
+--				__WPL:setWaypointIndex (__WPL:findWaypointTag ("right_to_left"))
+--			else
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("right_side"))
+--			end
+		else
+			__WPL:setDirection (WPT_BACKWARD)
+		end
 	]]></waypoint>
-	<!-- # 22 --><waypoint x="6334" z="2450"><![CDATA[checkDirection ()]]></waypoint>
+
+
+	<!-- # 43 --><waypoint x="7003" z="3500" tag="to_left"><![CDATA[
+		if __WPL.Direction==WPT_BACKWARD then
+      __WPL:setWaypointIndex (__WPL:findWaypointTag ("random_dir"))
+		end
+	]]></waypoint>
+	<!-- # 42 --><waypoint x="7147" z="3219"/>
+	<!-- # 41 --><waypoint x="7318" z="3185"/>
+	<!-- # 40 --><waypoint x="7368" z="3245"/>
+	<!-- # 39 --><waypoint x="7351" z="3292"/>
+	<!-- # 38 --><waypoint x="7414" z="3373"/>
+	<!-- # 37 --><waypoint x="7562" z="3173"/>
+	<!-- # 36 --><waypoint x="7666" z="3130"/>
+	<!-- # 35 --><waypoint x="7580" z="3050"/>
+	<!-- # 34 --><waypoint x="7562" z="2937"/>
+	<!-- # 33 --><waypoint x="7527" z="2809" tag="butterflies_left"><![CDATA[
+		__WPL:setDirection ((combatMode (getQuestStatus (questID)=='incomplete', nil, farmMobs) and WPT_BACKWARD) or WPT_FORWARD)
+		if combatMode () then
+--			if math.random ()>0.5 then
+--				__WPL:setDirection (WPT_BACKWARD)
+--				__WPL:setWaypointIndex (__WPL:findWaypointTag ("left_to_right"))
+--			else
+				__WPL:setWaypointIndex (__WPL:findWaypointTag ("left_side"))
+--			end
+		else
+			__WPL:setDirection (WPT_BACKWARD)
+		end
+	]]></waypoint>
+
+
+	<!-- # 22 --><waypoint x="6334" z="2450" tag="right_to_left"><![CDATA[
+		if __WPL.Direction==WPT_BACKWARD then
+      __WPL:setWaypointIndex (__WPL:findWaypointTag ("butterflies_right"))
+		end
+	]]></waypoint>
 	<!-- # 23 --><waypoint x="6447" z="2476"><![CDATA[checkDirection ()]]></waypoint>
 	<!-- # 24 --><waypoint x="6560" z="2503"><![CDATA[checkDirection ()]]></waypoint>
 	<!-- # 25 --><waypoint x="6685" z="2490"><![CDATA[checkDirection ()]]></waypoint>
@@ -135,21 +197,47 @@
 	<!-- # 29 --><waypoint x="7135" z="2586"><![CDATA[checkDirection ()]]></waypoint>
 	<!-- # 30 --><waypoint x="7229" z="2665"><![CDATA[checkDirection ()]]></waypoint>
 	<!-- # 31 --><waypoint x="7354" z="2691"><![CDATA[checkDirection ()]]></waypoint>
-	<!-- # 32 --><waypoint x="7460" z="2718"><![CDATA[checkDirection ()]]></waypoint>
-	<!-- # 33 --><waypoint x="7527" z="2809"><![CDATA[
-		__WPL:setDirection ((combatMode (getQuestStatus (questID)=='incomplete', nil, farmMobs) and WPT_BACKWARD) or WPT_FORWARD)
+	<!-- # 32 --><waypoint x="7460" z="2718" tag="left_to_right"><![CDATA[
+		if __WPL.Direction==WPT_FORWARD then
+      __WPL:setWaypointIndex (__WPL:findWaypointTag ("butterflies_left"))
+		end
 	]]></waypoint>
-	<!-- # 34 --><waypoint x="7562" z="2937" tag="butterflies_left"/>
-	<!-- # 35 --><waypoint x="7580" z="3050"/>
-	<!-- # 36 --><waypoint x="7666" z="3130"/>
-	<!-- # 37 --><waypoint x="7562" z="3173"/>
-	<!-- # 38 --><waypoint x="7414" z="3373"/>
-	<!-- # 39 --><waypoint x="7351" z="3292"/>
-	<!-- # 40 --><waypoint x="7368" z="3245"/>
-	<!-- # 41 --><waypoint x="7318" z="3185"/>
-	<!-- # 42 --><waypoint x="7147" z="3219"/>
-	<!-- # 43 --><waypoint x="7003" z="3500" tag="to_left"/>
-	<!-- # 44 --><waypoint x="7003" z="3500"><![CDATA[
-		__WPL:setWaypointIndex (__WPL:findWaypointTag ("random_dir"))
+
+
+	<!-- #  1 --><waypoint x="7588" z="2564" tag="left_side"><![CDATA[
+		checkDirection ()
+		if __WPL.Direction==WPT_BACKWARD then
+      __WPL:setWaypointIndex (__WPL:findWaypointTag ("butterflies_left"))
+		end
 	]]></waypoint>
+	<!-- #  2 --><waypoint x="7614" z="2418"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  3 --><waypoint x="7660" z="2218"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  4 --><waypoint x="7689" z="2057"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  5 --><waypoint x="7724" z="1926"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  6 --><waypoint x="7753" z="1820"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  7 --><waypoint x="7781" z="1719"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  8 --><waypoint x="7815" z="1597"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  9 --><waypoint x="7854" z="1455"><![CDATA[
+		checkDirection ()
+		__WPL:setDirection (WPT_BACKWARD)
+	]]></waypoint>
+
+	<!-- #  1 --><waypoint x="6273" z="2283" tag="right_side"><![CDATA[
+		checkDirection ()
+		if __WPL.Direction==WPT_BACKWARD then
+      __WPL:setWaypointIndex (__WPL:findWaypointTag ("butterflies_right"))
+		end
+	]]></waypoint>
+	<!-- #  2 --><waypoint x="6334" z="2065"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  3 --><waypoint x="6381" z="1905"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  4 --><waypoint x="6409" z="1784"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  5 --><waypoint x="6448" z="1616"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  6 --><waypoint x="6479" z="1476"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  7 --><waypoint x="6498" z="1378"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  8 --><waypoint x="6525" z="1295"><![CDATA[checkDirection (nil, false)]]></waypoint>
+	<!-- #  9 --><waypoint x="6571" z="1168"><![CDATA[
+		checkDirection ()
+		__WPL:setDirection (WPT_BACKWARD)
+	]]></waypoint>
+
 </waypoints>

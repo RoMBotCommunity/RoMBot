@@ -41,7 +41,7 @@
 
 		<!-- Attack monsters 3 levels above or 10 below your level -->
 		<option name="TARGET_LEVELDIF_ABOVE" value="3" />
-		<option name="TARGET_LEVELDIF_BELOW" value="10" />
+		<option name="TARGET_LEVELDIF_BELOW" value="30" />
 
 		<!-- Waypoint and movement settings -->
 		<option name="WAYPOINTS"			value="" />  			<!-- leave empty to show a list -->

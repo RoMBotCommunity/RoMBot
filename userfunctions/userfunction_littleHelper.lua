@@ -30,6 +30,7 @@ function getZoneLocalName (...)			return __loadInclude ('getZoneLocalName', tabl
 function smartMove (...)						return __loadInclude ('smartMove', table.pack (...)) 													end
 function afterCrash (...)						return __loadInclude ('afterCrash', table.pack (...))													end
 function cleanupBags (...)					return __loadInclude ('cleanupBags', table.pack (...))												end
+function catchMysteriousBag (...)		return __loadInclude ('catchMysteriousBag', table.pack (...))									end
 
 function mount (...)								return __loadInclude ('mount', table.pack (...))															end
 function combatMode (...)						return __loadInclude ('combatMode', table.pack (...))													end
