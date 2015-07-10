@@ -84,7 +84,8 @@
 			yrest (300)
 		end
 	]]></waypoint>
-	<!--#  7--><waypoint x="31635" z="4667"/>
+	<!--#  7--><waypoint x="31669" z="4649"/>
+	<!--#  7--><waypoint x="31645" z="4698"/>
 	<!--#  8--><waypoint x="31703" z="4902"/>
 	<!--#  9--><waypoint x="31416" z="5715" tag="daily_item"><![CDATA[
 		while getQuestStatus (422340) == 'incomplete' do
