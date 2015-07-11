@@ -97,7 +97,7 @@
 			player:mount ()
 		end
 		
-		local pidFile 		= getExecutionPath ()..'/lastfile.pid'
+		local pidFile 		= getExecutionPath ()..'/lastfile.'..getPlayerName ()
 		local currentFile = getFileName (__WPL.FileName):gsub ('.xml', '')
 		
 		function saveLastFile (file)
@@ -106,8 +106,8 @@
 		end
 		
 		stopWander ()
-		changeProfileOption('HEALING_POTION', (isLowLevel () and 50) or 99)
-		changeProfileOption('MANA_POTION', 		(isLowLevel () and 50) or 99)
+		changeProfileOption('HEALING_POTION', (isLowLevel () and 40) or 99)
+		changeProfileOption('MANA_POTION', 		(isLowLevel () and 40) or 99)
 		
 		local file = table.load (pidFile)
 		if file~=nil and type(file)=='table' and file.lastFile~=nil then

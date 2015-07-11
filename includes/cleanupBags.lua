@@ -60,7 +60,7 @@
 			"203784",					-- gildenburg-transportstein
 		},
 		
-		['mail::Schulani']	= {
+		['mail::Mainbänker']	= {
 			"money::50000",
 		},
 		

@@ -10,6 +10,8 @@
 
 		settings.profile.friends	= { 105412, 105414, 105290, 105291, 105292, 105293, 105294, 105299, 105408 }
 		changeProfileOption ('TARGET_LEVELDIF_BELOW', player.Level-50)
+		changeProfileOption ('LOOT', true)
+		changeProfileOption ('LOOT_ALL', false)
 
 		combatMode (false)
 		DN_AutoQuest (questID)

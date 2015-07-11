@@ -75,14 +75,14 @@
 						local oldTarget = CPawn (player.TargetPtr) or nil
 						player:target (obj)
 						RoMScript ('/' .. __UGF.emotes [math.floor (math.random()*3)+1])
-						cprintf (cli.lightblue, 'greetings to '..obj.Name)
+						cprintf (cli.lightblue, 'greetings to '..obj.Name..'\n')
 						player:target (oldTarget)
 						if __UGF.timeout==false then
 							__UGF.friends[obj.Name] = nil
 						else
 							__UGF.friends[obj.Name] = os.time ()
 						end
-						return
+						break
 					end
 				end
 			end
