@@ -1,17 +1,17 @@
 
 	--[[ modify user options here ]]-----------------------------------------------------------------------------------
 	
-	senderPass					= '*grmpf*'				-- a password to wisper to the senders for authentification
+	senderPass					= 'please'				-- a password to wisper to the senders for authentification
 																				-- this is to prevent other players from stealing items and stones
 	numTokensToKeep			= 0								-- if you want to keep some phirius tokens left on every character
 	maxStoneTier				= 9  							-- max tier to build
 	
-	stoneSender					= 'Fussimen'			-- then name of the fusion stone sender
+	stoneSender					= 'Fusilli'				-- then name of the fusion stone sender
 	stoneID							= 202999					-- 202999 or 203001 (or one of the other available fusion stones)
 	stonePrice					= 1980						-- how much costs a single stone?
 	stoneVendorID				= 110576					-- f.e. odeley prole (varanas)
 	
-	itemSender					= 'Beltiboy'			-- then name of the item sender
+	itemSender					= 'Beltolli'			-- then name of the item sender
 	itemID							= 228966					-- the item to buy (f.e. 228966 at fjord vendor)
 	itemTier						= 5								-- the item tier
 	itemPrice						= 6124						-- how much costs a single item?
