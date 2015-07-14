@@ -1,0 +1,1870 @@
+<Ui xmlns="http://www.runewaker.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.runewaker.com/
+../WorldXml/UI.xsd">
+
+	<Script file="AccountLogin.lua"/>
+
+	<Frame name="Console" hidden="true" enableMouse="true" frameStrata="HIGH">
+		<Size><AbsDimension x="400" y="400"/></Size>
+		<Anchors><Anchor point="TOP"/></Anchors>
+		<Layers>
+			<Layer>
+				<Texture file="Interface\Login\realmlist\realmlistbackground-topleft.tga">
+					<Size>
+						<AbsDimension x="200" y="200"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+					<TexCoords left="0" right="1" top="0" bottom="1"/>
+				</Texture>
+				<Texture file="Interface\Login\realmlist\realmlistbackground-topleft.tga">
+					<Size>
+						<AbsDimension x="200" y="200"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPRIGHT"/>
+					</Anchors>
+					<TexCoords left="1" right="0" top="0" bottom="1"/>
+				</Texture>
+				<Texture file="Interface\Login\realmlist\realmlistbackground-botleft.tga">
+					<Size>
+						<AbsDimension x="200" y="200"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT"/>
+					</Anchors>
+					<TexCoords left="0" right="1" top="0" bottom="0.94"/>
+				</Texture>
+				<Texture file="Interface\Login\realmlist\realmlistbackground-botleft.tga">
+					<Size>
+						<AbsDimension x="200" y="200"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+					<TexCoords left="1" right="0" top="0" bottom="0.94"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parentTitle" inherits="LoginTitleFont" text="Debug Console">
+					<Anchors><Anchor point="TOPLeft"><Offset><AbsDimension x="25" y="22"/></Offset></Anchor></Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnShow>
+				getglobal(this:GetName().."EditBox"):SetFocus()
+			</OnShow>
+			<OnHide>
+				getglobal(this:GetName().."EditBox"):ClearFocus()
+				if getglobal("AccountLogin"):IsVisible() then
+					getglobal("AccountLoginAccountEdit"):SetFocus()
+				end
+			</OnHide>
+			<OnMouseDown>
+				this:StartMoving();
+			</OnMouseDown>
+			<OnMouseUp>
+				this:StopMovingOrSizing();
+			</OnMouseUp>
+		</Scripts>
+		<Frames>
+			<EditBox name="$parentEditBox" historyLines="15">
+				<Size>
+					<AbsDimension x="400" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentLeft" file="Interface\login\common\panelitem-border.tga">
+							<Size>
+								<AbsDimension x="12" y="32"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="12" y="-8"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0" right="0.25" top="0" bottom="0.67"/>
+						</Texture>
+						<Texture name="$parentRight" file="Interface\login\common\panelitem-border.tga">
+							<Size>
+								<AbsDimension x="12" y="32"/>
+							</Size>
+							<Anchors>
+								<Anchor point="RIGHT">
+									<Offset>
+										<AbsDimension x="-12" y="-8"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0.75" right="1.0" top="0" bottom="0.67"/>
+						</Texture>
+						<Texture file="Interface\login\common\panelitem-border.tga">
+							<Size>
+								<AbsDimension x="16" y="32"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+								<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0.25" right="0.75" top="0" bottom="0.67"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnEscapePressed>
+						this:ClearFocus()
+						this:GetParent():Hide()
+					</OnEscapePressed>
+					<OnEnterPressed>
+						ConsoleEnter(this)
+					</OnEnterPressed>
+					<OnKeyDown>
+						ConsoleKeyDown(this,key)
+					</OnKeyDown>
+				</Scripts>
+				<FontString inherits="LoginFontHighlight"/>
+				<TextInsets>
+					<AbsInset top="3" left="20" bottom="9" right="20"/>
+				</TextInsets>
+			</EditBox>
+			<EditBox name="ConsoleOutput" letters="12800" multiLine="true" frameStrata="HIGH" maxLines="128" displayDuration="0" >
+				<Size>
+					<AbsDimension x="350" y="290"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-60"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<FontString inherits="LoginFontNormal" justifyH="LEFT" justifyV="BOTTOM"/>
+				<Frames>
+					<Slider name="$parentScrollBar" inherits="LoginScrollBarTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="0" y="16"/>
+								</Offset>
+							</Anchor>
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT">
+								<Offset>
+									<AbsDimension x="0" y="-16"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetValueStepMode("INT");
+							</OnLoad>
+							<OnValueChanged>
+								this:GetParent():SetMultiFirstLine(arg1);
+							</OnValueChanged>
+						</Scripts>
+					</Slider>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						this:SetKeyboardInputEnable(false)
+					</OnLoad>
+					<OnShow>
+						Console_UpdateRangeChanged(this);
+					</OnShow>
+					<OnTextChanged>
+						Console_UpdateRangeChanged(this);
+					</OnTextChanged>
+				</Scripts>
+
+			</EditBox>
+		</Frames>
+	</Frame>
+
+	<EditBox name="AccountLoginEditTemplate" letters="64" virtual="true">
+		<Size>
+			<AbsDimension x="256" y="42"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture file="Interface\Login\Common\PanelBackground">
+					<Size>
+						<AbsDimension x="202" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture file="Interface\Login\AccountLogin\AccountEdit-Border">
+					<TexCoords left="0" right="1" top="0" bottom="0.65625"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<FontString inherits="LoginEditBoxFont"/>
+		<TextInsets>
+			<AbsInset top="10" left="35" bottom="8" right="35"/>
+		</TextInsets>
+	</EditBox>
+	<Button name="fastLoginButtonTemplate" inherits="LoginButtonTemplate" virtual="true">
+		<Scripts>
+			<OnLoad>
+				--LoginButtonTemplate_OnLoad(this);
+			</OnLoad>
+			<OnEnter>
+				CustomLoginButton_OnEnter(this)
+			</OnEnter>
+			<OnLeave>
+				LoginTooltip:Hide();
+			</OnLeave>
+			<OnClick>
+				CustomLoginButton_OnClick(this, key);
+			</OnClick>
+		</Scripts>
+	</Button>
+	<Frame name="AccountLogin" parent="LoginParent" enableKeyboard="true" hidden="true" enableMouse="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="AccountLoginLogo">
+					<Size>
+						<AbsDimension x="384" y="192"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="CustomLoginVersion" inherits="LoginFontNormal">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT">
+							<Offset>
+								<AbsDimension x="2" y="-15"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="CustomLoginPages" inherits="LoginFontNormal" text="Page 1">
+					<Anchors>
+						<Anchor point="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="-10"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="AccountLoginVersion" inherits="LoginFontNormal">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT">
+							<Offset>
+								<AbsDimension x="2" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+
+
+			<EditBox name="AccountLoginAccountEdit" inherits="AccountLoginEditTemplate">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-312"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString inherits="LoginTitleFont" text="LOGIN_ACCOUNT_NAME">
+							<Anchors>
+								<Anchor point="BOTTOM" relativePoint="TOP">
+									<Offset>
+										<AbsDimension x="0" y="-6"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnKeyDown>
+						ConsoleKeyDown(this,key)
+					</OnKeyDown>
+					<OnLoad>
+						this:SetText(GetAccountName());
+						local Location = GetLocation()
+						if ( Location == "ENEU" or
+							 Location == "ENUS" or
+							 Location == "FR" or
+							 Location == "PL" or
+							 Location == "PL" or
+							 Location == "DE" or
+							 Location == "ES" or
+							 Location == "AUS" ) then
+							 AccountLoginLogo:ClearAllAnchors();
+							 AccountLoginLogo:SetAnchor("TOP", "TOP", "$parent", 0, 0);
+						end
+					</OnLoad>
+					<OnTabPressed>
+						AccountLogin_FocusPassword();
+					</OnTabPressed>
+					<OnEscapePressed>
+						AccountLogin_Exit();
+					</OnEscapePressed>
+					<OnEnterPressed>
+						AccountLogin_Login();
+					</OnEnterPressed>
+					<OnEditFocusGained>
+						this:HighlightText();
+					</OnEditFocusGained>
+					<OnEditFocusLost>
+						this:HighlightText(0, 0);
+					</OnEditFocusLost>
+				</Scripts>
+			</EditBox>
+			<EditBox name="AccountLoginPasswordEdit" inherits="AccountLoginEditTemplate" password="true">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="AccountLoginAccountEdit" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="30"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString inherits="LoginTitleFont" text="LOGIN_ACCOUNT_PASSWORD">
+							<Anchors>
+								<Anchor point="BOTTOM" relativePoint="TOP">
+									<Offset>
+										<AbsDimension x="0" y="-6"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnKeyDown>
+						ConsoleKeyDown(this,key)
+					</OnKeyDown>
+					<OnTabPressed>
+						AccountLogin_FocusAccountName();
+					</OnTabPressed>
+					<OnEscapePressed>
+						AccountLogin_Exit();
+					</OnEscapePressed>
+					<OnEnterPressed>
+						AccountLogin_Login();
+					</OnEnterPressed>
+					<OnEditFocusGained>
+						LSKB_SetAnchor("BOTTOM", "BOTTOM", "AccountLogin", -100, -20);
+						LSKB_Open(AccountLoginPasswordEdit_SetText);
+						this:HighlightText();
+					</OnEditFocusGained>
+					<OnEditFocusLost>
+						LSKB_Close();
+						this:HighlightText(0, 0);
+					</OnEditFocusLost>
+				</Scripts>
+			</EditBox>
+			<CheckButton name="AccountLastAccountButton" inherits="UILoginCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="AccountLoginPasswordEdit" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="20" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<FontString inherits="LoginFontNormal" text="LOGIN_ACCOUNT_LAST_ACCOUNT">
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						this:SetChecked(GetLastAccountState());
+					</OnLoad>
+					<OnClick>
+						SetLastAccountState(this:IsChecked());
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<Button name="AccountLoginLoginButton" inherits="LoginButtonTemplate" text="LOGIN_ACCOUNT_LOGIN">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-168"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						LogID = nil
+						RealmServer = nil
+						AccountLogin_Login();
+					</OnClick>
+				</Scripts>
+			</Button>
+
+			<!-- Row 1 -->
+			<Button name="CustomLoginButton1" inherits="fastLoginButtonTemplate" text="Account1">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-519"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton2" inherits="fastLoginButtonTemplate" text="Account2">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-492"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton3" inherits="fastLoginButtonTemplate" text="Account3">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-465"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton4" inherits="fastLoginButtonTemplate" text="Account4">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-438"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton5" inherits="fastLoginButtonTemplate" text="Account5">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-411"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton6" inherits="fastLoginButtonTemplate" text="Account6">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-384"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton7" inherits="fastLoginButtonTemplate" text="Account7">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-357"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton8" inherits="fastLoginButtonTemplate" text="Account8">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-330"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton9" inherits="fastLoginButtonTemplate" text="Account9">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-303"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton10" inherits="fastLoginButtonTemplate" text="Account10">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-276"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton11" inherits="fastLoginButtonTemplate" text="Account11">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-249"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton12" inherits="fastLoginButtonTemplate" text="Account12">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-222"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton13" inherits="fastLoginButtonTemplate" text="Account13">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-195"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton14" inherits="fastLoginButtonTemplate" text="Account14">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-168"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton15" inherits="fastLoginButtonTemplate" text="Account15">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-141"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton16" inherits="fastLoginButtonTemplate" text="Account16">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-114"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton17" inherits="fastLoginButtonTemplate" text="Account17">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-87"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton18" inherits="fastLoginButtonTemplate" text="Account18">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-60"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton19" inherits="fastLoginButtonTemplate" text="Account19">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-360" y="-33"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<!-- Row 2 -->
+			<Button name="CustomLoginButton20" inherits="fastLoginButtonTemplate" text="Account20">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-519"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton21" inherits="fastLoginButtonTemplate" text="Account21">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-492"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton22" inherits="fastLoginButtonTemplate" text="Account22">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-465"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton23" inherits="fastLoginButtonTemplate" text="Account23">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-438"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton24" inherits="fastLoginButtonTemplate" text="Account24">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-411"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton25" inherits="fastLoginButtonTemplate" text="Account25">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-384"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton26" inherits="fastLoginButtonTemplate" text="Account26">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-357"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton27" inherits="fastLoginButtonTemplate" text="Account27">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-330"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton28" inherits="fastLoginButtonTemplate" text="Account28">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-303"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton29" inherits="fastLoginButtonTemplate" text="Account29">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-276"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton30" inherits="fastLoginButtonTemplate" text="Account30">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-249"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton31" inherits="fastLoginButtonTemplate" text="Account31">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-222"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton32" inherits="fastLoginButtonTemplate" text="Account32">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-195"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton33" inherits="fastLoginButtonTemplate" text="Account33">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-168"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton34" inherits="fastLoginButtonTemplate" text="Account34">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-141"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton35" inherits="fastLoginButtonTemplate" text="Account35">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-114"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton36" inherits="fastLoginButtonTemplate" text="Account36">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-87"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton37" inherits="fastLoginButtonTemplate" text="Account37">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-60"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton38" inherits="fastLoginButtonTemplate" text="Account38">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-240" y="-33"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<!-- Row 3 -->
+			<Button name="CustomLoginButton39" inherits="fastLoginButtonTemplate" text="Account39">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-120" y="-519"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton40" inherits="fastLoginButtonTemplate" text="Account40">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-120" y="-492"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton41" inherits="fastLoginButtonTemplate" text="Account41">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-120" y="-465"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton42" inherits="fastLoginButtonTemplate" text="Account42">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-120" y="-438"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton43" inherits="fastLoginButtonTemplate" text="Account43">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-120" y="-411"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton44" inherits="fastLoginButtonTemplate" text="Account44">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-120" y="-168"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton45" inherits="fastLoginButtonTemplate" text="Account45">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-120" y="-141"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton46" inherits="fastLoginButtonTemplate" text="Account46">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-120" y="-114"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton47" inherits="fastLoginButtonTemplate" text="Account47">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-120" y="-87"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton48" inherits="fastLoginButtonTemplate" text="Account48">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-120" y="-60"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton49" inherits="fastLoginButtonTemplate" text="Account49">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-120" y="-33"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<!-- Row 4 -->
+			<Button name="CustomLoginButton50" inherits="fastLoginButtonTemplate" text="Account50">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-519"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton51" inherits="fastLoginButtonTemplate" text="Account51">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-492"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton52" inherits="fastLoginButtonTemplate" text="Account52">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-465"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton53" inherits="fastLoginButtonTemplate" text="Account53">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-438"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton54" inherits="fastLoginButtonTemplate" text="Account54">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-411"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton55" inherits="fastLoginButtonTemplate" text="Account55">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-141"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton56" inherits="fastLoginButtonTemplate" text="Account56">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-114"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton57" inherits="fastLoginButtonTemplate" text="Account57">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-87"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton58" inherits="fastLoginButtonTemplate" text="Account58">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-60"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton59" inherits="fastLoginButtonTemplate" text="Account59">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-33"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<!-- Row 5 -->
+			<Button name="CustomLoginButton60" inherits="fastLoginButtonTemplate" text="Account60">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="120" y="-519"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton61" inherits="fastLoginButtonTemplate" text="Account61">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="120" y="-492"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton62" inherits="fastLoginButtonTemplate" text="Account62">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="120" y="-465"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton63" inherits="fastLoginButtonTemplate" text="Account63">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="120" y="-438"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton64" inherits="fastLoginButtonTemplate" text="Account64">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="120" y="-411"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton65" inherits="fastLoginButtonTemplate" text="Account65">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="120" y="-168"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton66" inherits="fastLoginButtonTemplate" text="Account66">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="120" y="-141"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton67" inherits="fastLoginButtonTemplate" text="Account67">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="120" y="-114"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton68" inherits="fastLoginButtonTemplate" text="Account68">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="120" y="-87"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton69" inherits="fastLoginButtonTemplate" text="Account69">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="120" y="-60"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton70" inherits="fastLoginButtonTemplate" text="Account70">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="120" y="-33"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<!-- Row 6 -->
+			<Button name="CustomLoginButton71" inherits="fastLoginButtonTemplate" text="Account71">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-519"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton72" inherits="fastLoginButtonTemplate" text="Account72">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-492"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton73" inherits="fastLoginButtonTemplate" text="Account73">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-465"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton74" inherits="fastLoginButtonTemplate" text="Account74">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-438"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton75" inherits="fastLoginButtonTemplate" text="Account75">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-411"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton76" inherits="fastLoginButtonTemplate" text="Account76">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-384"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton77" inherits="fastLoginButtonTemplate" text="Account77">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-357"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton78" inherits="fastLoginButtonTemplate" text="Account78">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-330"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton79" inherits="fastLoginButtonTemplate" text="Account79">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-303"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton80" inherits="fastLoginButtonTemplate" text="Account80">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-276"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton81" inherits="fastLoginButtonTemplate" text="Account81">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-249"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton82" inherits="fastLoginButtonTemplate" text="Account82">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-222"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton83" inherits="fastLoginButtonTemplate" text="Account83">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-195"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton84" inherits="fastLoginButtonTemplate" text="Account84">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-168"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton85" inherits="fastLoginButtonTemplate" text="Account85">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-141"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton86" inherits="fastLoginButtonTemplate" text="Account86">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-114"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton87" inherits="fastLoginButtonTemplate" text="Account87">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-87"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton88" inherits="fastLoginButtonTemplate" text="Account88">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-60"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton89" inherits="fastLoginButtonTemplate" text="Account89">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="240" y="-33"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<!-- Row 7 -->
+			<Button name="CustomLoginButton90" inherits="fastLoginButtonTemplate" text="Account90">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-519"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton91" inherits="fastLoginButtonTemplate" text="Account91">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-492"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton92" inherits="fastLoginButtonTemplate" text="Account92">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-465"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton93" inherits="fastLoginButtonTemplate" text="Account93">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-438"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton94" inherits="fastLoginButtonTemplate" text="Account94">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-411"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton95" inherits="fastLoginButtonTemplate" text="Account95">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-384"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton96" inherits="fastLoginButtonTemplate" text="Account96">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-357"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton97" inherits="fastLoginButtonTemplate" text="Account97">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-330"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton98" inherits="fastLoginButtonTemplate" text="Account98">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-303"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton99" inherits="fastLoginButtonTemplate" text="Account99">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-276"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton100" inherits="fastLoginButtonTemplate" text="Account100">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-249"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton101" inherits="fastLoginButtonTemplate" text="Account101">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-222"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton102" inherits="fastLoginButtonTemplate" text="Account102">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-195"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton103" inherits="fastLoginButtonTemplate" text="Account103">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-168"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton104" inherits="fastLoginButtonTemplate" text="Account104">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-141"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton105" inherits="fastLoginButtonTemplate" text="Account105">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-114"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton106" inherits="fastLoginButtonTemplate" text="Account106">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-87"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton107" inherits="fastLoginButtonTemplate" text="Account107">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-60"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CustomLoginButton108" inherits="fastLoginButtonTemplate" text="Account108">
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="360" y="-33"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<Button name="CustomLoginPrev" inherits="LoginButtonTemplate" text="PREV">
+				<Size>
+					<AbsDimension x="50" y="28"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-120" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						CustomLoginPrevNext_OnClick(this, key);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CustomLoginNext" inherits="LoginButtonTemplate" text="NEXT">
+				<Size>
+					<AbsDimension x="50" y="28"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="120" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						CustomLoginPrevNext_OnClick(this, key);
+					</OnClick>
+				</Scripts>
+			</Button>
+
+			<Button name="CustomLoginShowButtonMap" inherits="LoginButtonTemplate" text="Show Button Map">
+				<Size>
+					<AbsDimension x="150" y="28"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="230" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						CustomLoginButtonMap_OnClick(this,key)
+					</OnClick>
+				</Scripts>
+			</Button>
+
+			<Button name="AccountLoginExitButton" inherits="LoginButtonTemplate" text="LOGIN_ACCOUNT_EXIT">
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-6" y="-30"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						AccountLogin_Exit();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="AccountLoginSYSButton" inherits="LoginButtonTemplate" text="LOGIN_ACCOUNT_SYS">
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT" relativeTo="AccountLoginExitButton">
+						<Offset>
+							<AbsDimension x="0" y="-5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<!--<Frames>
+					<Frame name="$parentFlash">
+						<Size>
+							<AbsDimension x="130" y="34"/>
+						</Size>
+						<Anchors>
+							<Anchor point="CENTER">
+								<Offset>
+									<AbsDimension x="-1" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer>
+								<Texture file="Interface\Buttons\PanelFlashButton-Highlight" alphaMode="ADD">
+									<Color b="1" g="1" r="1"/>
+								</Texture>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnUpdate>
+								LoginFlashFrame_OnUpdate(this, elapsedTime);
+							</OnUpdate>
+						</Scripts>
+					</Frame>
+				</Frames>-->
+				<Scripts>
+					<OnClick>
+						LoginSettingsFrame.LSFTab = 1;
+						PlaySoundByPath("sound\\interface\\ui_generic_open.mp3");
+						LoginSettingsFrame:Show();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				AccountLogin_OnLoad();
+			</OnLoad>
+			<OnShow>
+				AccountLogin_OnShow();
+			</OnShow>
+			<OnKeyDown>
+				AccountLogin_OnKeyDown(this, key);
+			</OnKeyDown>
+			<OnKeyUp>
+				AccountLogin_OnKeyUp(this, key);
+			</OnKeyUp>
+			<OnUpdate>
+				AccountLogin_OnUpdate(this, elapsedTime);
+			</OnUpdate>
+			<OnEvent>
+				-- AccountLogin_OnEvent(event);
+			</OnEvent>
+		</Scripts>
+	</Frame>
+	<Frame name="UserAgreement" parent="LoginParent" enableMouse="true" hidden="true">
+		<Size>
+			<AbsDimension x="512" y="512"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+			</Anchor>
+		</Anchors>
+		<Backdrop edgeFile="Interface\Tooltips\Tooltip-border" bgFile="Interface\Tooltips\Tooltip-Background">
+			<BackgroundInsets>
+				<AbsInset top="4" left="4" bottom="4" right="4"/>
+			</BackgroundInsets>
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+		</Backdrop>
+		<!--
+		<Layers>
+			<Layer>
+				<FontString inherits="LoginTitleFont" text="用戶協議">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="10"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		-->
+		<Frames>
+			<ScrollFrame name="$parentScrollFrame" inherits="LoginScrollFrameTemplate">
+				<Size>
+					<AbsDimension x="466" y="440"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP">
+						<Offset>
+							<AbsDimension x="-10" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<!--
+				<Layers>
+					<Layer>
+						<Texture file="Interface\Common\BarFill"/>
+					</Layer>
+				</Layers>
+				-->
+				<ScrollChild>
+					<Frame name="$parentChild">
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString name="UserAgreementText" inherits="LoginFontHighlight" justifyH="LEFT" justifyV="TOP" bytes="65535">
+									<Size>
+										<AbsDimension x="466" y="0"/>
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT"/>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Frame>
+				</ScrollChild>
+			</ScrollFrame>
+			<Button name="$parentCancelButton" inherits="LoginButtonTemplate" text="LOGIN_CANCEL">
+				<Size>
+					<AbsDimension x="76" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-30" y="-18"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						QuitGame();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentOkayButton" inherits="LoginButtonTemplate" text="LOGIN_OKAY">
+				<Size>
+					<AbsDimension x="76" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="$parentCancelButton" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="-12" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						AccountLoginShow();
+						AcceptUserAgreement();
+						UserAgreement:Hide();
+						AccountLogin_Show();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				if ( GetLocation() == "AE" ) then
+					UserAgreementText:SetJustifyHType("RIGHT");
+				end
+				UserAgreementText:SetText(GetUserAgreementText());
+				UserAgreementScrollFrame:UpdateScrollChildRect();
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="VivoxUserAgreement" parent="LoginParent" frameStrata="TOOLTIP" enableMouse="true" hidden="true">
+		<Size>
+			<AbsDimension x="512" y="512"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+			</Anchor>
+		</Anchors>
+		<Backdrop edgeFile="Interface\Tooltips\Tooltip-border" bgFile="Interface\Tooltips\Tooltip-Background">
+			<BackgroundInsets>
+				<AbsInset top="4" left="4" bottom="4" right="4"/>
+			</BackgroundInsets>
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+		</Backdrop>
+		<Frames>
+			<ScrollFrame name="$parentScrollFrame" inherits="LoginScrollFrameTemplate">
+				<Size>
+					<AbsDimension x="466" y="440"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP">
+						<Offset>
+							<AbsDimension x="-10" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						LoginScrollFrame_OnLoad(this);
+						this.OnReadFinish = VivoxUserAgreement_ReadFinish;
+					</OnLoad>
+				</Scripts>
+				<ScrollChild>
+					<Frame name="$parentChild">
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString name="VivoxUserAgreementText" inherits="LoginFontHighlight" justifyH="LEFT" justifyV="TOP" bytes="65535">
+									<Size>
+										<AbsDimension x="466" y="0"/>
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT"/>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Frame>
+				</ScrollChild>
+			</ScrollFrame>
+			<Button name="VivoxUserAgreementCancelButton" inherits="LoginButtonTemplate" text="LOGIN_CANCEL">
+				<Size>
+					<AbsDimension x="76" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-30" y="-18"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						DeclineVivoxUserAgreement();
+						VivoxUserAgreement:Hide();
+						ServerListFrame:Show();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="VivoxUserAgreementOkayButton" inherits="LoginButtonTemplate" text="LOGIN_OKAY">
+				<Size>
+					<AbsDimension x="76" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="$parentCancelButton" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="-12" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						AcceptVivoxUserAgreement();
+						VivoxUserAgreement:Hide();
+						ServerListFrame:Show();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				VivoxUserAgreement_OnLoad(this);
+			</OnLoad>
+			<OnEvent>
+				VivocUserAgreement_OnEvent(this, event);
+			</OnEvent>
+			<OnShow>
+				ServerListFrame:Hide();
+			</OnShow>
+		</Scripts>
+	</Frame>
+	<Frame name="AccountLoginBoard" parent="AccountLogin" hidden="true">
+		<Size>
+			<AbsDimension x="324" y="384"/>
+		</Size>
+		<Anchors>
+			<Anchor point="LEFT">
+				<Offset>
+					<AbsDimension x="10" y="12"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop edgeFile="Interface\Tooltips\Tooltip-border" bgFile="Interface\Tooltips\Tooltip-Background">
+			<BackgroundInsets>
+				<AbsInset top="4" left="4" bottom="4" right="4"/>
+			</BackgroundInsets>
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+		</Backdrop>
+		<Frames>
+			<ScrollFrame name="$parentScrollFrame" inherits="LoginScrollFrameTemplate">
+				<Size>
+					<AbsDimension x="294" y="364"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP">
+						<Offset>
+							<AbsDimension x="-5" y="11"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<!--
+				<Layers>
+					<Layer>
+						<Texture file="Interface\Common\BarFill"/>
+					</Layer>
+				</Layers>
+				-->
+				<ScrollChild>
+					<Frame name="$parentChild">
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString name="AccountLoginBoardText" inherits="LoginFontHighlight" justifyH="LEFT" justifyV="TOP" bytes="4096">
+									<Size>
+										<AbsDimension x="292" y="0"/>
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT"/>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Frame>
+				</ScrollChild>
+			</ScrollFrame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				AccountLoginBoard_OnLoad(this);
+			</OnLoad>
+			<OnEvent>
+				AccountLoginBoard_OnEvent(this, event);
+			</OnEvent>
+		</Scripts>
+	</Frame>
+	<Frame name="CompanyLogo" parent="LoginParent" hidden="true" frameStrata="HIGH">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="CompanyLogoTexture2" hidden="true"/>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture name="CompanyLogoTexture" hidden="false"/>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				CompanyLogo_OnLoad(this);
+			</OnLoad>
+			<OnUpdate>
+				CompanyLogo_OnUpdate(this, elapsedTime);
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+</Ui>

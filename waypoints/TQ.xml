@@ -56,10 +56,10 @@
 		
 		if getAcc ()==57 then
 			chars								= {
-				{ name = 'Thunderstrike', account = 57, char = 2, scripts = {'parcour','andor','tq_butterfly'} },
-				{ name = 'Celesteria', 		account = 57, char = 3, scripts = {'parcour','andor','tq_butterfly'} },
-				{ name = 'Celestron', 		account = 57, char = 1, scripts = {'goldegg','parcour','survival','andor','gobo','tq_flammen'} },
-				{ name = 'Schulani', 			account = 57, char = 4, scripts = {'goldegg','parcour','survival','andor','gobo'} },
+				{ name = 'Thunderstrike', account = 57, char = 2, scripts = {'tq_butterfly'} },
+				{ name = 'Celesteria', 		account = 57, char = 3, scripts = {'tq_butterfly'} },
+				{ name = 'Celestron', 		account = 57, char = 1, scripts = {'goldegg','survival','gobo','tq_flammen'} },
+				{ name = 'Schulani', 			account = 57, char = 4, scripts = {'goldegg','survival','gobo'} },
 			}
 		end
 		
@@ -150,6 +150,15 @@ message ('no scripts found for '..name, true)
 		config = getConfig ()
 		
 		if config[1]~=nil then
+
+			while getZoneId ()==400 do	-- in house
+				message ('leave the house', true);
+			end
+
+			while getZoneId ()==401 do	-- in the guild castle
+				message ('leave the guild castle', true);
+			end
+
 			table.save (config, logFile)
 			local next = ((type(config[1])=='table') and config[1]) or { config[1] }
 			loadPaths (wpPath .. scripts[next[1]])

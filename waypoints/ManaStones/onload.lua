@@ -191,24 +191,26 @@
 					UMB_fuseTierStones (itemID, itemTier, stoneID, maxStoneTier)
 				until moreToCome == false
         
-				local amountS	= checkOnline (stoneSender) and UMB_numToBuy (stoneID, itemTier, maxStoneTier) or 0
-				if amountS>0 then 
-					RoMScript ('SendChatMessage("send '..amountS..' stones '..senderPass..'", "WHISPER", 0, "'..stoneSender..'")') 
+				local online  = checkOnline (stoneSender) and checkOnline (itemSender)
+				local amountS	= UMB_numToBuy (stoneID, itemTier, maxStoneTier) or 0
+				local amountI	= UMB_numToBuy (itemID, itemTier, maxStoneTier) or 0
+
+				if online and (amountS>0 or amountI>0) then
+					if amountS==amountI then
+						RoMScript ('SendChatMessage("send '..amountS..' all '..senderPass..'", "WHISPER", 0, "'..stoneSender..'")')
+					else
+						RoMScript ('SendChatMessage("send '..amountI..' items '..senderPass..'", "WHISPER", 0, "'..itemSender..'")')
+						RoMScript ('SendChatMessage("send '..amountS..' stones '..senderPass..'", "WHISPER", 0, "'..stoneSender..'")')
+					end
+					waitForMails (amountS, amountI)
+				
+					saveData (getPlayerName (), 0, 0)
+
+					repeat
+						moreToCome = checkMailbox ()
+						UMB_fuseTierStones (itemID, itemTier, stoneID, maxStoneTier)
+					until moreToCome == false
 				end
-					
-				local amountI	= checkOnline (itemSender) and UMB_numToBuy (itemID, itemTier, maxStoneTier) or 0
-				if amountI>0 then 
-					RoMScript ('SendChatMessage("send '..amountI..' items '..senderPass..'", "WHISPER", 0, "'..itemSender..'")') 
-				end
-				
-				waitForMails (amountS, amountI)
-				saveData (getPlayerName (), 0, 0)
-				
-				repeat
-					moreToCome = checkMailbox ()
-					UMB_fuseTierStones (itemID, itemTier, stoneID, maxStoneTier)
-				until moreToCome == false
-				
 			end
 		end
 		saveData (getPlayerName (), 0, 0)
@@ -221,13 +223,14 @@
 		local count	    = 0
 		if atMailbox then
 			repeat
-        while needMoney (senderType) do
-					print ('\a\a') yrest (500) print ('\a\a') yrest (500) print ('\a\a')
-					cprintf (cli.lightred, "!!! not enought money !!!\n\n")
-					player:sleep ()
+				repeat
 					checkMailbox ()
-					inventory:update ()
-        end
+        	if needMoney (senderType) then
+						print ('\a\a') yrest (500) print ('\a\a') yrest (500) print ('\a\a')
+						cprintf (cli.lightred, "!!! not enought money !!!\n\n")
+						player:sleep ()
+					end
+				until not needMoney (senderType)
 				checkWisper ()
 				local data 	= loadData ()
 				for name,dat in pairs (data) do

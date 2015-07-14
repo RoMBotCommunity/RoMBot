@@ -1,0 +1,931 @@
+<Ui xmlns="http://www.runewaker.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.runewaker.com/
+../WorldXml/UI.xsd">
+	<Script file="CharacterCreate.lua"/>
+	<Slider name="LoginSliderTemplate" orientation="HORIZONTAL" virtual="true">
+		<Size>
+			<AbsDimension x="120" y="16"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeft" file="Interface\BagFrame\BagFrame-Slider-Border">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT"/>
+					</Anchors>
+					<TexCoords left="0" right="0.25" top="0" bottom="1"/>
+				</Texture>
+				<Texture name="$parentRight" file="Interface\BagFrame\BagFrame-Slider-Border">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.75" right="1" top="0" bottom="1"/>
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\BagFrame\BagFrame-Slider-Border">
+					<Size>
+						<AbsDimension x="1" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT"/>
+						<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT"/>
+					</Anchors>
+					<TexCoords left="0.25" right="0.75" top="0" bottom="1"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentLeftButton">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="-2" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnMouseDown>
+						CharacterCreateSlider_OnMouseDown(this, 1);
+					</OnMouseDown>
+					<OnUpdate>
+						CharacterCreateSlider_OnUpdate(this, elapsedTime, 1);
+					</OnUpdate>
+				</Scripts>
+				<NormalTexture file="Interface\Login\CharacterCreate\SliderLeft-Normal"/>
+				<PushedTexture file="Interface\Login\CharacterCreate\SliderLeft-Depress"/>
+				<DisabledTexture file="Interface\Login\CharacterCreate\SliderLeft-Disable"/>
+				<HighlightTexture file="Interface\Login\CharacterCreate\SliderLeft-Highlight" alphaMode="ADD"/>
+			</Button>
+			<Button name="$parentRightButton">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="2" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnMouseDown>
+						CharacterCreateSlider_OnMouseDown(this, nil);
+					</OnMouseDown>
+					<OnUpdate>
+						CharacterCreateSlider_OnUpdate(this, elapsedTime, nil);
+					</OnUpdate>
+				</Scripts>
+				<NormalTexture file="Interface\Login\CharacterCreate\SliderRight-Normal"/>
+				<PushedTexture file="Interface\Login\CharacterCreate\SliderRight-Depress"/>
+				<DisabledTexture file="Interface\Login\CharacterCreate\SliderRight-Disable"/>
+				<HighlightTexture file="Interface\Login\CharacterCreate\SliderRight-Highlight" alphaMode="ADD"/>
+			</Button>
+		</Frames>
+		<ThumbTexture file="Interface\BagFrame\BagFrame-Slider-knob">
+			<Size>
+				<AbsDimension x="16" y="16"/>
+			</Size>
+		</ThumbTexture>
+	</Slider>
+	<Slider name="FigureSliderTemplate" inherits="LoginSliderTemplate" virtual="true">
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentText" inherits="LoginFontHighlight">
+					<Anchors>
+						<Anchor point="BOTTOM" relativePoint="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				FigureSlider_OnLoad(this);
+			</OnLoad>
+			<OnValueChanged>
+				FigureSlider_OnValueChanged(this, arg1);
+			</OnValueChanged>
+		</Scripts>
+	</Slider>
+	<Frame name="CharacterCreate" hidden="true" parent="LoginParent" enableMouse="true">
+		<Frames>
+			<Frame name="CharacterCreateCharacterFrame">
+				<Size>
+					<AbsDimension x="238" y="768"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-32" y="32"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture file="Interface\Login\CharacterCreate\CharacterCreate-Top">
+							<Size>
+								<AbsDimension x="256" y="256"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT"/>
+							</Anchors>
+						</Texture>
+						<Texture file="Interface\Login\CharacterCreate\CharacterCreate-Bottom">
+							<Size>
+								<AbsDimension x="256" y="512"/>
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOMLEFT"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<EditBox name="CharacterCreateNameEdit" letters="16">
+						<Size>
+							<AbsDimension x="150" y="22"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="38" y="52"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="BACKGROUND">
+								<Texture name="$parentLeft" file="Interface\Login\Common\PanelItem-Border">
+									<Size>
+										<AbsDimension x="16" y="22"/>
+									</Size>
+									<Anchors>
+										<Anchor point="LEFT"/>
+									</Anchors>
+									<TexCoords left="0" right="0.25" top="0" bottom="0.6875"/>
+								</Texture>
+								<Texture name="$parentRight" file="Interface\Login\Common\PanelItem-Border">
+									<Size>
+										<AbsDimension x="16" y="22"/>
+									</Size>
+									<Anchors>
+										<Anchor point="RIGHT"/>
+									</Anchors>
+									<TexCoords left="0.75" right="1" top="0" bottom="0.6875"/>
+								</Texture>
+								<Texture name="$parentMiddle" file="Interface\Login\Common\PanelItem-Border">
+									<Size>
+										<AbsDimension x="1" y="22"/>
+									</Size>
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT"/>
+										<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT"/>
+									</Anchors>
+									<TexCoords left="0.25" right="0.75" top="0" bottom="0.6875"/>
+								</Texture>
+							</Layer>
+							<Layer level="ARTWORK">
+								<FontString inherits="LoginFontHighlight" text="LOGIN_PLAYER_NAME">
+									<Anchors>
+										<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="4" y="-4"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Frames>
+							<Frame name="CharacterCreateReserveDropdown" inherits="LoginDropDownMenuTemplate">
+								<Anchors>
+									<Anchor point="TOPRIGHT" relativeTo="CharacterCreateNameEdit">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										CharacterCreateReserveDropdown_OnLoad(this);
+									</OnLoad>
+								</Scripts>
+							</Frame>
+							<Button name="CharacterCreateReserveButton">
+								<Size>
+									<AbsDimension x="22" y="22"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CharacterCreateNameEdit" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="4" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="ARTWORK">
+										<Texture name="CharacterCreateReserveButtonFlash" file="Interface\Buttons\PanelUpButton-Highlight" alphaMode="ADD"/>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnClick>
+										ToggleLoginDropDownMenu(CharacterCreateReserveDropdown);
+									</OnClick>
+									<OnEnter>
+										LoginTooltip:ClearAllAnchors();
+										LoginTooltip:SetAnchor("BOTTOMRIGHT", "TOPLEFT", this, 0, 0);
+										LoginTooltip:SetText(CHARACTER_CREATE_RESERVE_TIP);
+									</OnEnter>
+									<OnLeave>
+										LoginTooltip:Hide();
+									</OnLeave>
+									<OnUpdate>
+										CharacterCreateReserveButton_OnUpdate(this, elapsedTime);
+									</OnUpdate>
+								</Scripts>
+								<NormalTexture file="Interface\Buttons\PanelDownButton-Normal">
+									<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+								</NormalTexture>
+								<PushedTexture file="Interface\Buttons\PanelDownButton-Depress">
+									<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+								</PushedTexture>
+								<DisabledTexture file="Interface\Buttons\PanelDownButton-Disable">
+									<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+								</DisabledTexture>
+								<HighlightTexture file="Interface\Buttons\PanelUpButton-Highlight" alphaMode="ADD"/>
+							</Button>
+						</Frames>
+						<Scripts>
+							<OnEnter>
+								LoginTooltip:ClearAllAnchors();
+								LoginTooltip:SetAnchor("TOPRIGHT", "BOTTOMLEFT", this, 0, 0);
+								if ( GetLocation() == "SG" ) then
+									LoginTooltip:SetText(TEXT("CHARACTER_CREATE_NAME_TIP_SG"));
+								else
+									LoginTooltip:SetText(TEXT("CHARACTER_CREATE_NAME_TIP"));
+								end
+							</OnEnter>
+							<OnLeave>
+								LoginTooltip:Hide();
+							</OnLeave>
+						</Scripts>
+						<FontString inherits="LoginFontHighlight"/>
+						<TextInsets>
+							<AbsInset left="4" right="4" top="4" bottom="4"/>
+						</TextInsets>
+					</EditBox>
+					<Button name="CharacterCreateGenerateName" >
+						<Size>
+							<AbsDimension x="22" y="22"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="192" y="51"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CharacterCreate_GenerateName();
+							</OnClick>
+						</Scripts>
+						<NormalTexture file="Interface\Buttons\pageleftbutton-normal.tga">
+							<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+						</NormalTexture>
+						<PushedTexture file="Interface\Buttons\pageleftbutton-depress.tga">
+							<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+						</PushedTexture>
+						<DisabledTexture file="Interface\Buttons\pageleftbutton-disable">
+							<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+						</DisabledTexture>
+						<HighlightTexture file="Interface\Buttons\PanelUpButton-Highlight" alphaMode="ADD"/>
+					</Button>
+					<Frame name="CharacterCreateRaceDropDown" inherits="LoginDropDownMenuTemplate" hidden="false">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CharacterCreateNameEdit" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="24"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString inherits="LoginFontHighlight" text="LOGIN_RACE">
+									<Anchors>
+										<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="4" y="-4"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad>
+								CharacterCreateRaceDropDown_OnLoad(this);
+							</OnLoad>
+						</Scripts>
+					</Frame>
+					<Frame name="CharacterCreateGenderDropDown" inherits="LoginDropDownMenuTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CharacterCreateRaceDropDown" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="24"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString inherits="LoginFontHighlight" text="LOGIN_SEX">
+									<Anchors>
+										<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="4" y="-4"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad>
+								CharacterCreateGenderDropDown_OnLoad(this);
+							</OnLoad>
+						</Scripts>
+					</Frame>
+					<Frame name="CharacterCreateClassDropDown" inherits="LoginDropDownMenuTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CharacterCreateGenderDropDown" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="24"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString inherits="LoginFontHighlight" text="LOGIN_CLASS">
+									<Anchors>
+										<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="4" y="-4"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad>
+								CharacterCreateClassDropDown_OnLoad(this);
+							</OnLoad>
+						</Scripts>
+					</Frame>
+					<Frame name="CharacterCreateClass">
+						<Size>
+							<AbsDimension x="234" y="326"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="0" y="239"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<Texture name="CharacterCreateClassTexture">
+									<Size>
+										<AbsDimension x="256" y="64"/>
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT">
+											<Offset>
+												<AbsDimension x="10" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</Texture>
+							</Layer>
+						</Layers>
+						<Frames>
+							<ScrollFrame name="$parentScrollFrame" inherits="LoginScrollFrameTemplate">
+								<Size>
+									<AbsDimension x="192" y="250"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP">
+										<Offset>
+											<AbsDimension x="-6" y="72"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<ScrollChild>
+									<Frame name="$parentChild">
+										<Layers>
+											<Layer level="ARTWORK">
+												<FontString name="ChacacterCreateClassText" inherits="LoginFontHighlight" justifyH="LEFT" justifyV="TOP" bytes="1024" spacing="0.5">
+													<Size>
+														<AbsDimension x="190" y="0"/>
+													</Size>
+													<Anchors>
+														<Anchor point="TOPLEFT">
+															<Offset>
+																<AbsDimension x="2" y="2"/>
+															</Offset>
+														</Anchor>
+													</Anchors>
+												</FontString>
+											</Layer>
+										</Layers>
+										<Scripts>
+											<OnLoad>
+												if ( GetLocation() == "AE" ) then
+													ChacacterCreateClassText:SetJustifyHType("RIGHT");
+												end
+											</OnLoad>
+										</Scripts>
+									</Frame>
+								</ScrollChild>
+							</ScrollFrame>
+						</Frames>
+					</Frame>
+					<Button name="CharacterCreateDefaultButton" inherits="LoginButtonSmallTemplate" text="LOGIN_DEFAULT">
+						<Anchors>
+							<Anchor point="BOTTOM">
+								<Offset>
+									<AbsDimension x="-50" y="-145"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CharacterCreate_Default();
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CharacterCreateOkayButton" inherits="LoginButtonSmallTemplate" text="LOGIN_OKAY">
+						<Anchors>
+							<Anchor point="BOTTOM">
+								<Offset>
+									<AbsDimension x="50" y="-145"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CharacterCreate_Okay();
+							</OnClick>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="CharacterCreateCharacterFigureFrame">
+				<Size>
+					<AbsDimension x="238" y="768"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="32" y="32"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture file="Interface\Login\CharacterCreate\CharacterCreateFigure-Top">
+							<Size>
+								<AbsDimension x="256" y="256"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT"/>
+							</Anchors>
+						</Texture>
+						<Texture file="Interface\Login\CharacterCreate\CharacterCreateFigure-Bottom">
+							<Size>
+								<AbsDimension x="256" y="512"/>
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOMLEFT"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Frame name="CharacterCreateSkinColorDropDown" inherits="ColorDropDownMenuTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="58" y="57"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString inherits="LoginFontHighlight" text="LOGIN_SKIN_COLOR">
+									<Anchors>
+										<Anchor point="BOTTOM" relativePoint="TOP">
+											<Offset>
+												<AbsDimension x="-8" y="-2"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad>
+								CharacterCreateSkinColorDropDown_OnLoad(this);
+							</OnLoad>
+						</Scripts>
+					</Frame>
+					<Frame name="CharacterCreateHairColorButton">
+						<Size>
+							<AbsDimension x="136" y="22"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CharacterCreateSkinColorDropDown" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="BACKGROUND">
+								<Texture name="$parentTexture" file="Interface\Login\Common\ColorButton-Background">
+									<Size>
+										<AbsDimension x="110" y="14"/>
+									</Size>
+									<Anchors>
+										<Anchor point="LEFT"/>
+									</Anchors>
+								</Texture>
+							</Layer>
+							<Layer level="BORDER">
+								<Texture name="$parentLeft" file="Interface\Login\Common\ColorSelect-Border">
+									<Size>
+										<AbsDimension x="16" y="16"/>
+									</Size>
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="$parentTexture">
+											<Offset>
+												<AbsDimension x="-1" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+									<TexCoords left="0" right="0.25" top="0" bottom="1"/>
+								</Texture>
+								<Texture name="$parentRight" file="Interface\Login\Common\ColorSelect-Border">
+									<Size>
+										<AbsDimension x="16" y="16"/>
+									</Size>
+									<Anchors>
+										<Anchor point="RIGHT" relativeTo="$parentTexture">
+											<Offset>
+												<AbsDimension x="1" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+									<TexCoords left="0.75" right="1" top="0" bottom="1"/>
+								</Texture>
+								<Texture name="$parentMiddle" file="Interface\Login\Common\ColorSelect-Border">
+									<Size>
+										<AbsDimension x="1" y="16"/>
+									</Size>
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT"/>
+										<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT"/>
+									</Anchors>
+									<TexCoords left="0.25" right="0.75" top="0" bottom="1"/>
+								</Texture>
+							</Layer>
+							<Layer level="ARTWORK">
+								<FontString inherits="LoginFontHighlight" text="LOGIN_HAIR_COLOR">
+									<Anchors>
+										<Anchor point="BOTTOM" relativePoint="TOP">
+											<Offset>
+												<AbsDimension x="-8" y="-2"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Frames>
+							<Button name="$parentButton">
+								<Size>
+									<AbsDimension x="22" y="22"/>
+								</Size>
+								<Anchors>
+									<Anchor point="RIGHT"/>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										local r, g, b = CharacterCreateHairColorButtonTexture:GetColor();
+										local info = {};
+										info.r = r;
+										info.g = g;
+										info.b = b;
+										info.a = a;
+										info.brightnessUp = 1;
+										info.brightnessDown = 0.238;
+										info.callbackFuncOkay = CharacterCreateHairColorButton_CallBack;
+										info.callbackFuncUpdate = CharacterCreateHairColorButton_CallBack;
+										info.callbackFuncCancel = CharacterCreateHairColorButton_CallBack;
+										OpenLoginColorPickerFrame(info);
+									</OnClick>
+								</Scripts>
+								<NormalTexture file="Interface\Buttons\PanelDownButton-Normal">
+									<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+								</NormalTexture>
+								<PushedTexture file="Interface\Buttons\PanelDownButton-Depress">
+									<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+								</PushedTexture>
+								<DisabledTexture file="Interface\Buttons\PanelDownButton-Disable">
+									<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+								</DisabledTexture>
+								<HighlightTexture file="Interface\Buttons\PanelUpButton-Highlight" alphaMode="ADD"/>
+							</Button>
+						</Frames>
+					</Frame>
+					<Slider name="CharacterCreateHairSlider" inherits="LoginSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CharacterCreateHairColorButton" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString inherits="LoginFontHighlight" text="LOGIN_HAIR_STYLE">
+									<Anchors>
+										<Anchor point="BOTTOM" relativePoint="TOP">
+											<Offset>
+												<AbsDimension x="0" y="-2"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad>
+								CharacterCreateHairSlider_OnLoad(this);
+							</OnLoad>
+							<OnValueChanged>
+								CharacterCreateHairSlider_OnValueChanged(this);
+							</OnValueChanged>
+						</Scripts>
+					</Slider>
+					<Slider name="CharacterCreateFaceSlider" inherits="LoginSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CharacterCreateHairSlider" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString inherits="LoginFontHighlight" text="LOGIN_FACE">
+									<Anchors>
+										<Anchor point="BOTTOM" relativePoint="TOP">
+											<Offset>
+												<AbsDimension x="0" y="-2"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad>
+								CharacterCreateFaceSlider_OnLoad(this);
+							</OnLoad>
+							<OnValueChanged>
+								CharacterCreateFaceSlider_OnValueChanged(this);
+							</OnValueChanged>
+						</Scripts>
+					</Slider>
+					<Button name="CharacterCreateLookAtFaceButton" inherits="LoginButtonSmallTemplate" text="CHARACTERCREATE_ZOOM_IN">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="CharacterCreateFaceSlider" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CharacterCreateLookAtFaceButton_OnClick();
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Slider name="FigureSliderHead" inherits="FigureSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="58" y="248"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+					<Slider name="FigureSliderBreasts" inherits="FigureSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="FigureSliderHead" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+					<Slider name="FigureSliderStature" inherits="FigureSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="FigureSliderBreasts" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+					<Slider name="FigureSliderChest" inherits="FigureSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="FigureSliderStature" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+					<Slider name="FigureSliderFigure" inherits="FigureSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="FigureSliderChest" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+					<Slider name="FigureSliderArm" inherits="FigureSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="FigureSliderFigure" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+					<Slider name="FigureSliderForearm" inherits="FigureSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="FigureSliderArm" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+					<Slider name="FigureSliderHand" inherits="FigureSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="FigureSliderForearm" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+					<Slider name="FigureSliderLeg" inherits="FigureSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="FigureSliderHand" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+					<Slider name="FigureSliderCalf" inherits="FigureSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="FigureSliderLeg" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+					<Slider name="FigureSliderFoot" inherits="FigureSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="FigureSliderCalf" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="19"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+				</Frames>
+			</Frame>
+			<Button name="CharacterCreateRotateRightButton">
+				<Size>
+					<AbsDimension x="28" y="28"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="86" y="-112"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnUpdate>
+						CharacterCreateRotateRightButton_OnUpdate(this, elapsedTime);
+					</OnUpdate>
+				</Scripts>
+				<NormalTexture file="Interface\Login\Common\RotationRight-Normal">
+					<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+				</NormalTexture>
+				<PushedTexture file="Interface\Login\Common\RotationRight-Depress">
+					<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+				</PushedTexture>
+				<DisabledTexture file="Interface\Login\Common\RotationRight-Disable">
+					<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+				</DisabledTexture>
+				<HighlightTexture file="Interface\Buttons\PanelUpButton-Highlight" alphaMode="ADD"/>
+			</Button>
+			<Button name="CharacterCreateRotateLeftButton">
+				<Size>
+					<AbsDimension x="28" y="28"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="-86" y="-112"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnUpdate>
+						CharacterCreateRotateLeftButton_OnUpdate(this, elapsedTime);
+					</OnUpdate>
+				</Scripts>
+				<NormalTexture file="Interface\Login\Common\RotationLeft-Normal">
+					<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+				</NormalTexture>
+				<PushedTexture file="Interface\Login\Common\RotationLeft-Depress">
+					<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+				</PushedTexture>
+				<DisabledTexture file="Interface\Login\Common\RotationLeft-Disable">
+					<TexCoords left="0" right="0.6875" top="0" bottom="0.6875"/>
+				</DisabledTexture>
+				<HighlightTexture file="Interface\Buttons\PanelUpButton-Highlight" alphaMode="ADD"/>
+			</Button>
+			<Button name="CharacterCreateBackButton" inherits="LoginButtonTemplate" text="LOGIN_BACK">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="CharacterCreateCharacterFrame" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-96"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						CharacterCreate_Back();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				CharacterCreate_OnLoad(this);
+			</OnLoad>
+			<OnEvent>
+				CharacterCreate_OnEvent(this, event);
+			</OnEvent>
+			<OnShow>
+				CharacterCreate_OnShow(this);
+			</OnShow>
+			<OnHide>
+				CharacterCreate_OnHide(this);
+			</OnHide>
+			<OnMouseDown>
+				CharacterCreate_OnMouseDown(this);
+			</OnMouseDown>
+			<OnMouseUp>
+				CharacterCreate_OnMouseUp(this);
+			</OnMouseUp>
+			<OnUpdate>
+				CharacterCreate_OnUpdate(this, elapsedTime);
+			</OnUpdate>
+			<OnMouseWheel>
+				CharacterCreate_OnMouseWheel(this, delta);
+			</OnMouseWheel>
+		</Scripts>
+	</Frame>
+</Ui>

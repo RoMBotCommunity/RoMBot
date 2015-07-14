@@ -3,13 +3,14 @@
 	<onload><![CDATA[
 		include ("../../includes/afterCrash.lua")
 		
-		questNPC			= 122168
-		questID				= 426333
-		campFire			= 122170
-		egg						= 242576
-		lastKey				= nil
-		numTqCards		= CheckTqCardCount (nil, true)
-		
+		questNPC							= 122168
+		questID								= 426333
+		campFire							= 122170
+		egg										= 242576
+		lastKey								= nil
+		complete, numTqCards	= dayliesComplete ()
+
+		combatMode (false)
 		DN_AutoQuest (questID)
 
 		repeat zid = getZoneId (); yrest (200) until zid;
@@ -38,39 +39,48 @@
 	<!-- #  5 --><waypoint x="-18124" z="-2890"/>
 	<!-- #  6 --><waypoint x="-18336" z="-2834"/>
 	<!-- #  7 --><waypoint x="-18540" z="-2825" tag="Madison Mull"><![CDATA[
-		complete, numTqCards	= dayliesComplete (numTqCards);
-		while not complete do 
+
+		complete, numTqCards = dayliesComplete (numTqCards)
+		if complete then
+			__WPL:setDirection (WPT_BACKWARD);
+			return
+		end
+
+		if getQuestStatus (questID)=='not accepted' then
+			player:target_NPC (questNPC)
 			if getQuestStatus (questID)=='not accepted' then
-				player:target_NPC (questNPC)
 				AcceptQuestByName (questID)
 			end
-			
-			while getQuestStatus (questID)=='incomplete' do
-				if inventory:itemTotalCount (egg)<=0 then
-					player:target_NPC (questNPC)
-					sendMacro("ChoiceOption(1)") yrest (1000)
-				end
-				while inventory:itemTotalCount (egg)>0 do
-					player:target_NPC (122170)
-					Attack ()
-					yrest (5000)
-					if lastKey==nil or lastKey==settings.hotkeys.MOVE_BACKWARD.key then
-						lastKey = settings.hotkeys.MOVE_FORWARD.key
-					else
-						lastKey = settings.hotkeys.MOVE_BACKWARD.key
-					end
-					keyboardPress (lastKey) 	yrest (200)
-					keyboardRelease (lastKey)	yrest (500)
-					inventory:update ()
-				end
-			end
-			
-			if getQuestStatus (questID)=='complete' then
+		end
+
+		while getQuestStatus (questID)=='incomplete' do
+			if inventory:itemTotalCount (egg)<=0 then
 				player:target_NPC (questNPC)
+				sendMacro("ChoiceOption(1)") yrest (1000)
+			end
+			while inventory:itemTotalCount (egg)>0 do
+				player:target_NPC (122170)
+				Attack ()
+				yrest (5000)
+				if lastKey==nil or lastKey==settings.hotkeys.MOVE_BACKWARD.key then
+					lastKey = settings.hotkeys.MOVE_FORWARD.key
+				else
+					lastKey = settings.hotkeys.MOVE_BACKWARD.key
+				end
+				keyboardPress (lastKey) 	yrest (200)
+				keyboardRelease (lastKey)	yrest (500)
+				inventory:update ()
+			end
+		end
+
+		complete, numTqCards = dayliesComplete (numTqCards)
+		if not complete and getQuestStatus (questID)=='complete' then
+			player:target_NPC (questNPC)
+			if getQuestStatus (questID)=='complete' then
 				CompleteQuestByName (questID)
 			end
-			complete, numTqCards	= dayliesComplete (numTqCards);
 		end
-		__WPL:setDirection (WPT_BACKWARD);
+
+		__WPL:setWaypointIndex (__WPL:findWaypointTag ("Madison Mull"))
 	]]></waypoint>
 </waypoints>
