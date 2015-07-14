@@ -223,14 +223,16 @@
 		local count	    = 0
 		if atMailbox then
 			repeat
-				repeat
-					checkMailbox ()
-        	if needMoney (senderType) then
-						print ('\a\a') yrest (500) print ('\a\a') yrest (500) print ('\a\a')
-						cprintf (cli.lightred, "!!! not enought money !!!\n\n")
-						player:sleep ()
-					end
-				until not needMoney (senderType)
+      	if needMoney (senderType) then
+          repeat
+     				checkMailbox ()
+            if needMoney (senderType) then
+    					print ('\a\a') yrest (500) print ('\a\a') yrest (500) print ('\a\a')
+    					cprintf (cli.lightred, "!!! not enought money !!!\n\n")
+    					player:sleep ()
+            end
+          until not needMoney (senderType) 
+				end
 				checkWisper ()
 				local data 	= loadData ()
 				for name,dat in pairs (data) do
