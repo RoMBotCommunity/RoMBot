@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<waypoints type="TRAVEL">
+	
+	<!-- itemSender fjord -->
+	<waypoint x="-23008" z="4599" tag="vendor"><![CDATA[
+		__WPL:setDirection (WPT_FORWARD)
+		handleSender (1, false)
+		if not player.Mounted then player:mount () end
+	]]></waypoint>
+	<waypoint x="-23060" z="4477"/>
+	<waypoint x="-23437" z="4085" tag="mailbox"><![CDATA[
+		__WPL:setDirection (WPT_BACKWARD)
+		handleSender (1, true)
+		if not player.Mounted then player:mount () end
+	]]></waypoint>
+
+</waypoints>

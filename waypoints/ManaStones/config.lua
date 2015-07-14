@@ -9,7 +9,7 @@
 	stoneSender					= 'Fusilli'				-- then name of the fusion stone sender
 	stoneID							= 202999					-- 202999 or 203001 (or one of the other available fusion stones)
 	stonePrice					= 1980						-- how much costs a single stone?
-	stoneVendorID				= 110576					-- f.e. odeley prole (varanas)
+	stoneVendorID				= 111392					-- f.e. odeley prole (varanas)
 	
 	itemSender					= 'Beltolli'			-- then name of the item sender
 	itemID							= 228966					-- the item to buy (f.e. 228966 at fjord vendor)
@@ -26,7 +26,9 @@
 		{ account = 91, chars = {1, 2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' }, 
 		{ account = 92, chars = {1, 2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' }, 
 		{ account = 93, chars = {1, 2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' }, 
-		{ account = 94, chars = {1, 2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' }, 
+		{ account = 94, chars = {1, 2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' },
+		{ account = 95, chars = {1, 2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' },
+		{ account = 96, chars = {1, 2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' },
 	}
 
 	--[[ end of user options ]]----------------------------------------------------------------------------------------

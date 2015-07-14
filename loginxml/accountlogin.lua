@@ -69,8 +69,8 @@ local CustomLogin = {
 	Account92 = {	UserName = "ElfenLager3",	Password = "Romrom74", 					Server = "Muinin", Label = "Elc (92)"	},
 	Account93 = {	UserName = "ElfenLager4",	Password = "Romrom74", 					Server = "Muinin", Label = "Eld (93)"	},
 	Account94 = {	UserName = "ElfenLager5",	Password = "Romrom74", 					Server = "Muinin", Label = "Ele (94)"	},
-	Account95 = {	UserName = "ElfenLager6",	Password = "Romrom74", 					Server = "Muinin", Label = "Elf (95)"	},
-	Account96 = {	UserName = "ElfenLager7",	Password = "Romrom74", 					Server = "Muinin", Label = "Elg (96)"	},
+	Account95 = {	UserName = "ElfenLager6",	Password = "Romrom74", 					Server = "Muinin", Label = "Elg (95)"	},
+	Account96 = {	UserName = "ElfenLager7",	Password = "Romrom74", 					Server = "Muinin", Label = "Elh (96)"	},
 
 	Account98 = {	UserName = "Fussimen",	Password = "Romrom74", 					Server = "Muinin", Label = "Fussimen"	},
 	Account99 = {	UserName = "Beltiboy",	Password = "Romrom74", 					Server = "Muinin", Label = "Beltiboy"	},
@@ -127,10 +127,10 @@ local CharacterCreateDefaultNames = {
 		'Eleone', 'Eletwo', 'Elethree', 'Elefour', 'Elefive', 'Elesix', 'Eleseven', 'Eleeight'
 	},
 	Account95 = {
-		'Elfone', 'Elftwo', 'Elfthree', 'Elffour', 'Elffive', 'Elfsix', 'Elfseven', 'Elfeight'
+		'Elgone', 'Elgtwo', 'Elgthree', 'Elgfour', 'Elgfive', 'Elgsix', 'Elgseven', 'Elgeight'
 	},
 	Account96 = {
-		'Elgone', 'Elgtwo', 'Elgthree', 'Elgfour', 'Elgfive', 'Elgsix', 'Elgseven', 'Elgeight'
+		'Elhone', 'Elhtwo', 'Elhthree', 'Elhfour', 'Elhfive', 'Elhsix', 'Elhseven', 'Elheight'
 	},
 }
 -- Example:
