@@ -103,13 +103,17 @@
 			readGuildList ()
 			__UGF.useGuildList = true
 		end
-		registerTimer ("greet", secondsToTimer (5), check)
-		cprintf (cli.lightblue, 'userfunction_greetFriends activated')
-    __UGF.active = true
+		if not __UGF.useFriendList and not __UGF.useGuildList then
+			return UGF_deactivate ()
+		else
+			registerTimer ("greet", secondsToTimer (5), check)
+			cprintf (cli.lightblue, 'userfunction_greetFriends activated\n')
+	    __UGF.active = true
+		end
 	end
 
 	function UGF_deactivate ()
  		unregisterTimer ("greet")
     reset ()
-		cprintf (cli.lightblue, 'userfunction_greetFriends deactivated')
+		cprintf (cli.lightblue, 'userfunction_greetFriends deactivated\n')
 	end

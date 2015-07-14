@@ -37,7 +37,7 @@
 				{ name = 'Runenbänker', 	account = 47, char = 3, scripts = {'tq_logar'} },
 				{ name = 'Statsbänker', 	account = 47, char = 6, scripts = {'tq_logar'} },
 				{ name = 'Brisinga',			account = 47, char = 1, scripts = {'tq_logar','manastone'} },
-				{ name = 'Vindictive', 		account = 47, char = 2, scripts = {'parcour','andor','tq_butterfly'} },
+				{ name = 'Vindictive', 		account = 47, char = 2, scripts = {'parcour','andor','tq_butterfly'}, UGF = true },
 			}
 		end
 		
@@ -58,9 +58,10 @@
 			chars								= {
 				{ name = 'Thunderstrike', account = 57, char = 2, scripts = {'tq_butterfly'} },
 				{ name = 'Celesteria', 		account = 57, char = 3, scripts = {'tq_butterfly'} },
-				{ name = 'Celestron', 		account = 57, char = 1, scripts = {'goldegg','survival','gobo','tq_flammen'} },
-				{ name = 'Schulani', 			account = 57, char = 4, scripts = {'goldegg','survival','gobo'} },
+				{ name = 'Celestron', 		account = 57, char = 1, scripts = {'goldegg','survival','gobo','tq_flammen'}, UGF = true },
+				{ name = 'Schulani', 			account = 57, char = 4, scripts = {'goldegg','survival','gobo'}, UGF = true },
 			}
+			UGF_activate (5, true, true)
 		end
 		
 		logFile							= getExecutionPath ()..'/logs/'..getPlayerName ()..'.'..getDailyDate ("%Y%m%d")..'.txt'
@@ -137,6 +138,14 @@ message ('no scripts found for '..name, true)
 			end
 		end
 		
+		function getUGF ()
+			for i=1,#chars do
+				if getAcc ()==chars[i].account and getChar ()==chars[i].char then
+					return (chars[i].UGF==true)
+				end
+			end
+		end
+
 		function logtrace()
 			errorCallback()
 			logInfo (player.Name, debug.traceback(), true, "crashes")
@@ -146,7 +155,7 @@ message ('no scripts found for '..name, true)
 
 		soundOff ()
 		savePlayerName ()
-		UGF_activate (5, true, true)
+		UGF_activate (5, getUGF (), getUGF ())
 		config = getConfig ()
 		
 		if config[1]~=nil then
