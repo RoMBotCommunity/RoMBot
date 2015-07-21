@@ -27,7 +27,7 @@
 		{ account = 92, chars = {1, 2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' }, 
 		{ account = 93, chars = {1, 2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' }, 
 		{ account = 94, chars = {1, 2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' },
-		{ account = 95, chars = {1, 2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' },
+		{ account = 95, chars = {1 ,2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' },
 		{ account = 96, chars = {1, 2, 3, 4, 5, 6, 7, 8}, secPass = 'animal10' },
 	}
 

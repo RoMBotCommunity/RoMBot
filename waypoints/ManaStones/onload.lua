@@ -135,11 +135,11 @@
 		end
     
 		if inventory:itemTotalCount (itemID)>0 then
-			UMM_SendByNameOrId (itemSender, inventory:itemTotalCount (itemID))
+			UMM_SendByNameOrId (itemSender, itemID)
 		end
     
 		if inventory:itemTotalCount (stoneID)>0 then
-			UMM_SendByNameOrId (stoneSender, inventory:itemTotalCount (stoneID))
+			UMM_SendByNameOrId (stoneSender, stoneID)
 		end
     
 		RoMScript ("HideUIPanel (UMMFrame)")
@@ -184,16 +184,16 @@
 		if UMB_getMagicBoxEnabled () then
 			local secPass = getSecPass ()
 			UMB_buyCharges (secPass, numTokensToKeep)
-			if UMB_getCharges ()>0 then
-			
-				repeat
-					moreToCome = checkMailbox ()
-					UMB_fuseTierStones (itemID, itemTier, stoneID, maxStoneTier)
-				until moreToCome == false
+			local online = checkOnline (stoneSender) and checkOnline (itemSender)
+			while UMB_getCharges ()>0 do	
+				while checkMailbox () do
+  				UMB_fuseTierStones (itemID, itemTier, stoneID, maxStoneTier)
+        end
+				UMB_fuseTierStones (itemID, itemTier, stoneID, maxStoneTier)
         
-				local online  = checkOnline (stoneSender) and checkOnline (itemSender)
-				local amountS	= UMB_numToBuy (stoneID, itemTier, maxStoneTier) or 0
-				local amountI	= UMB_numToBuy (itemID, itemTier, maxStoneTier) or 0
+        local halfBagSpace  = math.floor ((inventory:itemTotalCount (0) - 2)/2)
+				local amountS	      = math.min (halfBagSpace, UMB_numToBuy (stoneID, itemTier, maxStoneTier) or 0)
+				local amountI	      = math.min (halfBagSpace, UMB_numToBuy (itemID, itemTier, maxStoneTier) or 0)
 
 				if online and (amountS>0 or amountI>0) then
 					if amountS==amountI then
@@ -203,13 +203,7 @@
 						RoMScript ('SendChatMessage("send '..amountS..' stones '..senderPass..'", "WHISPER", 0, "'..stoneSender..'")')
 					end
 					waitForMails (amountS, amountI)
-				
 					saveData (getPlayerName (), 0, 0)
-
-					repeat
-						moreToCome = checkMailbox ()
-						UMB_fuseTierStones (itemID, itemTier, stoneID, maxStoneTier)
-					until moreToCome == false
 				end
 			end
 		end

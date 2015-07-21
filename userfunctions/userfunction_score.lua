@@ -1166,7 +1166,7 @@ local function equipSafe (item, pos)
 
 end
 local function equipBest()
-	
+	       
 	local result = scoreAll();
 	-- we equip
 	for key1,v1 in pairs(result) do
@@ -1230,7 +1230,7 @@ local function equipBest()
 							 score_main = getItemScore(item_main);
 						end
 						
-						if not (result[key1][key2][key3][key4][1]["BagSlot"] <= 21) then
+						if not (result[key1][key2][key3][key4][1]["BagSlot"] <= 21) and player.Level>12 then
 							local item = result[key1][key2][key3][key4][1]["Item"];
 							local score_new = result[key1][key2][key3][key4][1]["Score"]
 							if((score_off + 1) < score_new)then
@@ -1268,7 +1268,7 @@ local function equipBest()
 							end
 							--item:use();
 						end
-						if  result[key1][key2][key3][key4][2]["BagSlot"] ~= nil then
+						if  result[key1][key2][key3][key4][2]["BagSlot"] ~= nil and player.Level>12 then
 							if not (result[key1][key2][key3][key4][2]["BagSlot"] <= 21) then
 								local item = result[key1][key2][key3][key4][2]["Item"];
 								local score_new =  result[key1][key2][key3][key4][2]["Score"];
