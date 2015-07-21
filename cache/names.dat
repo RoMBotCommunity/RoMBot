@@ -9,6 +9,8 @@ return {
    [47]={7},
    [68]={8},
    [93]={9},
+   [95]={10},
+   [96]={11},
 },
 -- Table: {2}
 {
@@ -93,5 +95,27 @@ return {
    "Eldsix",
    "Eldseven",
    "Eldeight",
+},
+-- Table: {10}
+{
+   "Elgone",
+   "Elgtwo",
+   "Elgthree",
+   "Elgfour",
+   "Elgfive",
+   "Elgsix",
+   "Elgseven",
+   "Elgeight",
+},
+-- Table: {11}
+{
+   "Elhone",
+   "Elhtwo",
+   "Elhthree",
+   "Elhfour",
+   "Elhfive",
+   "Elhsix",
+   "Elhseven",
+   "Elheight",
 },
 }

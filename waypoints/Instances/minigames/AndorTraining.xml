@@ -2,6 +2,11 @@
 <waypoints>
 	<onLoad>
 	<![CDATA[
+
+		while not travelTo ('VaranasCentral') do
+			message ('unable to go to varanas', true)
+		end
+
 		-- V 2.1b
 				--=== User Options ===--
 		local When_Finished = "/TQ_return"

@@ -4,6 +4,10 @@
 <onload><![CDATA[
    --=== User Options ===--
 
+	while not travelTo ('VaranasCentral') do
+		message ('unable to go to varanas', true)
+	end
+
 	local When_Finished = "/TQ_return"
       -- "end" to end script, "relog" to log next survivalnext and "waypointfilename" to load that waypointfile.
   ExitBeforeNextFile    = true   -- If you want it to exit game before loading next "waypointfilename".

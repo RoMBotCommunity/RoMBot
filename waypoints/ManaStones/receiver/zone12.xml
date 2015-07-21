@@ -2,6 +2,8 @@
 <waypoints type="TRAVEL">
 	<onload><![CDATA[
 
+		UASH_Activate ()
+
 		function todoFinished ()
 			if player.Level==1 then
 				cprintf (cli.lightblue, "This char is new. Starting daily prequests.\n")

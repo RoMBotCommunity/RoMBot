@@ -35,6 +35,8 @@
 			210294,															-- stones
 		}
 		
+		UASH_Activate ()
+
 		function checkBag ()
 			for _,id in pairs (itemsToCollect) do
 				local item = inventory:findItem (id, 'bag1')
