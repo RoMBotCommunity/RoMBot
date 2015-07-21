@@ -142,9 +142,9 @@
 		<skill name="KNIGHT_HOLY_POWER_EXPLOSION" hotkey="MACRO" priority="99" pullonly="true" inbattle="true" />
 		<skill name="KNIGHT_CHARGE"								hotkey="MACRO" priority="98" pullonly="true" />
 		<skill name="KNIGHT_HOLY_SHIELD"    			hotkey="MACRO" priority="90" inbattle="true" hpper="15" />
-		<skill name="KNIGHT_HOLY_SEAL"      			hotkey="MACRO" priority="80" />
-		<skill name="KNIGHT_PUNISHMENT"     			hotkey="MACRO" priority="70" />
-		<skill name="KNIGHT_HOLY_STRIKE"    			hotkey="MACRO" priority="60" />
+		<skill name="KNIGHT_HOLY_SEAL"      			hotkey="MACRO" priority="97" />
+		<skill name="KNIGHT_PUNISHMENT"     			hotkey="MACRO" priority="96" />
+		<skill name="KNIGHT_HOLY_STRIKE"    			hotkey="MACRO" priority="98" />
 	</skills_knight>
 
 	<onLoad><![CDATA[

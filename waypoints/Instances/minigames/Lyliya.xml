@@ -6,8 +6,10 @@
 	-- move the hammer to IS bag
 	local movehammer   = true	
 	
-	
-	
+	while not travelTo ('VaranasCentral') do
+		message ('unable to go to varanas', true)
+	end
+
   local tablesize = 0
   local furniture = {}
   local objectList = nil

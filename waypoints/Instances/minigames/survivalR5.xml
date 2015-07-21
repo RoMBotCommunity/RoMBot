@@ -44,6 +44,10 @@
 		"SCOUT_IGNITE", -- Best for scout/mage.
 	}
 
+	while not travelTo ('VaranasCentral') do
+		message ('unable to go to varanas', true)
+	end
+
 	include("waypoints/"..getFilePath(__WPL.FileName).."/survivalR5onload.lua",true)
 
 </onLoad>

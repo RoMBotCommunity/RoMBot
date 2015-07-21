@@ -1,19 +1,29 @@
 <?xml version='1.0' encoding='utf-8'?>
 <waypoints type='TRAVEL'>
 	<onload><![CDATA[
-		logFile						= getExecutionPath ()..'/logs/'..getPlayerName ()..'.'..getDailyDate ("%Y%m%d")..'.txt'
+
+		logFile						= getExecutionPath ()..'/cache/'..getPlayerName ()..'.txt'
 		wpPath						= getExecutionPath ()..'/waypoints/'
 		selfFile					= wpPath .. "/TQ"
 		
-		saved	= table.load (logFile);
-		if saved and type (saved)=="table" then
-			config = saved
-			table.remove (config, 1)
-			table.save (config, logFile);
-			loadPaths (selfFile)
-		else
-			message ('something is wrong here', true);
+		function getConfig ()
+			local saved	= table.load (logFile)
+			if saved~=nil and type (saved)=="table" then
+				if saved.date and tonumber (saved.date)==tonumber (getDailyDate ('%Y%m%d')) then
+					return saved
+				end
+			end
+			return nil
 		end
+
+		config = getConfig ()
+		if config then
+			table.remove (config.scripts, 1)
+			table.save (config, logFile)
+		else
+			message ('something is wrong here', true)
+		end
+		loadPaths (selfFile)
 	]]></onload>
 	<waypoint />
 </waypoints>

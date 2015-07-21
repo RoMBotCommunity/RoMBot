@@ -64,17 +64,16 @@
 		 __WPL:setWaypointIndex (math.min (__WPL:getNearestWaypoint (player.X, player.Z), 4))
 		 
 	]]></onload>
-	<!-- #  1 --><waypoint x="0" z="-468"/>
-	<!-- #  2 --><waypoint x="106" z="-286"/>
-	<!-- #  3 --><waypoint x="399" z="-222"/>
-	<!-- #  4 --><waypoint x="410" z="-257"><![CDATA[
+	<!-- #  2 --><waypoint x="0" z="-520"/>
+	<!-- #  3 --><waypoint x="-408" z="-520"/>
+	<!-- #  4 --><waypoint x="-408" z="-223"><![CDATA[
+		harvest (1)
 		harvest (2)
 		harvest (3)
 	]]></waypoint>
-	<!-- #  5 --><waypoint x="401" z="-171"><![CDATA[
-		harvest (1)
-	]]></waypoint>
-	<!-- #  6 --><waypoint x="391" z="-14"><![CDATA[
+	<!-- #  3 --><waypoint x="-408" z="-520"/>
+	<!-- #  1 --><waypoint x="300" z="-520"/>
+	<!-- #  1 --><waypoint x="300" z="0"><![CDATA[
 		useBibliothek	= useBibliothek and (RoMScript ("GetPlayerExpDebt()")<0)
 		if not useBibliothek then
 			if onFinish=='logout' then

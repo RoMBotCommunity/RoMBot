@@ -26,7 +26,6 @@
 	]]></onload>
 	<!-- #  1 --><waypoint x="-20708" z="-22750"><![CDATA[
 		if complete then
-			print ('\a'); yrest (5000);
 			loadPaths ('/TQ_return')
 		end
 	]]></waypoint>

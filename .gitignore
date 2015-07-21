@@ -217,11 +217,12 @@ pip-log.txt
 *.bmp
 cache/dummy.txt
 
-*.lnk
 logs/
+cache/
 .svn/
-waypoints/ManaStones/temp.dat
+*.lnk
 *.pid
 *.dat
-waypoints/ManaStones/temp.dat
-*.dat
+addresses.lua
+*lastfile.*
+
