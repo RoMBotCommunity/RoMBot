@@ -8,19 +8,7 @@
 
 __UASH_active	  		= false
 __UASH_mountspeed   = 99
-__UASH_runspeed     = 100
-
-function UASH_Activate ()
-	registerTimer("UASH_speed", 5, checkSpeed)
-	cprintf (cli.lightblue, "AutoSpeedHack ") cprintf (cli.lightgreen, "activated\n")
-	__UASH_active = true
-end
-
-function UASH_Deactivate ()
-	unregisterTimer("UASH_speed")
-	cprintf (cli.lightblue, "AutoSpeedHack ") cprintf (cli.lightred, "deactivated\n")
-	__UASH_active = false
-end
+__UASH_runspeed     = 75
 
 local function checkSpeed ()
 	if not player or not __UASH_active then UASH_deactivate () return end
@@ -43,5 +31,17 @@ local function checkSpeed ()
 			memoryWriteFloat(getProc(), mount + 0x40, playerFound and 82 or __UASH_mountspeed)
 		end
 	end
+end
+
+function UASH_Activate ()
+	registerTimer("UASH_speed", 5, checkSpeed)
+	cprintf (cli.lightblue, "AutoSpeedHack ") cprintf (cli.lightgreen, "activated\n")
+	__UASH_active = true
+end
+
+function UASH_Deactivate ()
+	unregisterTimer("UASH_speed")
+	cprintf (cli.lightblue, "AutoSpeedHack ") cprintf (cli.lightred, "deactivated\n")
+	__UASH_active = false
 end
 

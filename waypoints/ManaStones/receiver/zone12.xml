@@ -2,7 +2,7 @@
 <waypoints type="TRAVEL">
 	<onload><![CDATA[
 
-		UASH_Activate ()
+		--UASH_Activate ()
 
 		function todoFinished ()
 			if player.Level==1 then
@@ -11,7 +11,15 @@
 				return false
 			end
 
-			if player.Level>=10 and not RoMScript ("IsMagicBoxEnable ()") then
+      if player.Level<10 then
+				repeat until not checkMailbox ()
+        while inventory:itemTotalCount (203276)>0 do
+          inventory:useItem (203276)
+        end
+        player:update ()
+      end
+      
+      if player.Level>=10 and not RoMScript ("IsMagicBoxEnable ()") then
 				cprintf (cli.lightblue, "Going to enable MagicBox.\n")
 				if not player.Mounted then player:mount () end
 				__WPL:setWaypointIndex (__WPL:getNearestWaypoint (player.X, player.Z, player.Y, __WPL:findWaypointTag ("enable_magicbox"), __WPL:findWaypointTag ("varanas_snoop")))

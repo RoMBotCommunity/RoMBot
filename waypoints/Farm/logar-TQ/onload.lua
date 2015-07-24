@@ -35,7 +35,7 @@
 			210294,															-- stones
 		}
 		
-		UASH_Activate ()
+		--UASH_Activate ()
 
 		function checkBag ()
 			for _,id in pairs (itemsToCollect) do
